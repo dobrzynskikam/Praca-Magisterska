@@ -1,0 +1,13 @@
+﻿<Application x:Class="GestureApplication.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:GestureApplication"
+             xmlns:converters="clr-namespace:GestureApplication.Converters"
+             StartupUri="View/GestureRecognitionView.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <local:ViewModelLocator x:Key="mainViewModelLocator"></local:ViewModelLocator>
+            <converters:BitmapToBitmapImageConverter x:Key="localBitmapToSourceConverter"></converters:BitmapToBitmapImageConverter>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

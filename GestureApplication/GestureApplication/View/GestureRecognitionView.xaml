@@ -1,0 +1,50 @@
+﻿<Window x:Class="GestureApplication.View.GestureRecognitionView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GestureApplication.View"
+        xmlns:controls="clr-namespace:AForge.Controls;assembly=AForge.Controls"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="640" Width="860"
+        DataContext="{Binding Source={StaticResource mainViewModelLocator}, Path=GestureRecognitionViewModel}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*"></ColumnDefinition>
+            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.8*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Image Grid.Column="0" Width="Auto" Height="Auto" Margin="5" Source="{Binding Bitmap}"/>
+            <!--<Image Grid.Column="1" Width="Auto" Height="Auto" Margin="5" Source="{Binding BinaryBitmapImage}"/>-->
+            <!--<Image Grid.Column="2" Width="Auto" Height="Auto" Margin="5" Source="{Binding ThresholdBitmapImage}"/>-->
+            <Image Grid.Row="1" Width="Auto" Height="Auto" Margin="5" Source="{Binding ColorFilterBitmapImage}"/>
+            
+        </Grid>
+        <!--<Image Grid.Column="0" Width="Auto" Height="Auto" Margin="5" Source="{Binding Bitmap}" Visibility="Visible"></Image>-->
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button Grid.Row="1" Width="100" Content="Start" Command="{Binding StartCameraCommand}"></Button>
+            <Button Grid.Row="1" Width="100" Content="Stop" Command="{Binding StopCameraCommand}"></Button>
+            <ComboBox ItemsSource="{Binding VideoDevices}" SelectedItem="{Binding CurrentDevice}" DisplayMemberPath="Name"></ComboBox>
+            <Slider Orientation="Horizontal" Width="100" Maximum="255" Minimum="0" Value="{Binding Threshold, Mode=TwoWay}"></Slider>
+            <Label Width="50" Content="{Binding Threshold}"></Label>
+            <Label Width="50" Content="{Binding Text}"></Label>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1">
+            
+        </StackPanel>
+
+    </Grid>
+</Window>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestureApplication", "GestureApplication\GestureApplication.csproj", "{03D1BA80-ED9B-4CB7-B985-9BC3862448DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camera", "Camera\Camera.csproj", "{9E8EB07A-A2BC-4C7A-9F3E-4A7A11259C6A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03D1BA80-ED9B-4CB7-B985-9BC3862448DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03D1BA80-ED9B-4CB7-B985-9BC3862448DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03D1BA80-ED9B-4CB7-B985-9BC3862448DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03D1BA80-ED9B-4CB7-B985-9BC3862448DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E8EB07A-A2BC-4C7A-9F3E-4A7A11259C6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E8EB07A-A2BC-4C7A-9F3E-4A7A11259C6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E8EB07A-A2BC-4C7A-9F3E-4A7A11259C6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E8EB07A-A2BC-4C7A-9F3E-4A7A11259C6A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BECDFBB7-D421-47C3-BBAA-EC5596233A80}
+	EndGlobalSection
+EndGlobal
