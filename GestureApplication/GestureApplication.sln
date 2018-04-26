@@ -9,6 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camera", "Camera\Camera.csp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6E180229-7937-4F23-8445-50425C292838}"
 	ProjectSection(SolutionItems) = preProject
+		frame-0000.jpg = frame-0000.jpg
 		image.png = image.png
 	EndProjectSection
 EndProject
