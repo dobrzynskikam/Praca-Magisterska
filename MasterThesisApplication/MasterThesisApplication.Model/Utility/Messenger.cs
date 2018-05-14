@@ -90,8 +90,9 @@ namespace MasterThesisApplication.Model.Utility
         /// <param name="context"></param>
         public void Unregister(object recipient, object context)
         {
+            object action;
             var key = new MessengerKey(recipient, context);
-            Dictionary.TryRemove(key, out object action);
+            Dictionary.TryRemove(key, out action);
         }
 
         /// <summary>
@@ -167,7 +168,7 @@ namespace MasterThesisApplication.Model.Utility
             /// <returns></returns>
             public override bool Equals(object obj)
             {
-                if (obj is null) return false;
+                if (obj == null) return false;
                 if (ReferenceEquals(this, obj)) return true;
                 if (obj.GetType() != GetType()) return false;
 

@@ -36,7 +36,10 @@ namespace MasterThesisApplication.ViewModel
 
         public Camera SelectedCamera
         {
-            get => _selectedCamera;
+            get
+            {
+                return _selectedCamera;
+            }
             set
             {
                 _selectedCamera = value;

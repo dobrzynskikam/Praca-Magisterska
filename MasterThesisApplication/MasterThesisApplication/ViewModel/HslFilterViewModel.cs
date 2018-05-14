@@ -57,7 +57,10 @@ namespace MasterThesisApplication.ViewModel
 
         public int MinHue
         {
-            get => _minHue;
+            get
+            {
+                return _minHue;
+            }
             set
             {
                 _minHue = value;
@@ -69,7 +72,10 @@ namespace MasterThesisApplication.ViewModel
 
         public int MaxHue
         {
-            get => _maxHue;
+            get
+            {
+                return _maxHue;
+            }
             set
             {
                 _maxHue = value;
@@ -81,7 +87,10 @@ namespace MasterThesisApplication.ViewModel
 
         public float MinSaturation
         {
-            get => _minSaturation;
+            get
+            {
+                return _minSaturation;
+            }
             set
             {
                 _minSaturation = value;
@@ -93,7 +102,10 @@ namespace MasterThesisApplication.ViewModel
 
         public float MaxSaturation
         {
-            get => _maxSaturation;
+            get
+            {
+                return _maxSaturation;
+            }
             set
             {
                 _maxSaturation = value;
@@ -105,7 +117,10 @@ namespace MasterThesisApplication.ViewModel
 
         public float MinLuminance
         {
-            get => _minLuminance;
+            get
+            {
+                return _minLuminance;
+            }
             set
             {
                 _minLuminance = value;
@@ -117,7 +132,10 @@ namespace MasterThesisApplication.ViewModel
 
         public float MaxLuminance
         {
-            get => _maxLuminance;
+            get
+            {
+                return _maxLuminance;
+            } 
             set
             {
                 _maxLuminance = value;

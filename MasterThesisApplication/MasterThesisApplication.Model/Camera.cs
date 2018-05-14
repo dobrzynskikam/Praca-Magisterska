@@ -25,7 +25,10 @@ namespace MasterThesisApplication.Model
 
         public BitmapImage CameraImage
         {
-            get => _cameraImage;
+            get
+            {
+                return _cameraImage;
+            }
             set
             {
                 _cameraImage = value;
@@ -35,7 +38,10 @@ namespace MasterThesisApplication.Model
         }
         public bool IsRunning
         {
-            get => _isRunning;
+            get
+            {
+                return _isRunning;
+            }
             set
             {
                 _isRunning = value;

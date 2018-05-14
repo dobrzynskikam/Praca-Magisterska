@@ -17,7 +17,7 @@ namespace MasterThesisApplication.Converter
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Int16.Parse((string) value ?? throw new InvalidOperationException());
+            return Int16.Parse((string) value);
         }
     }
 }
