@@ -1,5 +1,7 @@
 ﻿using MasterThesisApplication.View;
 using System.Windows;
+using System.Windows.Controls;
+using MasterThesisApplication.Model;
 
 namespace MasterThesisApplication.Services
 {

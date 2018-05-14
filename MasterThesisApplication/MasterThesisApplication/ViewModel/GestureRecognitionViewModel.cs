@@ -1,21 +1,28 @@
-﻿using MasterThesisApplication.Model;
+﻿using System;
+using MasterThesisApplication.Model;
 using MasterThesisApplication.Model.Annotations;
 using MasterThesisApplication.Services;
 using MasterThesisApplication.Utility;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using Accord.Imaging;
+using Accord.Imaging.Filters;
 using MasterThesisApplication.Model.Utility;
 
 namespace MasterThesisApplication.ViewModel
 {
     public class GestureRecognitionViewModel : INotifyPropertyChanged
     {
+        //private Camera modelCamera;
         private Camera _selectedCamera;
         private BitmapImage _cameraImage;
+        private Rectangle _rectangle;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -27,6 +34,7 @@ namespace MasterThesisApplication.ViewModel
 
         public ICameraDataService CameraService = new CameraDataService();
         public IDialogService DialogService;
+        
         public ICommand StartCameraCommand { get; set; }
         public ICommand StopCameraCommand { get; set; }
 
@@ -44,6 +52,7 @@ namespace MasterThesisApplication.ViewModel
             {
                 _selectedCamera = value;
                 OnPropertyChanged(nameof(VideoDevicesCollection));
+                SelectedCamera.PropertyChanged += cameraModel_PropertyChanged;
             }
         }
 
@@ -51,19 +60,48 @@ namespace MasterThesisApplication.ViewModel
         {
             get
             {
-                Messenger.Default.Register<BitmapImage>(this, OnImageReceived);
-                return _cameraImage;
+                //Messenger.CameraStream.Register<BitmapImage>(this, OnImageReceived);
+                return SelectedCamera.CameraImage;
             }
             set
             {
                 _cameraImage = value;
                 OnPropertyChanged(nameof(CameraImage));
+                Messenger.Default.Register<Rectangle>(this, OnRectangleReceived);
+                //Messenger.DefaultStream.Register<Rectangle>(this, OnRectangleReceived);
             }
         }
+
+        //public Rectangle Rectangle
+        //{
+        //    get
+        //    {
+                
+        //        return _rectangle;
+        //    }
+        //    set
+        //    {
+        //        _rectangle = value;
+        //        OnPropertyChanged(nameof(Rectangle));
+        //    }
+        //}
 
         private void OnImageReceived(BitmapImage cameraImage)
         {
             CameraImage = cameraImage;
+        }
+
+        private void OnRectangleReceived(Rectangle rect)
+        {
+            _rectangle = rect;
+            //RectanglesMarker marker = new RectanglesMarker(Color.DarkRed);
+            //marker.SingleRectangle = rect;
+            //var rectangleBitmap = marker.Apply(CameraImage.BitmapImage2Bitmap());
+            ////var bitmapasd = rectanImage.ToManagedImage();
+            ////_filter.Apply(bitmap).UnlockBits(imgData);
+            //var rectangleBitmapImage = rectangleBitmap.ToBitmapImage();
+            //rectangleBitmapImage.Freeze();
+            //CameraImage = rectangleBitmapImage;
         }
 
 
@@ -72,7 +110,30 @@ namespace MasterThesisApplication.ViewModel
             ICameraDataService cameraDataService = new CameraDataService();
             VideoDevicesCollection = cameraDataService.GetAllCameras();
             SelectedCamera = VideoDevicesCollection[0];
+            Messenger.Default.Send<Camera>(SelectedCamera);
             LoadCommands();
+            //this.modelCamera = camera;
+        }
+
+        private void cameraModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "CameraImage")
+            {
+                RectanglesMarker marker = new RectanglesMarker(Color.DarkRed);
+                marker.SingleRectangle = _rectangle;
+
+                BitmapData imgData = SelectedCamera.CameraImage.BitmapImage2Bitmap().LockBits(ImageLockMode.ReadWrite);
+
+                UnmanagedImage img = new UnmanagedImage(imgData);
+
+                var rectangleBitmap = marker.Apply(img);
+                //var bitmapasd = rectanImage.ToManagedImage();
+                //_filter.Apply(bitmap).UnlockBits(imgData);
+                var rectangleBitmapImage = rectangleBitmap.ToManagedImage().ToBitmapImage();
+                rectangleBitmapImage.Freeze();
+                CameraImage = rectangleBitmapImage;
+                //CameraImage = SelectedCamera.CameraImage;
+            }
         }
 
         private void LoadCommands()
@@ -86,7 +147,8 @@ namespace MasterThesisApplication.ViewModel
         {
             if (SelectedCamera != null)
             {
-                CameraService.StartCamera(SelectedCamera);
+                SelectedCamera.StartCamera();
+                //CameraService.StartCamera(SelectedCamera);
                 SelectedCamera.IsRunning = true;
             }
         }
@@ -98,7 +160,8 @@ namespace MasterThesisApplication.ViewModel
 
         private void StopCamera(object obj)
         {
-            CameraService.StopCamera(SelectedCamera);  
+            SelectedCamera.StopCamera();
+            //CameraService.StopCamera(SelectedCamera);  
             SelectedCamera.IsRunning = false;
         }
 
@@ -109,6 +172,7 @@ namespace MasterThesisApplication.ViewModel
 
         private void SetHslFilter(object obj)
         {
+            Messenger.Default.Send<Camera>(SelectedCamera);
             DialogService = new HslFilterDialogService();
             DialogService.ShowDialog();
         }

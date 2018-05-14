@@ -14,7 +14,7 @@ namespace MasterThesisApplication.DAL
     {
         private ObservableCollection<Camera> _cameras;
         private VideoCaptureDevice _videoCaptureDevice;
-        private readonly Camera _camera= new Camera();
+        //private readonly Camera _camera= new Camera();
 
         public ObservableCollection<Camera> GetCameras()
         {
@@ -26,21 +26,6 @@ namespace MasterThesisApplication.DAL
             return _cameras;
         }
 
-        public void StopCamera(Camera camera)
-        {
-            _videoCaptureDevice.SignalToStop();
-            _videoCaptureDevice.WaitForStop();
-            _videoCaptureDevice.Stop();
-            _videoCaptureDevice.NewFrame -= Video_NewFrame;
-        }
-
-        public void StartCamera(Camera camera)
-        {
-            _videoCaptureDevice = new VideoCaptureDevice(camera.MonikerString);
-            _videoCaptureDevice.NewFrame += Video_NewFrame;
-            _videoCaptureDevice.Start();
-        }
-
         private void GetVideoDevices()
         {
             _cameras = new ObservableCollection<Camera>();
@@ -50,23 +35,38 @@ namespace MasterThesisApplication.DAL
             }
         }
 
-        private void Video_NewFrame(object sender, NewFrameEventArgs eventargs)
-        {
-            try
-            {
-                BitmapImage bitmapImage;
-                using (var bitmap = (Bitmap)eventargs.Frame.Clone())
-                {
-                    bitmapImage = bitmap.ToBitmapImage();
-                    bitmapImage.Freeze();
-                }
+        //private void Video_NewFrame(object sender, NewFrameEventArgs eventargs)
+        //{
+        //    try
+        //    {
+        //        BitmapImage bitmapImage;
+        //        using (var bitmap = (Bitmap)eventargs.Frame.Clone())
+        //        {
+        //            bitmapImage = bitmap.ToBitmapImage();
+        //            bitmapImage.Freeze();
+        //        }
 
-                _camera.CameraImage = bitmapImage;
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show("Error on Video_NewFrame:\n" + exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+        //        _camera.CameraImage = bitmapImage;
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        MessageBox.Show("Error on Video_NewFrame:\n" + exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //}
+
+        //public void StopCamera(Camera camera)
+        //{
+        //    _videoCaptureDevice.SignalToStop();
+        //    _videoCaptureDevice.WaitForStop();
+        //    _videoCaptureDevice.Stop();
+        //    _videoCaptureDevice.NewFrame -= Video_NewFrame;
+        //}
+
+        //public void StartCamera(Camera camera)
+        //{
+        //    _videoCaptureDevice = new VideoCaptureDevice(camera.MonikerString);
+        //    _videoCaptureDevice.NewFrame += Video_NewFrame;
+        //    _videoCaptureDevice.Start();
+        //}
     }
 }

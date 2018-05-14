@@ -67,6 +67,7 @@
     <Compile Include="Utility\Messenger.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\ViewModelMessenger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

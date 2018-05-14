@@ -19,14 +19,14 @@ namespace MasterThesisApplication.Services
             return _repository.GetCameras();
         }
 
-        public void StopCamera(Camera camera)
-        {
-            _repository.StopCamera(camera);
-        }
+        //public void StopCamera(Camera camera)
+        //{
+        //    _repository.StopCamera(camera);
+        //}
 
-        public void StartCamera(Camera camera)
-        {
-            _repository.StartCamera(camera);
-        }
+        //public void StartCamera(Camera camera)
+        //{
+        //    _repository.StartCamera(camera);
+        //}
     }
 }
