@@ -6,7 +6,5 @@ namespace MasterThesisApplication.Services
     public interface ICameraDataService
     {
         ObservableCollection<Camera> GetAllCameras();
-        //void StopCamera(Camera camera);
-        //void StartCamera(Camera camera);
     }
 }

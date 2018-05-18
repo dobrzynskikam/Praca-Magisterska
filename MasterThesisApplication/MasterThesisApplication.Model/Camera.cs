@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Accord.Video;
+using Accord.Video.DirectShow;
 using MasterThesisApplication.Model.Annotations;
+using MasterThesisApplication.Model.Utility;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using Accord.Video;
-using Accord.Video.DirectShow;
-using MasterThesisApplication;
-using MasterThesisApplication.Model.Utility;
 
 namespace MasterThesisApplication.Model
 {
@@ -25,6 +24,7 @@ namespace MasterThesisApplication.Model
         private VideoCaptureDevice _videoCaptureDevice;
         private bool _isRunning;
         private BitmapImage _cameraImage;
+        private Rectangle _rectangle;
         public string Name { get; set; }
         public string MonikerString { get; set; }
 
@@ -38,7 +38,6 @@ namespace MasterThesisApplication.Model
             {
                 _cameraImage = value;
                 OnPropertyChanged(nameof(CameraImage));
-                //Messenger.CameraStream.Send<BitmapImage>(CameraImage);
             }
         }
         public bool IsRunning
@@ -54,6 +53,16 @@ namespace MasterThesisApplication.Model
             }
         }
 
+        public Rectangle Rectangle
+        {
+            get => _rectangle;
+            set
+            {
+                _rectangle = value;
+                OnPropertyChanged(nameof(Rectangle));
+            }
+        }
+
         private void Video_NewFrame(object sender, NewFrameEventArgs eventargs)
         {
             try
@@ -61,7 +70,7 @@ namespace MasterThesisApplication.Model
                 BitmapImage bitmapImage;
                 using (var bitmap = (Bitmap)eventargs.Frame.Clone())
                 {
-                    bitmapImage = bitmap.ToBitmapImage();
+                    bitmapImage =  bitmap.ToBitmapImage();
                     bitmapImage.Freeze();
                 }
 

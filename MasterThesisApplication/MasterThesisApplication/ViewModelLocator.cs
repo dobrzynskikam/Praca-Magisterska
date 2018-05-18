@@ -1,6 +1,4 @@
-﻿using Accord;
-using MasterThesisApplication.Model;
-using MasterThesisApplication.ViewModel;
+﻿using MasterThesisApplication.ViewModel;
 
 namespace MasterThesisApplication
 {

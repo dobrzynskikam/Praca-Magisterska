@@ -1,23 +1,20 @@
 ﻿using Accord;
+using Accord.Imaging;
 using Accord.Imaging.Filters;
+using Accord.Vision.Tracking;
+using MasterThesisApplication.Model;
 using MasterThesisApplication.Model.Annotations;
-using MasterThesisApplication.Utility;
+using MasterThesisApplication.Model.Utility;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
-using Accord.Vision.Tracking;
-using MasterThesisApplication.Model.Utility;
-using Accord.Imaging;
-using MasterThesisApplication.Model;
 
 namespace MasterThesisApplication.ViewModel
 {
     public class HslFilterViewModel : INotifyPropertyChanged
     {
-        //private BitmapImage _cameraImage;
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
@@ -25,20 +22,6 @@ namespace MasterThesisApplication.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        //private Camera _selectedCamera;
-        //public Camera SelectedCamera
-        //{
-        //    get
-        //    {
-        //        return _selectedCamera;
-        //    }
-        //    set
-        //    {
-        //        _selectedCamera = value;
-        //        OnPropertyChanged(nameof(SelectedCamera));
-        //    }
-        //}
 
         private BitmapImage _cameraImage;
         private readonly HSLFiltering _filter = new HSLFiltering();
@@ -73,41 +56,8 @@ namespace MasterThesisApplication.ViewModel
             {
                 _rectangle = value;
                 OnPropertyChanged(nameof(Rectangle));
-                //Messenger.DefaultStream.Send<Rectangle>(Rectangle);
             }
         }
-
-        //private void OnImageReceived(BitmapImage image)
-        //{
-        //    var bitmap = BitmapImage2Bitmap(image);
-        //    var filteredBitmap = _filter.Apply(bitmap);
-            
-        //    _hslBlobTracker = new HslBlobTracker(_filter);
-        //    _hslBlobTracker.MinHeight = 100;
-        //    _hslBlobTracker.MinWidth = 150;
-        //    //_hslBlobTracker.MaxHeight = 200;
-        //    //_hslBlobTracker.MaxWidth = 200;
-        //    _hslBlobTracker.Extract = true;
-        //    BitmapData imgData = filteredBitmap.LockBits(ImageLockMode.ReadWrite);
-
-        //    UnmanagedImage img = new UnmanagedImage(imgData);
-
-        //    _hslBlobTracker.ProcessFrame(img);
-        //    Rectangle rect = _hslBlobTracker.TrackingObject.Rectangle;
-        //    Rectangle = rect;
-        //    //Messenger.DefaultStream.Send<Rectangle>(rect);
-
-        //    RectanglesMarker marker = new RectanglesMarker(rect);
-        //    var rectangleInRealBitmap = marker.Apply(imgData);
-        //    var rectanImage = marker.Apply(img);
-        //    var bitmapasd = rectanImage.ToManagedImage();
-        //    //_filter.Apply(bitmap).UnlockBits(imgData);
-        //    var rectangleBitmapImage = bitmapasd.ToBitmapImage();
-        //    var rectangleInRealBitmapImage = rectangleInRealBitmap.ToBitmapImage();
-        //    rectangleInRealBitmapImage.Freeze();
-        //    rectangleBitmapImage.Freeze();
-        //    CameraImage = rectangleBitmapImage;
-        //}
 
         public int MinHue
         {
@@ -223,36 +173,28 @@ namespace MasterThesisApplication.ViewModel
             {
                 var bitmap = _selectedCamera.CameraImage.BitmapImage2Bitmap();
                 var filteredBitmap = _filter.Apply(bitmap);
-                //var filteredBitmapImage = filteredBitmap.ToBitmapImage();
-                //filteredBitmapImage.Freeze();
 
-                _hslBlobTracker = new HslBlobTracker(_filter);
-                _hslBlobTracker.MinHeight = 100;
-                _hslBlobTracker.MinWidth = 150;
-                //_hslBlobTracker.MaxHeight = 200;
-                //_hslBlobTracker.MaxWidth = 200;
-                _hslBlobTracker.Extract = true;
-                BitmapData imgData = filteredBitmap.LockBits(ImageLockMode.ReadWrite);
+                _hslBlobTracker = new HslBlobTracker(_filter)
+                {
+                    MinHeight = 100,
+                    MinWidth = 150,
+                    Extract = true
+                };
+                var imgData = filteredBitmap.LockBits(ImageLockMode.ReadWrite);
 
-                UnmanagedImage img = new UnmanagedImage(imgData);
+                var img = new UnmanagedImage(imgData);
 
                 _hslBlobTracker.ProcessFrame(img);
-                Rectangle rect = _hslBlobTracker.TrackingObject.Rectangle;
-                Rectangle = rect;
-                Messenger.Default.Send<Rectangle>(rect);
+                var rect = _hslBlobTracker.TrackingObject.Rectangle;
+                _selectedCamera.Rectangle = rect;
+                Messenger.Default.Send(rect);
 
                 RectanglesMarker marker = new RectanglesMarker(rect);
-                //var rectangleInRealBitmap = marker.Apply(imgData);
                 var rectanImage = marker.Apply(img);
                 var bitmapasd = rectanImage.ToManagedImage();
-                //_filter.Apply(bitmap).UnlockBits(imgData);
                 var rectangleBitmapImage = bitmapasd.ToBitmapImage();
-                //var rectangleInRealBitmapImage = rectangleInRealBitmap.ToBitmapImage();
-                //rectangleInRealBitmapImage.Freeze();
                 rectangleBitmapImage.Freeze();
                 CameraImage = rectangleBitmapImage;
-
-                //CameraImage = filteredBitmapImage;
             }
         }
         private void UpdateFilter()

@@ -1,13 +1,6 @@
-﻿using System;
-using MasterThesisApplication.DAL;
+﻿using MasterThesisApplication.DAL;
 using MasterThesisApplication.Model;
 using System.Collections.ObjectModel;
-using System.Drawing;
-using System.Windows;
-using System.Windows.Media.Imaging;
-using Accord.Video;
-using Accord.Video.DirectShow;
-using MasterThesisApplication.Utility;
 
 namespace MasterThesisApplication.Services
 {
