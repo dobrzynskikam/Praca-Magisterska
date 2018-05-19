@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Gestures>
+  <Gesture Name="A" Label="1" BowNumber="36">
+    <Feature Vector="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+             ImageName="A-train1.jpg">
+    </Feature>
+    <Feature Vector="1 0 1 0 1 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+             ImageName="A-train2.jpg">
+    </Feature>
+  </Gesture>
+  <Gesture Name="B" Label="2" BowNumber="36">
+    <Feature Vector="1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+             ImageName="B-train1.jpg">
+    </Feature>
+  </Gesture>
+  <Gesture Name="C" Label="3" BowNumber="36">
+    <Feature Vector="1 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+             ImageName="B-train1.jpg">
+    </Feature>
+  </Gesture>
+</Gestures>

@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using Accord.Math;
 
 namespace MasterThesisApplication.ViewModel
 {
@@ -31,8 +32,9 @@ namespace MasterThesisApplication.ViewModel
         
         public ICommand StartCameraCommand { get; set; }
         public ICommand StopCameraCommand { get; set; }
-
         public ICommand SetHslFilterCommand { get; set; }
+        public ICommand TakeSnapshotCommand { get; set; }
+        public ICommand OpenDatabaseCommand { get; set; }
 
         public ObservableCollection<Camera> VideoDevicesCollection { get; set; }
 
@@ -46,7 +48,7 @@ namespace MasterThesisApplication.ViewModel
             {
                 _selectedCamera = value;
                 OnPropertyChanged(nameof(VideoDevicesCollection));
-                SelectedCamera.PropertyChanged += cameraModel_PropertyChanged;
+                SelectedCamera.PropertyChanged += CameraModel_PropertyChanged;
             }
         }
 
@@ -91,7 +93,7 @@ namespace MasterThesisApplication.ViewModel
             LoadCommands();
         }
 
-        private void cameraModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void CameraModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "CameraImage")
             {
@@ -105,6 +107,29 @@ namespace MasterThesisApplication.ViewModel
             StartCameraCommand = new CustomCommand(StartCamera, CanStartCamera);
             StopCameraCommand = new CustomCommand(StopCamera, CanStopCamera);
             SetHslFilterCommand = new CustomCommand(SetHslFilter, CanStopCamera);
+            TakeSnapshotCommand = new CustomCommand(TakeSnapshot, CanTakeSnapshot);
+            OpenDatabaseCommand = new CustomCommand(OpenDatabase, CanOpenDatabase);
+        }
+
+        private bool CanOpenDatabase(object obj)
+        {
+            return true;
+        }
+
+        private void OpenDatabase(object obj)
+        {
+            DialogService = new DatabaseDialogService();
+            DialogService.ShowDialog();
+        }
+
+        private bool CanTakeSnapshot(object obj)
+        {
+            return !Rectangle.Bottom.IsEqual(0);
+        }
+
+        private void TakeSnapshot(object obj)
+        {
+            throw new System.NotImplementedException();
         }
 
         private void StartCamera(object obj)

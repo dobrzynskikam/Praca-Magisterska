@@ -91,12 +91,29 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\IntToStringConverter.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Gestures.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Gestures.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\DatabaseDialogService.cs" />
+    <Compile Include="Services\GestureDataService.cs" />
     <Compile Include="Services\HslFilterDialogService.cs" />
     <Compile Include="Services\IDialogService.cs" />
+    <Compile Include="Services\IGestureDataService.cs" />
+    <Compile Include="ViewModel\GestureDatabaseViewModel.cs" />
     <Compile Include="ViewModel\HslFilterViewModel.cs" />
+    <Compile Include="View\GestureDatabaseView.xaml.cs">
+      <DependentUpon>GestureDatabaseView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\HslFilterView.xaml.cs">
       <DependentUpon>HslFilterView.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\GestureDatabaseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\GestureRecognitionView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -134,6 +151,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Gestures.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Gestures.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -156,6 +177,18 @@
       <Project>{b2908d58-a788-413d-b613-dc24d2ef9b1a}</Project>
       <Name>MasterThesisApplication.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Gestures.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\0001.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\frame-0000.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />

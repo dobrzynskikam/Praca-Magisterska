@@ -63,7 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CameraRepository.cs" />
+    <Compile Include="GestureRepository.cs" />
     <Compile Include="ICameraRepository.cs" />
+    <Compile Include="IGestureRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
