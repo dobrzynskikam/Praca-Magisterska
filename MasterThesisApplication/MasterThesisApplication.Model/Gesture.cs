@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MasterThesisApplication.Model.Annotations;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-using MasterThesisApplication.Model.Annotations;
 
 namespace MasterThesisApplication.Model
 {
@@ -22,7 +16,6 @@ namespace MasterThesisApplication.Model
         }
 
         private string _gestureName;
-        private int _bowNumber;
         private ObservableCollection<Feature> _featureList;
 
         public string GestureName
@@ -44,8 +37,6 @@ namespace MasterThesisApplication.Model
                 OnPropertyChanged(nameof(FeatureList));
             }
         }
-
-        //public List<Feature> FeatureList { get; set; }
     }
         
     public class Feature : INotifyPropertyChanged
@@ -66,6 +57,18 @@ namespace MasterThesisApplication.Model
             {
                 _vector = value;
                 OnPropertyChanged(nameof(Vector));
+            }
+        }
+
+        private string _imageName;
+
+        public string ImageName
+        {
+            get { return _imageName; }
+            set
+            {
+                _imageName = value;
+                OnPropertyChanged(nameof(ImageName));
             }
         }
     }

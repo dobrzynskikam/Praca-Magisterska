@@ -3,19 +3,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:model="clr-namespace:MasterThesisApplication.Model;assembly=MasterThesisApplication.Model"
         mc:Ignorable="d"
         Title="GestureDatabaseView" Height="300" Width="300"
-        DataContext="{Binding Source={StaticResource Locator}, Path= GestureDatabaseViewModel}"
-        >
-    <Window.Resources>
-        <DataTemplate x:Key="ItemTemplate" DataType="model:Feature">
-            <StackPanel>
-                <TextBlock Text="{Binding Vector}"></TextBlock>
-                <TextBlock Text="wqezxc"></TextBlock>
-            </StackPanel>
-        </DataTemplate>
-    </Window.Resources>
+        DataContext="{Binding Source={StaticResource Locator}, Path= GestureDatabaseViewModel}">
     <Grid>
         <TabControl ItemsSource="{Binding GestureCollection}"
                     SelectedItem="{Binding SelectedGesture}">
@@ -26,9 +16,20 @@
             </TabControl.ItemTemplate>
             <TabControl.ContentTemplate>
                 <DataTemplate>
-                    <ListView>
-                        <TextBlock Text="{Binding SelectedGesture.GestureName, Mode=OneWay}"></TextBlock>
-                        <TextBlock Text="asdasd"></TextBlock>
+                    <ListView ItemsSource="{Binding FeatureList}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width ="150"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Grid.Column="1" Text="{Binding Vector}" />
+                                    <Image  Height ="150" Source="{Binding ImageName, Converter={StaticResource ImageConverter}}"></Image>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
                     </ListView>
                 </DataTemplate>
             </TabControl.ContentTemplate>

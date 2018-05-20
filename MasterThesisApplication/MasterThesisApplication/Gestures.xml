@@ -15,7 +15,7 @@
   </Gesture>
   <Gesture Name="C" Label="3" BowNumber="36">
     <Feature Vector="1 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
-             ImageName="B-train1.jpg">
+             ImageName="C-train1.jpg">
     </Feature>
   </Gesture>
 </Gestures>
