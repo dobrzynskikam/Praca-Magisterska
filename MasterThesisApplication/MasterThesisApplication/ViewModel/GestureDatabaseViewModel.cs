@@ -1,14 +1,20 @@
 ﻿using MasterThesisApplication.Model;
 using MasterThesisApplication.Model.Annotations;
 using MasterThesisApplication.Services;
+using MasterThesisApplication.Utility;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace MasterThesisApplication.ViewModel
 {
     public class GestureDatabaseViewModel: INotifyPropertyChanged
     {
+
+        public ICommand AddGestureCommand { get; set; }
+        public IDialogService DialogService;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
@@ -56,11 +62,41 @@ namespace MasterThesisApplication.ViewModel
             }
         }
 
-        public GestureDatabaseViewModel()
+        private int _numberOfBow;
+
+        public int NumberOfBow
         {
+            get { return _numberOfBow; }
+            set
+            {
+                _numberOfBow = value;
+                OnPropertyChanged(nameof(NumberOfBow));
+            }
+        }
+
+        public GestureDatabaseViewModel(int numberOfBow)
+        {
+            NumberOfBow = numberOfBow;
             IGestureDataService gestureDataService = new GestureDataService();
             GestureCollection = gestureDataService.GetAllGestures();
             SelectedGesture = GestureCollection[1];
+            LoadCommands();
+        }
+
+        private void LoadCommands()
+        {
+            AddGestureCommand = new CustomCommand(AddGesture, CanAddGesture);
+        }
+
+        private bool CanAddGesture(object obj)
+        {
+            return true;
+        }
+
+        private void AddGesture(object obj)
+        {
+            DialogService = new AddGestureDialogService();
+            DialogService.ShowDialog();
         }
     }
 }

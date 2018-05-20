@@ -77,7 +77,6 @@
     <Compile Include="Camera.cs" />
     <Compile Include="Gesture.cs" />
     <Compile Include="Utility\BitmapHelper.cs" />
-    <Compile Include="Utility\Messenger.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

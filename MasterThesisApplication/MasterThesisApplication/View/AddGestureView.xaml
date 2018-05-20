@@ -1,0 +1,74 @@
+﻿<Window x:Class="MasterThesisApplication.View.AddGestureView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MasterThesisApplication.View"
+        mc:Ignorable="d"
+        Title="AddGestureView" Height="700" Width="900"
+        DataContext="{Binding Source={StaticResource Locator}, Path=AddGestureViewModel}">
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*" MaxWidth="250"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ListView ItemsSource="{Binding GestureToSave.FeatureList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width ="150"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Margin="5" Height ="100" 
+                                   Source="{Binding ImageName, Converter={StaticResource ImageConverter}}">
+                            </Image>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="{Binding ImageName}"/>
+                                <TextBlock Text=""/>
+                                <TextBlock Text="{Binding Vector}"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid Grid.Column="1" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <Label HorizontalContentAlignment="Center" 
+                               VerticalContentAlignment="Center" 
+                               Content="Number of BoW:">
+                    </Label>
+                    <TextBox Margin="5" MinWidth="30" MaxWidth="70"
+                                 Text="{Binding NumberOfBow}"
+                                 IsEnabled="False">
+                    </TextBox>
+                </StackPanel>
+                <Button Grid.Row="1" Margin="5" Content="Load new Gesture"
+                        Command="{Binding LoadGestureCommand}"></Button>
+                <Button Grid.Row="2" Margin="5" Content="Compute Bag-of-Words"
+                        Command="{Binding ComputeCommand}"></Button>
+                <StackPanel Grid.Row="3"  Orientation="Horizontal">
+                    <Label HorizontalContentAlignment="Center" 
+                           VerticalContentAlignment="Center" 
+                           Content="Gesture Name:">
+                    </Label>
+                    <TextBox Margin="5" MinWidth="30" MaxWidth="70"
+                             Text="{Binding GestureToSave.GestureName}"
+                             IsEnabled="False">
+                    </TextBox>
+                    <Button Grid.Row="3" Margin="5" Width="90"
+                            Content="Save Gesture"
+                            Command="{Binding SaveCommand}"></Button>
+                </StackPanel>
+                
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

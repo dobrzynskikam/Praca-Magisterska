@@ -69,6 +69,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -98,19 +99,29 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Gestures.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\AddGestureDialogService.cs" />
     <Compile Include="Services\DatabaseDialogService.cs" />
     <Compile Include="Services\GestureDataService.cs" />
     <Compile Include="Services\HslFilterDialogService.cs" />
     <Compile Include="Services\IDialogService.cs" />
     <Compile Include="Services\IGestureDataService.cs" />
+    <Compile Include="Utility\Messenger.cs" />
+    <Compile Include="ViewModel\AddGestureViewModel.cs" />
     <Compile Include="ViewModel\GestureDatabaseViewModel.cs" />
     <Compile Include="ViewModel\HslFilterViewModel.cs" />
+    <Compile Include="View\AddGestureView.xaml.cs">
+      <DependentUpon>AddGestureView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\GestureDatabaseView.xaml.cs">
       <DependentUpon>GestureDatabaseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\HslFilterView.xaml.cs">
       <DependentUpon>HslFilterView.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\AddGestureView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\GestureDatabaseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

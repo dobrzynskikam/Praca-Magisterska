@@ -4,10 +4,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="GestureDatabaseView" Height="300" Width="300"
+        Title="GestureDatabaseView" Height="700" Width="900"
         DataContext="{Binding Source={StaticResource Locator}, Path= GestureDatabaseViewModel}">
     <Grid>
-        <TabControl ItemsSource="{Binding GestureCollection}"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*" MaxWidth="250"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TabControl Grid.Column="0" Margin="10" 
+                    ItemsSource="{Binding GestureCollection}"
                     SelectedItem="{Binding SelectedGesture}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
@@ -24,9 +29,8 @@
                                         <ColumnDefinition Width ="150"></ColumnDefinition>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    
                                     <TextBlock Grid.Column="1" Text="{Binding Vector}" />
-                                    <Image  Height ="150" Source="{Binding ImageName, Converter={StaticResource ImageConverter}}"></Image>
+                                    <Image Margin="5" Height ="100" Source="{Binding ImageName, Converter={StaticResource ImageConverter}}"></Image>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -34,5 +38,20 @@
                 </DataTemplate>
             </TabControl.ContentTemplate>
         </TabControl>
+        <Grid Grid.Column="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Label HorizontalContentAlignment="Center" 
+                       VerticalContentAlignment="Center" 
+                       Content="Number of BoW:"></Label>
+                <TextBox Margin="5" MinWidth="30" MaxWidth="70"
+                         Text="{Binding NumberOfBow}"
+                         IsEnabled="False"></TextBox>
+                <Button Margin="5" Width="70" Content="Add new gesture"
+                        Command="{Binding AddGestureCommand}"></Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

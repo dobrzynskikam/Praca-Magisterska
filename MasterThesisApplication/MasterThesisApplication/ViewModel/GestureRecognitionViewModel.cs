@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Accord.Math;
+using Messenger = MasterThesisApplication.Utility.Messenger;
 
 namespace MasterThesisApplication.ViewModel
 {

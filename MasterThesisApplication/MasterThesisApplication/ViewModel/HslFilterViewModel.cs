@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
+using Messenger = MasterThesisApplication.Utility.Messenger;
 
 namespace MasterThesisApplication.ViewModel
 {
