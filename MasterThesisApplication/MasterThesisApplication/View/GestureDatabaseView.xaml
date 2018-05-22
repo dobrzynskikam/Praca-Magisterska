@@ -47,7 +47,7 @@
                        VerticalContentAlignment="Center" 
                        Content="Number of BoW:"></Label>
                 <TextBox Margin="5" MinWidth="30" MaxWidth="70"
-                         Text="{Binding NumberOfBow}"
+                         Text="{Binding SelectedGesture.BowNumber}"
                          IsEnabled="False"></TextBox>
                 <Button Margin="5" Width="70" Content="Add new gesture"
                         Command="{Binding AddGestureCommand}"></Button>

@@ -11,5 +11,10 @@ namespace MasterThesisApplication.Services
         {
             return _repository.GetGestures();
         }
+
+        public void AddNewGesture(Gesture gesture)
+        {
+            _repository.AddNewGesture(gesture);
+        }
     }
 }

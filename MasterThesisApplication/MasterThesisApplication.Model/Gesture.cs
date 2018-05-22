@@ -28,6 +28,17 @@ namespace MasterThesisApplication.Model
             }
         }
 
+        private int _bowNumber;
+        public int BowNumber
+        {
+            get { return _bowNumber; }
+            set
+            {
+                _bowNumber = value;
+                OnPropertyChanged(nameof(BowNumber));
+            }
+        }
+
         public ObservableCollection<Feature> FeatureList
         {
             get { return _featureList; }

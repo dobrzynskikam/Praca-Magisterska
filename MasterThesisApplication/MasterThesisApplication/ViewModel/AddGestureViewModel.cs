@@ -5,8 +5,10 @@ using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using MasterThesisApplication.Services;
 
 namespace MasterThesisApplication.ViewModel
 {
@@ -24,17 +26,17 @@ namespace MasterThesisApplication.ViewModel
         public ICommand ComputeCommand { get; set; }
         public ICommand SaveCommand { get; set; }
 
-        private int _numberOfBow;
+        //private int _numberOfBow;
 
-        public int NumberOfBow
-        {
-            get { return _numberOfBow; }
-            set
-            {
-                _numberOfBow = value;
-                OnPropertyChanged(nameof(NumberOfBow));
-            }
-        }
+        //public int NumberOfBow
+        //{
+        //    get { return _numberOfBow; }
+        //    set
+        //    {
+        //        _numberOfBow = value;
+        //        OnPropertyChanged(nameof(NumberOfBow));
+        //    }
+        //}
 
         //private ObservableCollection<Feature> _featureCollection = new ObservableCollection<Feature>();
         //public ObservableCollection<Feature> FeatureCollection
@@ -64,7 +66,7 @@ namespace MasterThesisApplication.ViewModel
         public AddGestureViewModel(int numberOfBow)
         {
             GestureToSave = new Gesture();
-            NumberOfBow = numberOfBow;
+            GestureToSave.BowNumber = numberOfBow;
             LoadCommands();
         }
 
@@ -77,11 +79,30 @@ namespace MasterThesisApplication.ViewModel
 
         private void Save(object obj)
         {
+            IGestureDataService gestureDataService = new GestureDataService();
+            var existingGestures = gestureDataService.GetAllGestures();
+
+            //true if gesture to save exists in database
+            if (existingGestures.Any(g => g.GestureName == GestureToSave.GestureName))
+            {
+                
+            }
+            else
+            {
+                //add new gesture to xml with name and BoW
+                gestureDataService.AddNewGesture(GestureToSave);
+            }
         }
 
         private bool CanSave(object obj)
         {
-            return true;
+            if (GestureToSave.FeatureList == null || GestureToSave.GestureName == null)
+            {
+                return false;
+            }
+
+            return GestureToSave.FeatureList.Count != 0 && GestureToSave.GestureName != "";
+
             //return GestureToSave.FeatureList.Count != 0;
         }
 
@@ -94,7 +115,7 @@ namespace MasterThesisApplication.ViewModel
         {
             OpenFileDialog openFile = new OpenFileDialog();
             openFile.Multiselect = true;
-            //openFile.Filter = "(*.jpg)|*.jpeg";
+            openFile.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
             openFile.InitialDirectory = Environment.CurrentDirectory;
             if (openFile.ShowDialog() == true)
             {

@@ -6,5 +6,6 @@ namespace MasterThesisApplication.DAL
     public interface IGestureRepository
     {
         ObservableCollection<Gesture> GetGestures();
+        void AddNewGesture(Gesture gesture);
     }
 }

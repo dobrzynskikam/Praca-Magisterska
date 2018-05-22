@@ -62,24 +62,25 @@ namespace MasterThesisApplication.ViewModel
             }
         }
 
-        private int _numberOfBow;
+        //private int _numberOfBow;
 
-        public int NumberOfBow
-        {
-            get { return _numberOfBow; }
-            set
-            {
-                _numberOfBow = value;
-                OnPropertyChanged(nameof(NumberOfBow));
-            }
-        }
+        //public int NumberOfBow
+        //{
+        //    get { return _numberOfBow; }
+        //    set
+        //    {
+        //        _numberOfBow = value;
+        //        OnPropertyChanged(nameof(NumberOfBow));
+        //    }
+        //}
 
         public GestureDatabaseViewModel(int numberOfBow)
         {
-            NumberOfBow = numberOfBow;
+            //NumberOfBow = numberOfBow;
             IGestureDataService gestureDataService = new GestureDataService();
             GestureCollection = gestureDataService.GetAllGestures();
             SelectedGesture = GestureCollection[1];
+            SelectedGesture.BowNumber = numberOfBow;
             LoadCommands();
         }
 

@@ -46,7 +46,7 @@
                                Content="Number of BoW:">
                     </Label>
                     <TextBox Margin="5" MinWidth="30" MaxWidth="70"
-                                 Text="{Binding NumberOfBow}"
+                                 Text="{Binding GestureToSave.BowNumber}"
                                  IsEnabled="False">
                     </TextBox>
                 </StackPanel>
@@ -60,8 +60,7 @@
                            Content="Gesture Name:">
                     </Label>
                     <TextBox Margin="5" MinWidth="30" MaxWidth="70"
-                             Text="{Binding GestureToSave.GestureName}"
-                             IsEnabled="False">
+                             Text="{Binding GestureToSave.GestureName}">
                     </TextBox>
                     <Button Grid.Row="3" Margin="5" Width="90"
                             Content="Save Gesture"
