@@ -80,6 +80,8 @@ namespace MasterThesisApplication.ViewModel
         private void Save(object obj)
         {
             IGestureDataService gestureDataService = new GestureDataService();
+            IDialogService service = new AddGestureDialogService();
+            
             var existingGestures = gestureDataService.GetAllGestures();
 
             //true if gesture to save exists in database
@@ -90,8 +92,10 @@ namespace MasterThesisApplication.ViewModel
             else
             {
                 //add new gesture to xml with name and BoW
-                gestureDataService.AddNewGesture(GestureToSave);
+                gestureDataService.AddNewGesture(GestureToSave);         
             }
+            service.CloseDialog();
+            gestureDataService.GetAllGestures();
         }
 
         private bool CanSave(object obj)

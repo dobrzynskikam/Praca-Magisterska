@@ -55,7 +55,7 @@ namespace MasterThesisApplication.Model
 
         public Rectangle Rectangle
         {
-            get => _rectangle;
+            get { return _rectangle; }
             set
             {
                 _rectangle = value;

@@ -11,8 +11,10 @@ namespace MasterThesisApplication.DAL
 {
     public class GestureRepository : IGestureRepository
     {
-        private readonly string _path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new InvalidOperationException(), @"Gestures.xml");
-        private readonly string _tempPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new InvalidOperationException(), @"TempGestures.xml");
+        static string _assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        private readonly string _databasePath = Path.Combine(_assemblyPath.Replace("MasterThesisApplication\\bin\\Debug", ""), "GestureDatabase");
+        private readonly string _gesturePath = Path.Combine(_assemblyPath, @"Gestures.xml");
+        private readonly string _tempPath = Path.Combine(_assemblyPath, @"TempGestures.xml");
         private ObservableCollection<Gesture> _gestures;
         private ObservableCollection<Feature> _features;
         public ObservableCollection<Gesture> GetGestures()
@@ -27,13 +29,14 @@ namespace MasterThesisApplication.DAL
 
         public void AddNewGesture(Gesture gesture)
         {
-            XDocument xmlDocument = XDocument.Load(_path);
+            XDocument xmlDocument = XDocument.Load(_gesturePath);
             IEnumerable<XElement> gestures = xmlDocument.Element("Gestures").Elements("Gesture");
 
             //var temp = gestures.ElementAt(gestures.Count());
-            var lastLabelNumber = int.Parse(gestures.Last(g => g != null).Attribute("Label").Value); 
+            var lastLabelNumber = int.Parse(gestures.Last(g => g != null).Attribute("Label").Value);
             //var maxLabel = int.Parse(gestures.ElementAt(gestures.Count()).Attribute("Label").Value);
-
+            var gestureFolder = Path.Combine(_databasePath, gesture.GestureName);
+            Directory.CreateDirectory(gestureFolder);
             var rootElement = xmlDocument.Element("Gestures");
             rootElement.Add(new XElement("Gesture", 
                 new XAttribute("Name", gesture.GestureName),
@@ -46,11 +49,14 @@ namespace MasterThesisApplication.DAL
             int index = 1;
             foreach (var feature in gesture.FeatureList)
             {
-                gestureElement.Add(new XElement("Feature", new XAttribute("ImageName", $"{gesture.GestureName}-train{index}.jpg")));
+                var imageName = $"{gesture.GestureName}-train{index}.jpg";
+                gestureElement.Add(new XElement("Feature", new XAttribute("ImageName", imageName)));
+                File.Copy(feature.ImageName, Path.Combine(gestureFolder, imageName));
                 index += 1;
             }
             xmlDocument.Save(_tempPath);
 
+            //Move file
             
             //var last = gestures.Descendants("Gesture").First(g => (int)g.Attribute("Label") == 3);
 
@@ -63,7 +69,7 @@ namespace MasterThesisApplication.DAL
         {
             _gestures = new ObservableCollection<Gesture>();
             
-            XDocument xmlDocument = XDocument.Load(_path);
+            XDocument xmlDocument = XDocument.Load(_gesturePath);
             IEnumerable<XElement> gestures = xmlDocument.Element("Gestures").Elements("Gesture");
 
             foreach (var gesture in gestures)
