@@ -1,10 +1,11 @@
-﻿using MasterThesisApplication.View;
+﻿using System.Windows;
+using MasterThesisApplication.View;
 
 namespace MasterThesisApplication.Services
 {
-    class AddGestureDialogService :IDialogService
+    public class AddGestureDialogService :IDialogService
     {
-        private AddGestureView _window;
+        private Window _window;
 
         public void ShowDialog()
         {

@@ -18,4 +18,8 @@
              ImageName="C-train1.jpg">
     </Feature>
   </Gesture>
+  <Gesture Name="AAA" Label="4" BowNumber="36">
+    <Feature ImageName="AAA-train1.jpg" />
+    <Feature ImageName="AAA-train2.jpg" />
+  </Gesture>
 </Gestures>

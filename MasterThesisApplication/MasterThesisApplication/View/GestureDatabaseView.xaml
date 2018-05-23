@@ -29,8 +29,14 @@
                                         <ColumnDefinition Width ="150"></ColumnDefinition>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="1" Text="{Binding Vector}" />
-                                    <Image Margin="5" Height ="100" Source="{Binding ImageName, Converter={StaticResource ImageConverter}}"></Image>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Vector}" />
+                                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding ImageName}" />
+                                    <Image Grid.RowSpan="3" Margin="5" Height ="100" Source="{Binding ImageName, Converter={StaticResource ImageConverter}}"></Image>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

@@ -262,3 +262,6 @@ __pycache__/
 
 #Gesture Databases
 HandGestureDatabases/
+GestureDatabase/
+framework-development/
+SampleProjects/

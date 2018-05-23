@@ -1,14 +1,13 @@
 ﻿using MasterThesisApplication.Model;
 using MasterThesisApplication.Model.Annotations;
+using MasterThesisApplication.Services;
 using MasterThesisApplication.Utility;
 using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using MasterThesisApplication.Services;
 
 namespace MasterThesisApplication.ViewModel
 {
@@ -26,29 +25,6 @@ namespace MasterThesisApplication.ViewModel
         public ICommand ComputeCommand { get; set; }
         public ICommand SaveCommand { get; set; }
 
-        //private int _numberOfBow;
-
-        //public int NumberOfBow
-        //{
-        //    get { return _numberOfBow; }
-        //    set
-        //    {
-        //        _numberOfBow = value;
-        //        OnPropertyChanged(nameof(NumberOfBow));
-        //    }
-        //}
-
-        //private ObservableCollection<Feature> _featureCollection = new ObservableCollection<Feature>();
-        //public ObservableCollection<Feature> FeatureCollection
-        //{
-        //    get { return _featureCollection; }
-        //    set
-        //    {
-        //        _featureCollection = value;
-        //        OnPropertyChanged(nameof(FeatureCollection));
-        //    }
-        //}
-
         private Gesture _gestureToSave;
         public Gesture GestureToSave
         {
@@ -65,8 +41,7 @@ namespace MasterThesisApplication.ViewModel
 
         public AddGestureViewModel(int numberOfBow)
         {
-            GestureToSave = new Gesture();
-            GestureToSave.BowNumber = numberOfBow;
+            GestureToSave = new Gesture {BowNumber = numberOfBow};
             LoadCommands();
         }
 
@@ -80,22 +55,9 @@ namespace MasterThesisApplication.ViewModel
         private void Save(object obj)
         {
             IGestureDataService gestureDataService = new GestureDataService();
-            IDialogService service = new AddGestureDialogService();
-            
-            var existingGestures = gestureDataService.GetAllGestures();
-
-            //true if gesture to save exists in database
-            if (existingGestures.Any(g => g.GestureName == GestureToSave.GestureName))
-            {
-                
-            }
-            else
-            {
-                //add new gesture to xml with name and BoW
-                gestureDataService.AddNewGesture(GestureToSave);         
-            }
-            service.CloseDialog();
-            gestureDataService.GetAllGestures();
+           
+            gestureDataService.AddNewGesture(GestureToSave);
+            Messenger.Default.Send(new Gesture());
         }
 
         private bool CanSave(object obj)
@@ -106,8 +68,6 @@ namespace MasterThesisApplication.ViewModel
             }
 
             return GestureToSave.FeatureList.Count != 0 && GestureToSave.GestureName != "";
-
-            //return GestureToSave.FeatureList.Count != 0;
         }
 
         private bool CanLoadGesture(object obj)
@@ -140,7 +100,6 @@ namespace MasterThesisApplication.ViewModel
         private bool CanComputeBow(object obj)
         {
             return true;
-            //return GestureToSave.FeatureList.Count != 0;
         }
 
         private void ComputeBow(object obj)

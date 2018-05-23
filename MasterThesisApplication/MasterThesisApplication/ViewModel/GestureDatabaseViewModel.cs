@@ -36,18 +36,6 @@ namespace MasterThesisApplication.ViewModel
             }
         }
 
-        private ObservableCollection<Feature> _featureCollection = new ObservableCollection<Feature>();
-        public ObservableCollection<Feature> FeatureCollection
-        {
-            get { return _featureCollection; }
-            set
-            { 
-                _featureCollection = value;
-                OnPropertyChanged(nameof(GestureCollection));
-            }
-        }
-
-
         private Gesture _selectedGesture;
         public Gesture SelectedGesture
         {
@@ -62,26 +50,21 @@ namespace MasterThesisApplication.ViewModel
             }
         }
 
-        //private int _numberOfBow;
-
-        //public int NumberOfBow
-        //{
-        //    get { return _numberOfBow; }
-        //    set
-        //    {
-        //        _numberOfBow = value;
-        //        OnPropertyChanged(nameof(NumberOfBow));
-        //    }
-        //}
-
         public GestureDatabaseViewModel(int numberOfBow)
         {
-            //NumberOfBow = numberOfBow;
             IGestureDataService gestureDataService = new GestureDataService();
             GestureCollection = gestureDataService.GetAllGestures();
             SelectedGesture = GestureCollection[1];
             SelectedGesture.BowNumber = numberOfBow;
             LoadCommands();
+
+            Messenger.Default.Register<Gesture>(this, OnUpdateGestureListMessageReceived);
+        }
+
+        private void OnUpdateGestureListMessageReceived(Gesture obj)
+        {
+            GestureCollection = GestureDataService.GetAllGestures();
+            DialogService.CloseDialog();
         }
 
         private void LoadCommands()
