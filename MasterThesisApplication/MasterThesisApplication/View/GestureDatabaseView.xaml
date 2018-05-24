@@ -47,17 +47,21 @@
         <Grid Grid.Column="1" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal">
+            <Button Margin="5"  Content="Add new gesture"
+                        Command="{Binding AddGestureCommand}"></Button>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <Label HorizontalContentAlignment="Center" 
                        VerticalContentAlignment="Center" 
                        Content="Number of BoW:"></Label>
                 <TextBox Margin="5" MinWidth="30" MaxWidth="70"
                          Text="{Binding SelectedGesture.BowNumber}"
                          IsEnabled="False"></TextBox>
-                <Button Margin="5" Width="70" Content="Add new gesture"
-                        Command="{Binding AddGestureCommand}"></Button>
             </StackPanel>
+            <Button Grid.Row="2" Margin="5"  Content="Compute Bag-of-Words"
+                        Command="{Binding AddGestureCommand}"></Button>
         </Grid>
     </Grid>
 </Window>

@@ -5,10 +5,10 @@
              xmlns:converter="clr-namespace:MasterThesisApplication.Converter"
              StartupUri="View/GestureRecognitionView.xaml">
     <Application.Resources>
-         <ResourceDictionary>
-             <local:ViewModelLocator x:Key="Locator"></local:ViewModelLocator>
-             <converter:InverseBooleanConverter x:Key="BooleanConverter"/>
-             <converter:ImageConverter x:Key="ImageConverter"></converter:ImageConverter>
+        <ResourceDictionary>
+            <local:ViewModelLocator x:Key="Locator"/>
+            <converter:InverseBooleanConverter x:Key="BooleanConverter"/>
+            <converter:ImageConverter x:Key="ImageConverter"></converter:ImageConverter>
          </ResourceDictionary>
     </Application.Resources>
 </Application>

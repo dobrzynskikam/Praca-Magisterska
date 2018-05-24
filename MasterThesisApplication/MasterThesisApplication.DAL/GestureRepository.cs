@@ -26,9 +26,16 @@ namespace MasterThesisApplication.DAL
             var gestures = xmlDocument.Element("Gestures")?.Elements("Gesture");
 
             if (gestures == null) return;
-
-            var lastLabelNumber = int.Parse(gestures.Last(g => g != null).Attribute("Label")?.Value);
             var rootElement = xmlDocument.Element("Gestures");
+            int lastLabelNumber = 0;
+
+            //check if gestures database has any gesture
+            if (rootElement.FirstNode != null)
+            {
+                lastLabelNumber = int.Parse(gestures.Last(g => g != null).Attribute("Label")?.Value);
+            }
+            
+            
             int imageIndex;
             string gestureFolder = Path.Combine(DatabasePath, gesture.GestureName);
 
