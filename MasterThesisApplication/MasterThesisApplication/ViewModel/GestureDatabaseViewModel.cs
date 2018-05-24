@@ -1,15 +1,13 @@
 ﻿using Accord.Imaging;
 using Accord.MachineLearning;
-using Accord.MachineLearning.VectorMachines.Learning;
-using Accord.Statistics.Kernels;
 using MasterThesisApplication.Model;
 using MasterThesisApplication.Model.Annotations;
 using MasterThesisApplication.Services;
 using MasterThesisApplication.Utility;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
@@ -17,10 +15,10 @@ namespace MasterThesisApplication.ViewModel
 {
     public class GestureDatabaseViewModel: INotifyPropertyChanged
     {
-
         public ICommand AddGestureCommand { get; set; }
         public ICommand ComputeCommand { get; set; }
         public IDialogService DialogService;
+        public IGestureDataService GestureDataService = new GestureDataService();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -30,7 +28,7 @@ namespace MasterThesisApplication.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public IGestureDataService GestureDataService = new GestureDataService();
+        
 
         private ObservableCollection<Gesture> _gestureCollection = new ObservableCollection<Gesture>();
         public ObservableCollection<Gesture> GestureCollection
@@ -70,14 +68,13 @@ namespace MasterThesisApplication.ViewModel
 
         public GestureDatabaseViewModel(int numberOfBow)
         {
-            IGestureDataService gestureDataService = new GestureDataService();
-            GestureCollection = gestureDataService.GetAllGestures();
+            NumberOfBow = numberOfBow;
+            GestureCollection = GestureDataService.GetAllGestures();
             if (GestureCollection.Count != 0)
             {
                 SelectedGesture = GestureCollection[0];
-                SelectedGesture.BowNumber = numberOfBow;
             }
-            
+
             LoadCommands();
 
             Messenger.Default.Register<Gesture>(this, OnUpdateGestureListMessageReceived);
@@ -108,40 +105,39 @@ namespace MasterThesisApplication.ViewModel
 
         private bool CanComputeBow(object obj)
         {
-            return true;
+            return GestureCollection.Count != 0;
         }
 
         private void ComputeBow(object obj)
         {
+
+            Accord.Math.Random.Generator.Seed = 0;
+
+            // Create a new Bag-of-Visual-Words (BoW) model
             var bow = BagOfVisualWords.Create(new BinarySplit(NumberOfBow));
-            //BinarySplit binarySplit = new BinarySplit(NumberOfBow);
 
-            //// Create bag-of-words (BoW) with the given algorithm
-            //BagOfVisualWords surfBow = new BagOfVisualWords(binarySplit);
+            // Since we are using generics, we can setup properties 
+            // of the binary split clustering algorithm directly:
+            bow.Clustering.ComputeProportions = true;
+            bow.Clustering.ComputeCovariances = false;
 
-            //// Compute the BoW codebook using training images only
-            //var bow = surfBow.Learn(GestureCollection.);
-            var gestureTupleList = new List<Tuple<int, string, double[]>>();
-            //var teacher = new SequentialMinimalOptimization<Linear>()
-            //{
-            //    Complexity = 10000 // make a hard margin SVM
-            //};
-            //var svm = teacher.Learn()
+            // Get some training images
+            var images = GestureDataService.GetAllImages();
+
+            
+            // Compute the model
+            bow.Learn(images.Values.ToArray());
 
             foreach (var gesture in GestureCollection)
             {
-                var gestureName = gesture.GestureName;
+                foreach (var feature in gesture.FeatureList)
+                {
+                    var vector = bow.Transform(images[feature.ImageName]);
+                    feature.Vector = string.Join(" ", vector.Select(x => x.ToString(CultureInfo.InvariantCulture)));
+                }
             }
 
-            GestureCollection[0].FeatureList[0].ImageName
-            foreach (var feature in FeatureCollection)
-            {
-
-                var image = (Bitmap)Image.FromFile(feature.ImageName);
-
-                double[] featureVector = (_bow as ITransform<Bitmap, double[]>).Transform(image);
-                feature.Vector = featureVector.ToString(DefaultArrayFormatProvider.InvariantCulture);
-            }
+            GestureDataService.SaveGestures(GestureCollection);
         }
     }
 }

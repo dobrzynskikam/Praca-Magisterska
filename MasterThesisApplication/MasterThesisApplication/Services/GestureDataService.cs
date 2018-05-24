@@ -1,6 +1,8 @@
 ﻿using MasterThesisApplication.DAL;
 using MasterThesisApplication.Model;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 
 namespace MasterThesisApplication.Services
 {
@@ -15,6 +17,16 @@ namespace MasterThesisApplication.Services
         public void AddNewGesture(Gesture gesture)
         {
             _repository.AddNewGesture(gesture);
+        }
+
+        public Dictionary<string, Bitmap> GetAllImages()
+        {
+            return _repository.GetImages();
+        }
+
+        public void SaveGestures(ObservableCollection<Gesture> gestures)
+        {
+            _repository.SaveGestures(gestures);
         }
     }
 }

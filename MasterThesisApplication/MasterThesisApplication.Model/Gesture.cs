@@ -39,6 +39,21 @@ namespace MasterThesisApplication.Model
             }
         }
 
+        private int _label;
+
+        public int Label
+        {
+            get
+            {
+                return _label;
+            }
+            set
+            {
+                _label = value;
+                OnPropertyChanged(nameof(Label));
+            }
+
+        }
         public ObservableCollection<Feature> FeatureList
         {
             get { return _featureList; }

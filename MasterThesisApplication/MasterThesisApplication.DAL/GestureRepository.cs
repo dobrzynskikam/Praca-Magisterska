@@ -1,5 +1,7 @@
-﻿using MasterThesisApplication.Model;
+﻿using System.Collections.Generic;
+using MasterThesisApplication.Model;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -18,6 +20,24 @@ namespace MasterThesisApplication.DAL
         {
             LoadGestures();
             return _gestures;
+        }
+
+        public Dictionary<string, Bitmap> GetImages()
+        {
+            var bitmapDictionary = new Dictionary<string, Bitmap>();
+            var gestureCollection = GetGestures();
+            foreach (var gesture in gestureCollection)
+            {
+                {
+                    foreach (var feature in gesture.FeatureList)
+                    {
+                        var imageFullName = Path.Combine(DatabasePath, gesture.GestureName, feature.ImageName);
+                        bitmapDictionary.Add(feature.ImageName, (Bitmap)Image.FromFile(imageFullName));
+                    }
+                }
+            }
+
+            return bitmapDictionary;
         }
 
         public void AddNewGesture(Gesture gesture)
@@ -56,8 +76,7 @@ namespace MasterThesisApplication.DAL
                 //Add new Gesture child to xml structure
                 rootElement?.Add(new XElement("Gesture",
                     new XAttribute("Name", gesture.GestureName),
-                    new XAttribute("Label", lastLabelNumber + 1),
-                    new XAttribute("BowNumber", gesture.BowNumber)));
+                    new XAttribute("Label", lastLabelNumber + 1)));
 
                 //This is new gesture, so we start iterate from 1
                 imageIndex = 1;
@@ -102,9 +121,41 @@ namespace MasterThesisApplication.DAL
                 _gestures.Add(new Gesture()
                 {
                     GestureName = gesture.Attribute("Name")?.Value,
+                    Label = int.Parse(gesture.Attribute("Label")?.Value),
                     FeatureList = _features
                 });
             }
+        }
+
+        public void SaveGestures(ObservableCollection<Gesture> gestures)
+        {
+            //Load file
+            XDocument xmlDocument = XDocument.Load(_gesturePath);
+
+            //Remove all root descendants
+            if (gestures == null) return;
+            var rootElement = xmlDocument.Element("Gestures");
+            rootElement.RemoveAll();
+
+            foreach (var gesture in gestures)
+            {
+                //Add new gesture
+                rootElement?.Add(new XElement("Gesture",
+                    new XAttribute("Name", gesture.GestureName),
+                    new XAttribute("Label", gesture.Label)));
+
+                var gestureElement = rootElement?.Elements("Gesture")
+                    .First(g => g.Attribute("Name")?.Value == gesture.GestureName);
+
+                foreach (var feature in gesture.FeatureList)
+                {
+                    gestureElement?.Add(new XElement("Feature", 
+                        new XAttribute("ImageName", feature.ImageName),
+                        new XAttribute("Vector", feature.Vector)
+                        ));
+                }
+            }
+            xmlDocument.Save(_gesturePath);
         }
     }
 }

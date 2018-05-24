@@ -104,6 +104,7 @@ namespace MasterThesisApplication.ViewModel
 
         private void ComputeBow(object obj)
         {
+            
             //BinarySplit binarySplit = new BinarySplit(NumberOfBow);
 
             //// Create bag-of-words (BoW) with the given algorithm
