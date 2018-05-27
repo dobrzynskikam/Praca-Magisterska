@@ -39,10 +39,17 @@ namespace MasterThesisApplication.ViewModel
             }
         }
 
+        private GestureDatabaseViewModel _gestureDatabaseViewModel;
         public AddGestureViewModel(int numberOfBow)
         {
             GestureToSave = new Gesture {BowNumber = numberOfBow};
             LoadCommands();
+            Messenger.Default.Register<GestureDatabaseViewModel>(this, OnGestureDatabaseViewModelReceived);
+        }
+
+        private void OnGestureDatabaseViewModelReceived(GestureDatabaseViewModel gesture)
+        {
+            _gestureDatabaseViewModel = gesture;
         }
 
         private void LoadCommands()

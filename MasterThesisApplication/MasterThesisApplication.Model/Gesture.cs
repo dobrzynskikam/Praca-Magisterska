@@ -87,7 +87,6 @@ namespace MasterThesisApplication.Model
         }
 
         private string _imageName;
-
         public string ImageName
         {
             get { return _imageName; }
@@ -97,5 +96,35 @@ namespace MasterThesisApplication.Model
                 OnPropertyChanged(nameof(ImageName));
             }
         }
+
+        private bool _isClassifiedCorrectly;
+
+        public bool IsClassifiedCorrectly
+        {
+            get { return _isClassifiedCorrectly; }
+            set
+            {
+                _isClassifiedCorrectly = value;
+                OnPropertyChanged(nameof(IsClassifiedCorrectly));
+            }
+        }
+
+        private FeatureState _state;
+
+        public FeatureState State
+        {
+            get { return _state; }
+            set
+            {
+                _state = value;
+                OnPropertyChanged(nameof(State));
+            }
+        }
+    }
+    public enum FeatureState
+    {
+        BeforeClassification,
+        CorrectClassification,
+        IncorrectClassification
     }
 }

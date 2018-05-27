@@ -42,17 +42,27 @@ namespace MasterThesisApplication.DAL
 
         public void AddNewGesture(Gesture gesture)
         {
+            ////Edit this function to work in gesture object, not in xml file!!!
+            //var existingGestures = GetGestures();
+
+            ////check if gestures database has any gesture
+            //if (existingGestures.Count == 0)
+            //{
+            //    gesture.Label = 0;
+            //    existingGestures.Add(gesture);
+            //}
+
             XDocument xmlDocument = XDocument.Load(_gesturePath);
             var gestures = xmlDocument.Element("Gestures")?.Elements("Gesture");
 
             if (gestures == null) return;
             var rootElement = xmlDocument.Element("Gestures");
-            int lastLabelNumber = 0;
+            int newLabelNumber = 0;
 
             //check if gestures database has any gesture
             if (rootElement.FirstNode != null)
             {
-                lastLabelNumber = int.Parse(gestures.Last(g => g != null).Attribute("Label")?.Value);
+                newLabelNumber = int.Parse(gestures.Last(g => g != null).Attribute("Label")?.Value) + 1;
             }
             
             
@@ -76,9 +86,9 @@ namespace MasterThesisApplication.DAL
                 //Add new Gesture child to xml structure
                 rootElement?.Add(new XElement("Gesture",
                     new XAttribute("Name", gesture.GestureName),
-                    new XAttribute("Label", lastLabelNumber + 1)));
+                    new XAttribute("Label", newLabelNumber)));
 
-                //This is new gesture, so we start iterate from 1
+                //This is new gesture, so we start iterate images from 1
                 imageIndex = 1;
             }
 

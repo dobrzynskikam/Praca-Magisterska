@@ -9,7 +9,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*" MaxWidth="250"></ColumnDefinition>
+            <ColumnDefinition Width="250"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TabControl Grid.Column="0" Margin="10" 
                     ItemsSource="{Binding GestureCollection}"
@@ -24,7 +24,7 @@
                     <ListView ItemsSource="{Binding FeatureList}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <Grid Background="{Binding State, Converter={StaticResource BackgroundConverter}}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width ="150"></ColumnDefinition>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -35,7 +35,9 @@
                                         <RowDefinition Height="30"></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Vector}" />
-                                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding ImageName}" />
+                                    <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
+                                        <TextBlock Text="{Binding ImageName}"/>
+                                    </StackPanel>
                                     <Image Grid.RowSpan="3" Margin="5" Height ="100" Source="{Binding ImageName, Converter={StaticResource ImageConverter}}"></Image>
                                 </Grid>
                             </DataTemplate>
@@ -46,22 +48,151 @@
         </TabControl>
         <Grid Grid.Column="1" Margin="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="160"></RowDefinition>
+                <RowDefinition Height="280"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
             </Grid.RowDefinitions>
             <Button Margin="5"  Content="Add new gesture"
-                        Command="{Binding AddGestureCommand}"></Button>
-            <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <Label HorizontalContentAlignment="Center" 
-                       VerticalContentAlignment="Center" 
-                       Content="Number of BoW:"></Label>
-                <TextBox Margin="5" MinWidth="30" MaxWidth="70"
-                         Text="{Binding NumberOfBow}"
-                         IsEnabled="False"></TextBox>
-            </StackPanel>
-            <Button Grid.Row="2" Margin="5"  Content="Compute Bag-of-Words"
-                        Command="{Binding ComputeCommand}"></Button>
+                        Command="{Binding AddGestureCommand}">
+            </Button>
+            <GroupBox Margin="5" Grid.Row="1" Header="Feature Extraction">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="50"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label HorizontalContentAlignment="Center" 
+                               VerticalContentAlignment="Center" 
+                               Content="Number of BoW:">
+                        </Label>
+                        <TextBox Grid.Column="1" Margin="5"
+                                 VerticalContentAlignment="Center"
+                                 HorizontalContentAlignment="Center"
+                                 Text="{Binding NumberOfBow}"
+                                 IsEnabled="False">
+                        </TextBox>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Grid.Column="0" GroupName="FeatureExtractionMethod"
+                                     Margin="0 0 5 0" HorizontalAlignment="Center"
+                                     Content="SURF"
+                                     IsChecked="True">
+                        </RadioButton>
+                        <RadioButton Grid.Column="1" GroupName="FeatureExtractionMethod"
+                                     Margin="0 0 5 0" HorizontalAlignment="Center"
+                                     Content="HOG">
+                        </RadioButton>
+                        <RadioButton Grid.Column="2" GroupName="FeatureExtractionMethod"
+                                     Margin="0 0 5 0" HorizontalAlignment="Center"
+                                     Content="FREAK">
+                        </RadioButton>
+                    </Grid>
+                    <Button Grid.Row="2" Grid.ColumnSpan="2" Margin="5"  Content="Compute Bag-of-Words"
+                        Command="{Binding ComputeCommand}">
+                    </Button>
+                </Grid>
+            </GroupBox>
+            <GroupBox Margin="5" Grid.Row="2" Header="Classifier Settings">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="160"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <RadioButton Margin="5" GroupName="KernelType"
+                                 Content="Polynominal Kernel"
+                                 IsChecked="True">
+                    </RadioButton>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"></ColumnDefinition>
+                            <ColumnDefinition Width="50"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="50"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Degree:" VerticalContentAlignment="Center">
+                        </Label>
+                        <TextBox Grid.Column="1" Margin="5" VerticalContentAlignment="Center">
+                        </TextBox>
+                        <Label  Grid.Column="2"  Content="Constant:" VerticalContentAlignment="Center">
+                        </Label>
+                        <TextBox Grid.Column="3" Margin="5" VerticalContentAlignment="Center">
+                        </TextBox>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="1.5*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"></RowDefinition>
+                            <RowDefinition Height="40"></RowDefinition>
+                            <RowDefinition Height="40"></RowDefinition>
+                            <RowDefinition Height="40"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" VerticalContentAlignment="Center"
+                               Content="Complexity:">
+                        </Label>
+                        <TextBox  Grid.Row="0" Grid.Column="1"
+                                  VerticalContentAlignment="Center"
+                                  Margin="5">
+                        </TextBox>
+                        <Label Grid.Row="1" VerticalContentAlignment="Center"
+                               Content="Tolerance:">
+                        </Label>
+                        <TextBox  Grid.Row="1" Grid.Column="1"
+                                  VerticalContentAlignment="Center"
+                                  Margin="5">
+                        </TextBox>
+                        <Label Grid.Row="2" VerticalContentAlignment="Center"
+                               Content="Cache size:">
+                        </Label>
+                        <TextBox  Grid.Row="2" Grid.Column="1"
+                                  VerticalContentAlignment="Center"
+                                  Margin="5">
+                        </TextBox>
+                        <Label Grid.Row="3" VerticalContentAlignment="Center"
+                               Content="Strategy:">
+                        </Label>
+                        <ComboBox  Grid.Row="3" Grid.Column="1"
+                                  VerticalContentAlignment="Center"
+                                  Margin="5">
+                        </ComboBox>
+                    </Grid>
+                </Grid>
+            </GroupBox>
+            <Button Grid.Row="3" Margin="5"  Content="Start Training"
+                    Command="{Binding StartTrainingCommand}">
+            </Button>
+            <Button Grid.Row="4" Margin="5"  Content="Classify"
+                    Command="{Binding ClassifyCommand}">
+            </Button>
+            <!--<Button Grid.Row="5" Margin="5"  Content="Add Test Image"
+                    Command="{Binding AddTestImageCommand}">
+            </Button>
+            <Button Grid.Row="6" Margin="5"  Content="Classify Test Image"
+                    Command="{Binding ClassifyTestImageCommand}">
+            </Button>
+            <Label Grid.Row="7"
+                   Content="{Binding TestedImageLabel}">
+            </Label>
+            <Image Grid.Row="8" 
+                   Source="{Binding TestImage}">
+            </Image>-->
         </Grid>
     </Grid>
 </Window>

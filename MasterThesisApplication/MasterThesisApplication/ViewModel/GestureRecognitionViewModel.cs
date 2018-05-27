@@ -80,6 +80,37 @@ namespace MasterThesisApplication.ViewModel
             }
         }
 
+        private bool _isRecognitionEnabled;
+        public bool IsRecognitionEnabled
+        {
+            get { return _isRecognitionEnabled; }
+            set
+            {
+                _isRecognitionEnabled = value;
+                OnPropertyChanged(nameof(IsRecognitionEnabled));
+            }
+        }
+
+        private string _resultLabel;
+        public string ResultLabel
+        {
+            get
+            {
+                //Messenger.Default.Register<string>(ResultLabel, OnResultLabelReceived);
+                return _resultLabel;
+            }
+            set
+            {
+                _resultLabel = value;
+                OnPropertyChanged(nameof(ResultLabel));
+            }
+        }
+
+        private void OnResultLabelReceived(string label)
+        {
+            ResultLabel = label;
+        }
+
         private void OnRectangleReceived(Rectangle rect)
         {
             Rectangle = rect;
@@ -92,6 +123,7 @@ namespace MasterThesisApplication.ViewModel
             VideoDevicesCollection = cameraDataService.GetAllCameras();
             SelectedCamera = VideoDevicesCollection[0];
             LoadCommands();
+            Messenger.Default.Register<string>(ResultLabel, OnResultLabelReceived);
         }
 
         private void CameraModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -100,6 +132,10 @@ namespace MasterThesisApplication.ViewModel
             {
                 CameraImage = _selectedCamera.CameraImage.BitmapImage2Bitmap()
                     .DrawRectangle(Rectangle).ToBitmapImage();
+                if (IsRecognitionEnabled)
+                {
+                    //Messenger.Default.Register<string>(ResultLabel, OnResultLabelReceived);
+                }
             }
         }
 
@@ -125,12 +161,14 @@ namespace MasterThesisApplication.ViewModel
 
         private bool CanTakeSnapshot(object obj)
         {
-            return !Rectangle.Bottom.IsEqual(0);
+            return SelectedCamera.IsRunning;
+            //return !Rectangle.Bottom.IsEqual(0);
+            //return true;
         }
 
         private void TakeSnapshot(object obj)
         {
-            throw new System.NotImplementedException();
+            Messenger.Default.Send(CameraImage);
         }
 
         private void StartCamera(object obj)

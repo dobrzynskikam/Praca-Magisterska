@@ -9,6 +9,14 @@
             <local:ViewModelLocator x:Key="Locator"/>
             <converter:InverseBooleanConverter x:Key="BooleanConverter"/>
             <converter:ImageConverter x:Key="ImageConverter"></converter:ImageConverter>
+            <converter:ClassificationStateConverter x:Key="BackgroundConverter"></converter:ClassificationStateConverter>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Brown.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Brown.xaml" />
+            </ResourceDictionary.MergedDictionaries>
          </ResourceDictionary>
     </Application.Resources>
 </Application>
