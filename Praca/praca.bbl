@@ -1,0 +1,80 @@
+\begin{thebibliography}{10}
+
+\bibitem{ModbusRys}
+\\\texttt{http://www.modbus.org/}.
+
+\bibitem{NotationD-H}
+Wang H., Qi~H., Xu~M., Tang Y., Yao J., Yan X., Li~M.
+\newblock Research on the relationship between classic denavit-hartenberg and
+  modified denavit-hartenberg.
+\newblock 2014 Seventh International Symposium on Computational Intelligence
+  and Design, 2014.
+
+\bibitem{CyberPhysicalForIndustry}
+Lee J., Bagheri B., Kao H.
+\newblock A cyber-physical systems architecture for industry 4.0-based
+  manufacturing systems.
+\newblock ScienceDirect, 2015.
+
+\bibitem{ManufacturingForIndustry}
+Qina J., Liua Y., Grosvenora R.
+\newblock A categorical framework of manufacturing for industry 4.0 and beyond.
+\newblock ScienceDirect, 2016.
+
+\bibitem{BigDataTabakow}
+Tabakow M., Korczak J., Franczyk B.
+\newblock Big data – definicje, wyzwania i technologie informatyczne.
+\newblock {\em Informatyka ekonomiczna}, strony 138--157, Wroc{\l{}}aw, 2014.
+  Uniwersytet Ekonomiczny we Wrocławiu.
+
+\bibitem{Zaczyk}
+Zaczyk M.
+\newblock Kinematyka prosta. materiały wykładowe.
+
+\bibitem{Industry40}
+Sishi~M. N.,  Telukdarie A.
+\newblock Implementation of industry 4.0 technologies in the mining industry: A
+  case study.
+\newblock IEEE, 2017.
+
+\bibitem{Industry40Wittbrodt}
+Wittbrodt P.,  {\L{}}apu{\'n}ka I.
+\newblock Przemysł 4.0 - wyzwanie dla wsp{\'o}łczesnych przedsiębiorstw
+  produkcyjnych.
+\newblock {\em Innowacje w zarz{\k{a}}dzaniu i inżynierii produkcji}, strony
+  793--799, Opole, 2017. Oficyna Wydawnicza Polskiego Towarzystwa
+  Zarz{\k{a}}dzania Produkcj{\k{a}}.
+
+\bibitem{ViolaJonesIntegralImage}
+M.Jones P.Viola.
+\newblock Rapid object detection using a boosted cascade of simple
+  features.incomputer vision and pattern recognition.
+\newblock IEEE, 2001.
+
+\bibitem{SCADA}
+Jakuszewski R.
+\newblock {\em Podstawy programowania systemów SCADA}.
+\newblock Wydawnictwo Pracowni Komputerowej Jacka Skalmierskiego, Gliwice,
+  2010.
+
+\bibitem{IarovyiIndustry}
+Iarovyi S., Mohammed W., Lobov A., Ferrer B., Lastra J.
+\newblock Cyber–physical systems for open-knowledge-driven manufacturing
+  execution systems.
+\newblock wolumen 104, strony 1142--1152, 2016.
+
+\bibitem{SystemDwojkowy}
+Finley T.
+\newblock Two's complement., Kwiecień 2000.
+
+\bibitem{Modbus}
+Rutkowski T.
+\newblock {\em Protokół modbus}.
+\newblock Politechnika Gdańska, Gdańsk, 2011.
+
+\bibitem{StockIndustry}
+Stock T.,  Seliger G.
+\newblock Opportunities of sustainable manufacturing in industry 4.0.
+\newblock {\em Procedia CIRP}, wolumen~20, strony 536--541, 2016.
+
+\end{thebibliography}

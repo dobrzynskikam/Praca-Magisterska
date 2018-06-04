@@ -1,0 +1,189 @@
+\chapter{Opis realizacji aplikacji}
+
+Projekt zakładał utworzenie aplikacji SCADA do zarządzania i monitorowania celą spawalniczą. Aplikacja ta została zaimplementowana z użyciem platformy systemowej firmy Wonderware. Z kolei komunikacja pomiędzy aplikacją, a obiektem rzeczywistym została zrealizowana z użyciem protokołu Modbus TCP z udziałem driver-a ... . 
+
+
+\section{Aplikacja SCADA}
+
+Aplikacja SCADA pełni główną rolę w monitorowaniu i zarządzaniu celą spawalniczą.  Dzięki niej użytkownik ma możliwość zdalnego sterowania całym obiektem, a przede wszystkim robotem spawającym umieszczonym w centralnym punkcie celi. Dodatkowo użytkownik ma dostęp do danych w czasie rzeczywistym, co pozwala mu na dokładne śledzenie pracy robota, szybką reakcję na alarmy, bądź sygnały ostrzegawcze. 
+
+Aplikacja SCADA, dedykowana celi spawalniczej, została utworzona w środowisku \textit{Wonderware Application Server} jako projekt o nazwie \textit{Cela}. Komunikację, tworzenie obiektu oraz elementów graficznych opisują poniższe podrozdziały.
+
+
+\subsection{Komunikacja z robotem}
+
+Jednym z kluczowych etapów tworzenia aplikacji było nawiązanie połączenia z robotem Kawasaki BA006%, który umożliwiał komunikacje z celą spawalniczą. 
+Do tego zadania został wykorzystany driver \textit{OI Modbus}, skonfigurowany w programie \textit{System Management Console}, gdzie konfigurację można podzielić na cztery główne kroki.
+
+Pierwszym krokiem było zdefiniowanie typu połączenia, poprzez wybranie z listy dostępnych połączeń, modułu OPC Connection oraz określenie jego nazwy. W projekcie  przyjęto nazwę OPC. Rysunek 14 prezentuje parametry konfiguracyjne, które zostały określone dla wybranego modułu.
+
+
+\subsection{Utworzenie obiektu}
+
+Na podstawie szablonu \textit{UserDefined} z biblioteki \textit{Wonderware}, w projekcie został utworzony obiekt o nazwie \textit{Kawasaki}, w którym została zawarta logika zarówno dla samego robota jak i pozostałych elementów celi spawalniczej. Logika ta została zaimplementowana przy użyciu skryptów, które z kolei korzystały z poszczególnych zmiennych umożliwiających komunikację. 
+
+\subsubsection{Definicje atrybutów}
+
+Definicja atrybutów polegała na dodaniu sygnałów, które umożliwiły komunikację z obiektem. Atrybuty zostały zdefiniowane pod kątem dwóch grup:
+
+\begin{itemize}
+	\item wejściowe – odczyt wartości sygnałów z robota,
+	\item wyjściowe – zapis wartości sygnałów.
+\end{itemize}
+
+Do sygnałów wejściowych należały:
+\begin{itemize}
+\item	I\_BasePosition – położenie robota w pozycji bazowej,
+\item	I\_Clean – robot w drodze do stacji czyszczącej,
+\item	I\_Cycle – praca w cyklu robota,
+\item	I\_DoorService – status drzwi serwisowych, OFF – drzwi zamknięte, ON – drzwi otwarte,
+\item	I\_ErrorEthIP – błąd komunikacji ze źródłem spawalniczym,
+\item	I\_ErrorRobot – błąd wystąpił po stronie robota,
+\item	I\_Estop – stan przycisków bezpieczeństwa,
+\item	I\_GateClosed – brama zamknięta,
+\item	I\_GateOpened – brama otwarta,
+\item	I\_HoldRun – status robota $hold$ lub $run$,
+\item	I\_jt1, I\_jt2, I\_jt3, I\_jt4, I\_jt5, I\_jt6 – położenie poszczególnej osi robota,
+\item	I\_jt7, I\_jt8 – położenie poszczególnej osi manipulatora,
+\item	I\_LC\_Orange, I\_LC\_Green, I\_LC\_Red – odpowiednie kolory wieży sygnalizacyjnej,
+\item	I\_Motor – stan silników robota,
+\item	I\_OdsRequire – wymagane potwierdzenie zamknięcia drzwi serwisowych,
+\item	I\_Ready – robot gotowy do pracy,
+\item	I\_Start – rozpoczęcie pracy robota,
+\item	I\_Stop – praca robota została przerwana,
+\item	I\_TeachLock – zablokowanie trybu uczenia,
+\item	I\_TeachMode – tryb uczenia jest aktywny,
+\item	I\_WeldingActivation – robot w trybie spawania,
+\item	I\_WeldingCurrent – wartość prądu spawania, generowanego przez źródło spawalnicze,
+\item	I\_WeldingVoltage – wartość napięcia spawania, generowanego przez źródło spawalnicze,
+\item	I\_WeldingWFS – prędkość podawania drutu.
+\end{itemize}
+
+W grupie wyjściowej znalazły się sygnały:
+\begin{itemize}
+\item	O\_Stop – zatrzymanie pracy robota w cyklu,
+\item	O\_OpenServiceDoor – otwarcie drzwi serwisowych, 
+\item	O\_Motor – uruchomienie motorów robota, 
+\item	O\_StartCycle – start pracy robota, 
+\item	O\_gate\_open – otwarcie bramy,
+\item	O\_gate\_close – zamknięcie bramy,
+\item	O\_CloseServiceDoor – zamknięcie drzwi serwisowych,
+\item	O\_NumberCycle – liczba cykli, po których robot ma pojechać do stacji czyszczącej,
+\item	O\_ProgramSet – potwierdzenie wybrania numeru programu,
+\item	O\_T\_Splash – czas sprysku,
+\item	O\_F\_Clean – częstość czyszczenia,
+\item	O\_L\_Cut – długość obcięcia drutu w milimetrach,
+\item	O\_ProgramNumber – numer programu jaki ma wykonać robot,
+\item	O\_SpeedMonit – prędkość pracy robota,
+\item	O\_T\_Mill – czas frezowania.
+\end{itemize}
+
+Niektóre z atrybutów, zarówno z grupy wejściowych, jak i wyjściowych zostały powołane do logowania historycznego, poprzez zaznaczenia opcji \textit{History}, podczas ich definiowania \ref{fig:ZmienneHistory}.
+
+
+\subsubsection{Definicje skryptów}
+Skrypt jest to zapis instrukcji, które powinien wykonać procesor aby zrealizować pewne określone zadanie.  W projekcie można wyróżnić trzy/cztery rodzaje skryptów:
+
+\begin{itemize}
+	\item Skrypty inicjalizacyjne - to skrypty wywoływane jednorazowo podczas uruchomienia aplikacji. W projekcie koniecznym było napisanie skryptu inicjalizacyjnego w celu  skojarzenia wcześniej utworzonych atrybutów obiektu z odpowiednimi zmiennymi robota Kawasaki BA006N. Zadanie to wykonane zostało z użyciem formuły:
+	Me.<Nazwa atrybutu>.InputSource = <Nazwa OPC Clienta>.<Nazwa scan group>.<Nazwa OPC Connection>.<Nazwa OPCGroup Connection >.<Nazwa zmiennej>
+	Np. 
+	Me.I\_BasePosition.InputSource = “OPCClient\_001\_001.OPC\_DeviceGroup.OPC.DeviceGroup.I\_BasePosition”
+	
+	\item Skrypty sterujące impulsowe - to skrypty umożliwiające sterowanie robotem poprzez wysyłanie do niego odpowiednich impulsów. Robot, będąc w trybie nasłuchiwania, oczekiwał od aplikacji SCADA instrukcji w postaci impulsów, a gdy tylko wykrył narastające zbocze danego sygnału, od razu uruchamiał odpowiednie procedury. Rysunek \ref{fig:SkryptImpulsowy} przedstawia skrypt z instrukcjami oraz okno ustawień dla atrybutu O\_gate\_close.
+	
+	
+	Instrukcje, które wystąpiły w powyższym skrypcie:
+	\textit{System.Threading.Thread.Sleep(1500)} – odczekuje 1500 ms i przechodzi do następnej instrukcji,
+	\textit{Me.O\_gate\_close = false} – ustawia sygnał zamknięcia bramy na stan niski.
+	Sygnał w postaci impulsów został również zrealizowany dla atrybutów \textit{O\_Stop}, \textit{O\_OpenServiceDoor}, \textit{O\_Motor}, \textit{O\_StartCycle}, \textit{O\_gate\_open}, \textit{O\_CloseServiceDoor} i \textit{O\_ProgramSet}.
+	
+	\item Skrypty konwertujące liczbę dziesiętną na ZU2 - to skrypty wysyłające dane całkowite, lecz rozbite na poszczególne bity. Utworzenie tego rodzaju skryptów było konieczne ze względu na narzucone ograniczenia przesyłu danych ze strony robota Kawasaki. Robot ten miał ograniczoną przestrzeń zmiennych, dlatego też, niektóre zmienne zostały zapisane na mniej niż 8 bitach. Rysunek \ref{fig:SkryptBitowy} obrazuje przykładowy skrypt wywoływany przy każdorazowej zmianie wartości T\_Splash.
+	
+
+	Część kodu znajdująca się w pętli warunkowej \textit{if else} sprawdza zakres wprowadzanej danej, aby nie przekraczała założonych wartości. W dalszym fragmencie kodu następuję konwersja liczby dziesiętnej na liczbę w systemie dwójkowym z dopełnieniem do dwóch. Wprowadzone liczby nie mogły być liczbami ujemnymi zatem wszelkie konwersje dokonywane były jak na rysunku \ref{fig:SkryptBitowy}.
+	
+	Pozostałe atrybuty, dla których został napisany skrypt sterujący bitowy:
+	
+	\subitem O\_F\_Clean - 5 bitów, zakres 1-30,
+	\subitem O\_L\_Cut - 5 bitów, zakres 5-15,
+	\subitem O\_ProgramNumber - 8 bitów, zakres 1-100,
+	\subitem O\_SpeedMonit - 8 bitów, zakres 1-100,
+	\subitem O\_T\_Mill – 5 bitów, zakres 0-10,
+	\subitem O\_NumberCycle – 5 bitów, zakres 1-10.
+	
+	
+	\item Skrypty konwertujące liczbę w ZU2 na system dziesiętny 
+	
+	
+\end{itemize}
+
+\subsubsection{Obiekty graficzne}
+
+Tworzenie obiektów graficznych zrealizowano w środowisku \textit{Application Server}. W celu ich powstania wykorzystano podstawowe elementy z przybornika graficznego oraz animację, które mają na celu „ożywienie” grafiki. W powstałych obiektach zastosowano następujące animacje:
+
+\begin{itemize}
+\item	Visibility –  wraz ze zmianą wartości zmiennej, element graficzny znika, bądź się pojawia,
+\item	Value Display -  umożliwia zmianę wyświetlanej wartości (informacji) w zależności od stanu atrybutu, od którego wartość jest uzależniona,
+\item	Fill Style – wraz ze zmianą wartości sygnału obiekt zmienia swój kolor,
+\item	Pushbutton - po kliknięciu w komponent graficzny, który zawiera tą animację, wartość powiązanego atrybutu ulega zmianie,
+\item	User Input  - z użyciem tej animacji użytkownik jest w stanie wprowadzić wartość dla analogowej zmiennej. Dodatkowo w oknie konfiguracji można ograniczyć zakres w jakim powinna się znajdować wprowadzona wartość,
+\item	Action Scripts - powoduje wywołanie zdefiniowanego skryptu.
+\end{itemize}
+
+\myparagraph{Strona główna}
+
+Jednym z elementów graficznych, widocznych podczas uruchomienia aplikacji, był obraz celi spawalniczej z otwartą, bądź zamkniętą bramą. Grafiki z różnym stanem bramy celi spawalniczej, zostały na siebie nałożone, stąd koniecznym było użycie animacji \textit{Visibility}. Animacja ta, w zależności od atrybutu \textit{I\_GateOpened} ukazywała użytkownikowi bramę otwartą, bądź zamkniętą. Dodatkowo do obrazu celi dodano opis poszczególnych elementów, takich jak: pozycjoner, robot, źródło spawalnicze oraz ogólne informacje o celi.   
+
+
+
+
+\myparagraph{Status}
+
+Jednym z podstawowych obiektów graficznych, informujący o statusie pracy robota, aplikacji był komponent złożony z elementów: \textit{Textbox} oraz \textit{Rectangle}. Miał on na celu odwzorowywanie stanu danego sygnału. Wspomniany element został skonfigurowany przez dodanie animacji \textit{Value Display} dla \textit{Textbox}-a oraz animacji \textit{Fill Style} dla \textit{Rectangle}. Poniższe rysunki przedstawiają  przykładową wizualizację obiektu oraz jego konfigurację dla atrybutu \textit{I\_ErrorRobot}. 
+
+
+
+\myparagraph{Statusy celi}
+
+Na podstawie obiektu graficznego\textit{Status} utworzono grupę, która odzwierciedlała wartości sygnałów płynących od celi spawalniczej \ref{fig:StatusCela}.
+
+
+\myparagraph{Sterowanie bramą i drzwiami serwisowymi}
+
+Implementacja elementów graficznych, które odpowiadały za sterowanie obiektem rzeczywistym, było kolejnym etapem do powstania aplikacji. W grupie obiektów sterujących bramą oraz drzwiami serwisowymi wykorzystano \textit{Status} (do którego podpięto odpowiednio sygnał \textit{I\_gate\_closed} i \textit{I\_DoorService}) oraz element \textit{Rectangle}, dla którego zdefiniowano animacje \textit{Pushbutton} \ref{PushButton}. 
+
+\myparagraph{Sterowanie stacją czyszczącą}
+
+Kolejną grupą, która decydowała o przebiegu procesu spawania, był blok zatytułowany „Stacja czyszcząca”, która determinowała jak powinien odbywać się etap czyszczenia palnika. W tym obiekcie graficznym użyto elementów typu \textit{Textbox}, do których dodano animacje \textit{User Input}. 
+
+
+\myparagraph{Sterowanie robotem}
+
+Ostatnią grupą, która decydowała o przebiegu spawania, dotyczyła bezpośrednio pracy robota Kawasaki. Można było z niej wybrać numer programu, który robot miał wykonać, a także z jaką prędkością powinien się poruszać. Dodatkowo, znalazły się tam przyciski, które decydowały o starcie i przerwaniu pracy robota. 
+
+
+Wpisana tam instrukcja zmienia wartość atrybutu \textit{InTouch:\$Language}, która decyduje w jakim języku powinny pokazać się informację w aplikacji. Dla języka polskiego jest to numer 1045, angielskiego – 1033, a niemieckiego – 1031. 
+
+
+\myparagraph{Symulacja ruchu robota}
+
+Kolejny obiekt graficzny odwzorowywał pozycję robota w trzech różnych układach odniesieniach. Odwzorowanie to było możliwe, dzięki wykorzystaniu zadania prostej kinematyki dla odczytanych kątów poszczególnych osi. Dodatkowo poniższy element graficzny wyświetlał pozycję kątową sześciu osi robota oraz dwie osie pozycjonera.
+
+
+\subsubsection{Wizualizacja aplikacji}
+
+Z szablonu \textit{InTouchViewApp} został utworzony obiekt o nazwie \textit{CelaApp}, w którym wykreowano wizualizacje do powstałej aplikacji. Zdefiniowano w nim 8 okien:
+
+\begin{itemize}
+	\item	Menu – położenie: 920, 180, wymiary: 1000, 810,
+	\item	Header – położenie: 0, 0, wymiary: 1920, 180,
+	\item	Footer - położenie: 0, 990, wymiary: 1920, 90,
+	\item	Home – położenie: 220, 180, wymiary: 1700, 810,
+	\item	Control – położenie: 920, 180, wymiary: 1000, 810,
+	\item	Status - położenie: 920, 180, wymiary: 1000, 810,
+	\item	Kawasaki – położenie: 920, 180, wymiary: 700, 810,
+	\item	WeldingCharts - położenie: 220, 180, wymiary: 1700, 810,
+	\item	Web - położenie: 220, 180, wymiary: 1700, 810.
+\end{itemize}
+

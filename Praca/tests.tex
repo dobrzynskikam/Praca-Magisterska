@@ -1,0 +1,286 @@
+\chapter{Technologie i pojęcia wykorzystane w projekcie}
+
+
+ Protokół Modbus, opisany poniżej, został wykorzystany do wymiany danych między robotem Kawasaki BA006 i aplikacją SCADA. Dodatkowo w poniższym rozdziale przedstawiono sposób kodowania robota oraz wyznaczenie jego położenia.  
+
+
+\section{Protokół Modbus}
+
+Protokół Modbus został stworzony przez firmę Modicon i opublikowany w 1979 roku. Do dnia dzisiejszego jest on wykorzystywany, szczególnie w aplikacjach przemysłowych do komunikacji pomiędzy urządzeniami elektronicznymi. Standard Modbus definiuje protokół siódmej warstwy modelu OSI in. warstwy aplikacji, który zapewnia komunikację typu klient - serwer pomiędzy urządzeniami mogącymi znajdować się w różnych sieciach. Modbus określa również specjalny protokół dla łącza szeregowego, który umożliwia wymianę żądań wysyłanych pomiędzy urządzeniem typu master, a jednym lub kilkoma urządzeniami typu slave. Specyfikacja ta powoduje, że Modbus klasyfikowany jest również do drugiej warstwy modelu OSI, czyli warstwy łącza danych (rys. \ref{fig:Modbus1}).
+
+
+
+\subsection{Komunikacja typu Master-Slave}
+
+Modbus jest protokołem typu Master-Slave. Oznacza to, że w danym czasie do jednej magistrali szeregowej może być podłączony tylko jedno urządzenie typu master oraz klika (maksymalnie 247) urządzeń typu slave. Komunikację zawsze rozpoczyna węzeł typu master. Urządzenia typu slave nigdy nie wysyłają danych bez uprzedniej prośby od węzła typu master, a także nie komunikują się bezpośrednio z innymi urządzeniami typu slave. 
+
+Węzeł typu master może wysyłać żądania do węzłów typu slave w dwóch trybach:
+
+\begin{itemize}
+	\item pojedynczej emisji (ang. unicast mode) - master wysyła żądanie do jednego węzła typu slave. Ten z kolei po odebraniu i przetworzeniu żądania wysyła wiadomość zwrotną do mastera. Do tego typu transmisji danych koniecznym jest, aby każde z urządzeń typu slave posiadał swój unikalny adres.
+	\item zbiorowej emisji -  (ang. broadcast mode) - master może wysłać żądanie do wszystkich urządzeń typu slave równocześnie. W tym trybie przepływ informacji jest w jedną stronę, to znaczy, że master nie oczekuje na odpowiedzi od węzłów, do których wysłał wiadomość.
+\end{itemize}
+
+
+\subsection{Zasady adresacji}
+
+Przestrzeń adresowa protokołu Modbus składa się z 256 różnych adresów (tab. 3.1). Adres 0 jest zarezerwowany do przesyłu wiadomości w trybie broadcast. Wymagane jest, aby wszystkie urządzenia typu slave rozpoznawały adres 0. Każde z urządzeń slave posiada swój unikalny adres, natomiast master nie ma przypisanego żadnego adresu.
+
+
+\subsection{Opis pojedynczej ramki}
+
+Dla warstwy aplikacji modelu OSI protokół Modbus definiuje przesyłaną wiadomość in. ramkę, jako pojedynczą jednostkę danych (ang. Protocol Data Unit PDU). Ramka ta jest niezależna od niższych warstw komunikacyjnych i składa się z kodu funkcji (ang. Function code) oraz danych (ang. Data), co przedstawia rysunek \ref{fig:Modbus3}.
+
+
+Jednakże chcąc użyć protokołu Modbus dla warstwy łącza danych należy zdefiniować dodatkowo pola służące do komunikacji czyli pole adresowe (ang. Address field) oraz pole sumy kontrolnej CRC (ang. Error checking), które przedstawia rysunek \ref{fig:Modbus4}.
+
+
+Poszczególne pola zawierają informację o:
+
+\begin{itemize}
+	\item pole adresowe (Address field) - przechowuje adres węzła typu slave,
+	\item pole kodu funkcji (Function code) - niesie informację o typie akcji, która jest aktualnie wykonywana,
+	\item pole danych (Data) - zawiera parametry żądania lub odpowiedzi,
+	\item pole sumy kontrolnej (CRC) - zawiera informację o błędach, które ewentualnie wystąpiły.
+\end{itemize}
+
+
+\subsection{Modbus TCP/IP}
+
+Modbus TCP/IP jest to po prostu protokół Modbus używający interfejsu TCP oraz łącza Ethernet do przesyłu danych. Struktura komunikacyjna Modbus jest protokołem aplikacji, który definiuje zasady organizowania i interpretowania danych niezależnie od medium transmisyjnego. Z kolei TCP/IP zapewnia medium transmisyjne do przesyłania bloków danych binarnych pomiędzy komputerami. Podstawową funkcją TCP jest zapewnienie, aby wszystkie pakiety danych zostały poprawnie otrzymane, podczas gdy IP gwarantuje, że wiadomości są poprawnie adresowane i przekierowywane. W skrócie, Modbus TCP/IP jest to komunikacja standardu Modbus opakowana w Ethernet TCP/IP, o czym świadczy budowa jej pojedynczej ramki (rys. \ref{fig:Modbus5})
+
+
+
+Ramka Modbus TCP/IP składa się z niezmienionych dwóch pól protokołu Modbus czyli kodu funkcji oraz danych, a także z pól pochodzących od standardu TCP/IP:
+
+\begin{itemize}
+	\item pole identyfikatora transakcji (Transaction identifier) - zawiera identyfikator pozwalający na rozróżnienie od siebie wiadomości, podczas gdy są one wysłane w tym samym czasie poprzez jedno łącze TCP,
+	\item pole identyfikatora protokołu (Protocol identifier) - w przypadku protokołu Modbus wynosi ono zawsze 0,
+	\item  pole długości (Length Field) -  zawiera informację o pozostałych bajtach w następujących po nim polach,
+	\item  pole identyfikatora jednostki (Unit ID) - używane do rozróżniania zdalnych serwerów zlokalizowanych poza siecią TCP/IP.
+\end{itemize}
+
+
+
+\section{Kod uzupełnień do dwóch}
+
+Kod uzupełnień do dwóch (w skrócie U2 lub ZU2) to system reprezentacji liczb całkowitych w dwójkowym systemie pozycyjnym. To najpopularniejszy obecnie sposób zapisu liczb całkowitych, ponieważ operacje dodawania i odejmowania są w nim wykonywane tak samo jak dla liczb binarnych bez znaku. Dzięki tej zależności, procesor jest obciążany mniejszą ilością rozkazów, niż przy użyciu innych kodowań.
+
+Nazwa systemu pochodzi od sposobu obliczania liczb przeciwnych. Wartość przeciwna dla liczby jednobitowej obliczana jest poprzez odjęcie danej liczby od 2. Dla  n-bitowych, liczb wartości przeciwne uzyskuje się w analogiczny sposób tzn. odejmując wartość liczby od dwukrotnej wagi najstarszego bitu (2·2$^{n-1}$ = 2$^n$). 
+
+W systemie U2 istnieje tylko jedno zero, co niewątpliwe jest zaletą, mimo niesymetryczności przedziału kodowanych liczb. W opisywanym systemie kodowania na $n$ bitach można zapisać liczby z zakresu: 
+
+\begin{center}
+	\LARGE{\textbf{[$-2^{n-1}, 2^{n-1}-1$]}}
+\end{center}
+
+
+Konwersje liczb (w przykładzie zamieniono liczbę 50 i -50) z systemu dziesiętnego na systemem U2 (zapisany na 8-bitach) należy przeprowadzić w następujący sposób: 
+
+
+\begin{itemize}
+	\item \textbf{Liczba dodatnia} - liczbę należy zamienić na system dwójkowy 
+	
+	\begin{center}
+		$50 = (110010)_2$.
+	\end{center}
+	
+	Następnie z lewej strony należy dopełnić liczbę zerami, aby w sumie otrzymać osiem bitów
+	
+	\begin{center}
+		$50 = (00110010)_{U2}$.
+	\end{center}
+	
+	\item \textbf{Liczba ujemna} - w pierwszym kroku należy wyznaczyć wartość bezwzględną konwertowanej liczby:
+	
+	\begin{center}
+		$|-50| = 50$
+	\end{center}
+	
+	Następnie postąpić analogicznie jak z liczbą dodatnią otrzymując wartość bezwzględną liczby w systemie U2
+	
+	\begin{center}
+		$50 = (00110010)_{U2}$.
+	\end{center} 
+	
+	W kolejnym kroku należy zanegować wszystkie bity
+	
+	\begin{center}
+		$(00110010)_{U2}$ \~=  $11001101$.
+	\end{center} 
+	
+	Ostatnim etapem konwersji liczby ujemnej jest zwiększenie otrzymanego wyniku o 1:
+	
+	\begin{center}
+		$11001101 + 1 =  11001110$
+		
+		$ -50 = (11001110)_{U2}$
+	\end{center}
+\end{itemize}
+
+Poniżej zaprezentowano konwersje w przeciwnym kierunku. W tym przypadku jest jeden algorytm postępowania dla liczb dodatnich i ujemnych.
+
+\begin{center}
+	$(11001110)_{U2} = -1 \cdot 2^{7} + 1 \cdot 2^{6} + 0 \cdot 2^{5} + 0 \cdot 2^{4} + 1 \cdot 2^{3} + 1 \cdot 2^{2} + 1 \cdot 2^{1} + 0 \cdot 2^{0} = -128 + 78 = -50$ 
+\end{center}
+
+
+
+\section{Proste zadanie kinematyki}
+
+Proste zadanie kinematyki w robotyce jest definiowane jako przeliczanie współrzędnych złączowych na współrzędne kartezjańskie w celu znalezienia położenia i orientacji końcówki robota.   
+
+%Układ współrzędnych złączowych to podstawowy układ odniesienia robota, w którym można wyróżnić dwa typy współrzędnych złączowych:
+
+%\begin{itemize}
+%	\item kąt - dla złącza obrotowego,
+%	\item przesunięcie - dla złącza postępowego.
+%\end{itemize}   
+
+Do rozwiązania prostego zadania kinematyki w bazowym układzie współrzędnych X$_0$Y$_0$Z$_0$ stosuje się dwie składowe:
+
+\begin{itemize}
+	\item pozycja - opisana jest przez wektor d$_i$, w którym znajdują się współrzędne $x$, $y$, $z$ początku lokalnego układu X$_i$Y$_i$Z$_i$ względem układu bazowego,
+	\item orientacja - wyrażona przez macierz orientacji R$_i$, która opisuje obrót układu X$_i$Y$_i$Z$_i$ względem układu bazowego. Opis ten wyrażony jest za pomocą rzutów wektorów jednostkowych osi układu lokalnego na wektory osi układu bazowego.  
+\end{itemize}   
+
+
+Na rysunku \ref{fig:kin1} zaprezentowano punkt P, którego położenie można wyrazić za pomocą  wektora $p_0$ zapisanego jako sumę dwóch wektorów znajdujących się w tym samym układzie współrzędnych.
+
+
+
+\begin{equation}
+p_{0} = R^{1}_{0} \cdot p_{1} + d^{1}_{0},
+\end{equation}
+
+gdzie: 
+
+\begin{eqwhere}[2cm]
+	\item[$R^{1}_{0}$] macierz, która przelicza współrzędne punktu P z układu ,,1'' na układ ,,0'',
+	\item[$p_{1}$] wektor opisujący położenie punktu P w układzie ,,1'',
+	\item[$d^{1}_{0}$] wektor początku układu ,,1'' w układzie ,,0''.
+\end{eqwhere}
+
+
+\subsection{Macierz orientacji oraz macierz przekształcenia}
+
+Na podstawie wyprowadzenia \cite{Zaczyk} otrzymano ogólną postać macierzy orientacji, która składa się z iloczynów skalarnych wektorów.
+
+
+
+\begin{eqnarray}
+\label{MacierzOrientacjiZaczyk}
+R_{0}^{1}
+=
+\begin{bmatrix}
+i_{1}i_{0} & j_{1}i_{0} & k_{1}i_{0}\\
+i_{1}j_{0} & j_{1}j_{0} & k_{1}j_{0} \\
+i_{1}k_{0} & j_{1}k_{0} & k_{1}k_{0}
+\end{bmatrix}
+\end{eqnarray}
+
+\begin{eqwhere}[2cm]
+	\item $i_{0}, j_{0}, k_{0}$ - wektory jednostkowe osi w układzie ,,0'',
+	\item $i_{1}, j_{1}, k_{1}$ - wektory jednostkowe osi w układzie ,,1''.
+\end{eqwhere}
+
+
+Wykorzystując (\ref{MacierzOrientacjiZaczyk}) oraz tzw. kąty RPY (ang. Roll, Pitch, Yard), które opisują obrót bryły sztywnej w trzech elementarnych płaszczyznach: obrót (roll), nachylenie (pitch), odchylenie (yaw),  wyznacza się pełną macierz orientacji. 
+
+
+\begin{eqnarray}
+\label{MacierzRPY}
+R = R_{Z,\phi}R_{Y,\vartheta}R_{X,\psi}
+=
+\begin{bmatrix}
+\cos\phi\cos\vartheta & 
+\cos\phi\sin\vartheta\sin\psi - \sin\phi\cos\psi & 
+\cos\phi\sin\vartheta\cos\psi + \sin\phi\sin\psi\\
+\sin\phi\cos\vartheta & 
+\sin\phi\sin\vartheta\sin\psi + \cos\phi\cos\psi & 
+\sin\phi\sin\vartheta\cos\psi - \cos\phi\sin\psi\\
+-\sin\vartheta & 
+\cos\vartheta\sin\psi & 
+\cos\vartheta\sin\psi
+\end{bmatrix}
+\end{eqnarray}
+
+%\subsection{Postacie jednorodne}
+
+W celu ujednolicenia zapisu i ułatwienia operacji matematycznych wprowadzona została tzw. macierz przekształcenia $T$ opisująca przekształcenie jednego układu współrzędnych w drugi. Macierz ta składa się z wektora pozycji $d$ oraz macierzy orientacji $R$.
+
+ \begin{eqnarray}
+ \label{MacierzPrzeksztalcenia}
+ T
+ =
+ \begin{bmatrix}
+R &
+d \\
+0 &
+1 \\
+ \end{bmatrix}
+ \end{eqnarray}
+ 
+ \subsection{Kinematyka prosta}
+ 
+ Równanie kinematyki prostej otrzymuje się mnożąc macierze przekształceń. 
+ 
+ \begin{equation} \label{KinProsta}
+ T_{0}^{n} = T_{0}^{1} \cdot T_{1}^{2} \cdot \cdots \cdot T_{i-1}^{i} \cdot \cdots \cdot T_{n-1}^{n} ,
+ \end{equation}
+ 
+ gdzie:
+ 
+ \begin{eqwhere}[2cm]
+ 	\item[$T^{n}_{0}$] macierz, zawierająca pozycję i orientację n-tego układu lokalnego w układzie bazowym,
+ 	 \end{eqwhere}
+  \begin{eqwhere}[2.2cm]
+ 	\item[$T^{i}_{i-1}$] macierz przekształcająca układ $i-1$ w $i$.
+ \end{eqwhere}
+
+Rozwiązanie równania (\ref{KinProsta}), czyli wynik prostego zadania kinematyki, zawsze daje jednoznaczne rozwiązanie.  
+ 
+ %Warto zwrócić uwagę, że równanie ref nie tylko pozwala na wyznaczenie pozycji i orientacji końcówki robota w układzie bazowym ale także na wyznaczenie położenia w którymś układzie lokalnym. 
+ 
+ \subsection{Notacja Denavita-Hartenberga}
+ 
+ Notacja Denavita-Hartenberga (D-H) jest to konwencja uproszczająca rozwiązywanie równań mechaniki klasycznej. Została zapoczątkowana przez Jacques Denavit-a i Richard Hartenberg-a w 1955 roku w celu standaryzacji układu współrzędnych dla mechanicznych łączeń. Do opisu każdego połączenia notacja D-H wykorzystuje cztery parametry, dwa z nich opisują swój układ współrzędnych, a dwa kolejne reprezentują sposób połączenia z sąsiednim układem. Znaczenie parametrów jest następujące:
+ 
+ \begin{eqwhere}[2cm]
+ 	\item [$\theta_{i}$] kąt przegubu pomiędzy $X_{i}$ i $X_{i-1}$ liczony względem $Z_{i-1}$,
+ 	\item [$b_{i}$] odległość członu między osiami $X_{i}$ i $X_{i-1}$ mierzona wzdłuż $Z_{i-1}$, 
+ 	\item [$a_{i}$] odległość członu między osiami $Z_{i}$ i $Z_{i-1}$ wzdłuż $X_{i}$,
+ 	\item [$\alpha_{i}$] kąt przegubu pomiędzy $Z_{i}$ i $Z_{i-1}$ liczony wokół osi $X_{i}$.
+ \end{eqwhere}
+ 
+ Dla każdego rodzaju połączeń trzy z powyższych parametrów są stałe. Dla połączenia obrotowego zmienną jest $\theta_{i}$, a dla złącza postępowego $b_{i}$. 
+ 
+ Opisywana notacja wykorzystuje 4 podstawowe przekształcenia do wyznaczenia macierzy $T^{i}_{i-1}$. 
+ 
+
+   \begin{eqnarray}
+  T^{i}_{i-1} = Rot(Z_{i-1}, \theta_{i})Trans(Z_{i-1}, b_{i})Trans(X_{i}, a_{i})Rot(X_{i}, \alpha_{i}) = \nonumber \\
+   \begin{bmatrix}
+\cos\theta_{i} &
+-\sin\theta_{i}\cos\alpha_{i} &
+ \sin\theta_{i}\sin\alpha_{i} &
+ a_{i}\cos\theta_{i} \\
+ \sin\theta_{i} &
+ \cos\theta_{i}\cos\alpha_{i} &
+ -\cos\theta_{i}\sin\alpha_{i} &
+ a_{i}\sin\theta_{i} \\
+ 0 &
+ \sin\alpha_{i} &
+ \cos\alpha_{i} &
+ b_{i} \\
+ 0 &
+ 0 &
+ 0 &
+ 1 &
+  \end{bmatrix}
+  \end{eqnarray}
+  
+  
+  
+  
+ 
