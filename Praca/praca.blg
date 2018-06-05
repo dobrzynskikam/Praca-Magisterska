@@ -5,15 +5,11 @@ A level-1 auxiliary file: tests.aux
 A level-1 auxiliary file: rozdzial3.aux
 The style file: plplain.bst
 Database file #1: bibfile.bib
-Warning--I didn't find a database entry for "ObrazekHistoriaIndustry"
-Warning--I didn't find a database entry for "SCADAObrazek"
 Warning--I didn't find a database entry for "SCADATabela"
-Warning--to sort, need author, organization, or key in ModbusRys
-Warning--empty title in ModbusRys
+Warning--empty year in BibliografiaScaleSpace
 Warning--empty booktitle in NotationD-H
 Warning--empty booktitle in CyberPhysicalForIndustry
 Warning--empty booktitle in ManufacturingForIndustry
 Warning--empty booktitle in Industry40
-Warning--empty booktitle in ViolaJonesIntegralImage
 Warning--empty booktitle in IarovyiIndustry
-(There were 11 warnings)
+(There were 7 warnings)

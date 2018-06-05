@@ -1,38 +1,38 @@
 \babel@toc {polish}{}
-\contentsline {chapter}{\numberline {1}Wprowadzenie}{7}{chapter.1}
-\contentsline {section}{\numberline {1.1}Cele pracy}{7}{section.1.1}
-\contentsline {section}{\numberline {1.2}Zawarto\IeC {\'s}\IeC {\'c} pracy}{7}{section.1.2}
-\contentsline {chapter}{\numberline {2}Technologie i poj\IeC {\k e}cia wykorzystane w projekcie }{9}{chapter.2}
-\contentsline {section}{\numberline {2.1}Obraz ca\IeC {\l }kowy}{9}{section.2.1}
-\contentsline {section}{\numberline {2.2}Ci\IeC {\k a}g\IeC {\l }a przestrze\IeC {\'n} skali dla obrazu}{10}{section.2.2}
-\contentsline {section}{\numberline {2.3}Windows Presentation Foundation (WPF)}{10}{section.2.3}
-\contentsline {section}{\numberline {2.4}Algorytm SURF}{13}{section.2.4}
-\contentsline {subsection}{\numberline {2.4.1}Paradygmaty Przemys\IeC {\l }u 4.0}{14}{subsection.2.4.1}
-\contentsline {subsection}{\numberline {2.4.2}Przemys\IeC {\l } 4.0 i Big Data}{14}{subsection.2.4.2}
-\contentsline {section}{\numberline {2.5}Systemy SCADA}{15}{section.2.5}
-\contentsline {chapter}{\numberline {3}Technologie i poj\IeC {\k e}cia wykorzystane w projekcie}{17}{chapter.3}
-\contentsline {section}{\numberline {3.1}Protok\IeC {\'o}\IeC {\l } Modbus}{17}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}Komunikacja typu Master-Slave}{17}{subsection.3.1.1}
-\contentsline {subsection}{\numberline {3.1.2}Zasady adresacji}{18}{subsection.3.1.2}
-\contentsline {subsection}{\numberline {3.1.3}Opis pojedynczej ramki}{18}{subsection.3.1.3}
-\contentsline {subsection}{\numberline {3.1.4}Modbus TCP/IP}{18}{subsection.3.1.4}
-\contentsline {section}{\numberline {3.2}Kod uzupe\IeC {\l }nie\IeC {\'n} do dw\IeC {\'o}ch}{19}{section.3.2}
-\contentsline {section}{\numberline {3.3}Proste zadanie kinematyki}{20}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Macierz orientacji oraz macierz przekszta\IeC {\l }cenia}{21}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}Kinematyka prosta}{21}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Notacja Denavita-Hartenberga}{22}{subsection.3.3.3}
-\contentsline {chapter}{\numberline {4}Opis realizacji aplikacji}{23}{chapter.4}
-\contentsline {section}{\numberline {4.1}Aplikacja SCADA}{23}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Komunikacja z robotem}{23}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Utworzenie obiektu}{23}{subsection.4.1.2}
-\contentsline {subsubsection}{\numberline {4.1.2.1}Definicje atrybut\IeC {\'o}w}{24}{subsubsection.4.1.2.1}
-\contentsline {subsubsection}{\numberline {4.1.2.2}Definicje skrypt\IeC {\'o}w}{25}{subsubsection.4.1.2.2}
-\contentsline {subsubsection}{\numberline {4.1.2.3}Obiekty graficzne}{27}{subsubsection.4.1.2.3}
-\contentsline {paragraph}{\numberline {4.1.2.3.1}Strona g\IeC {\l }\IeC {\'o}wna}{27}{paragraph.4.1.2.3.1}
-\contentsline {paragraph}{\numberline {4.1.2.3.2}Status}{27}{paragraph.4.1.2.3.2}
-\contentsline {paragraph}{\numberline {4.1.2.3.3}Statusy celi}{27}{paragraph.4.1.2.3.3}
-\contentsline {paragraph}{\numberline {4.1.2.3.4}Sterowanie bram\IeC {\k a} i drzwiami serwisowymi}{28}{paragraph.4.1.2.3.4}
-\contentsline {paragraph}{\numberline {4.1.2.3.5}Sterowanie stacj\IeC {\k a} czyszcz\IeC {\k a}c\IeC {\k a}}{28}{paragraph.4.1.2.3.5}
-\contentsline {paragraph}{\numberline {4.1.2.3.6}Sterowanie robotem}{28}{paragraph.4.1.2.3.6}
-\contentsline {paragraph}{\numberline {4.1.2.3.7}Symulacja ruchu robota}{28}{paragraph.4.1.2.3.7}
-\contentsline {subsubsection}{\numberline {4.1.2.4}Wizualizacja aplikacji}{28}{subsubsection.4.1.2.4}
+\contentsline {chapter}{\numberline {1}Wprowadzenie}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}Cele pracy}{3}{section.1.1}
+\contentsline {section}{\numberline {1.2}Zawarto\IeC {\'s}\IeC {\'c} pracy}{3}{section.1.2}
+\contentsline {chapter}{\numberline {2}Technologie i poj\IeC {\k e}cia wykorzystane w projekcie }{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}Obraz ca\IeC {\l }kowy}{5}{section.2.1}
+\contentsline {section}{\numberline {2.2}Ci\IeC {\k a}g\IeC {\l }a przestrze\IeC {\'n} skali dla obrazu}{6}{section.2.2}
+\contentsline {section}{\numberline {2.3}Windows Presentation Foundation (WPF)}{7}{section.2.3}
+\contentsline {section}{\numberline {2.4}Algorytm SURF}{9}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Detekcja}{9}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}Przemys\IeC {\l } 4.0 i Big Data}{10}{subsection.2.4.2}
+\contentsline {section}{\numberline {2.5}Systemy SCADA}{11}{section.2.5}
+\contentsline {chapter}{\numberline {3}Technologie i poj\IeC {\k e}cia wykorzystane w projekcie}{13}{chapter.3}
+\contentsline {section}{\numberline {3.1}Protok\IeC {\'o}\IeC {\l } Modbus}{13}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Komunikacja typu Master-Slave}{13}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Zasady adresacji}{14}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}Opis pojedynczej ramki}{14}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}Modbus TCP/IP}{14}{subsection.3.1.4}
+\contentsline {section}{\numberline {3.2}Kod uzupe\IeC {\l }nie\IeC {\'n} do dw\IeC {\'o}ch}{15}{section.3.2}
+\contentsline {section}{\numberline {3.3}Proste zadanie kinematyki}{16}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Macierz orientacji oraz macierz przekszta\IeC {\l }cenia}{17}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Kinematyka prosta}{17}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Notacja Denavita-Hartenberga}{18}{subsection.3.3.3}
+\contentsline {chapter}{\numberline {4}Opis realizacji aplikacji}{19}{chapter.4}
+\contentsline {section}{\numberline {4.1}Aplikacja SCADA}{19}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Komunikacja z robotem}{19}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Utworzenie obiektu}{19}{subsection.4.1.2}
+\contentsline {subsubsection}{\numberline {4.1.2.1}Definicje atrybut\IeC {\'o}w}{20}{subsubsection.4.1.2.1}
+\contentsline {subsubsection}{\numberline {4.1.2.2}Definicje skrypt\IeC {\'o}w}{21}{subsubsection.4.1.2.2}
+\contentsline {subsubsection}{\numberline {4.1.2.3}Obiekty graficzne}{23}{subsubsection.4.1.2.3}
+\contentsline {paragraph}{\numberline {4.1.2.3.1}Strona g\IeC {\l }\IeC {\'o}wna}{23}{paragraph.4.1.2.3.1}
+\contentsline {paragraph}{\numberline {4.1.2.3.2}Status}{23}{paragraph.4.1.2.3.2}
+\contentsline {paragraph}{\numberline {4.1.2.3.3}Statusy celi}{23}{paragraph.4.1.2.3.3}
+\contentsline {paragraph}{\numberline {4.1.2.3.4}Sterowanie bram\IeC {\k a} i drzwiami serwisowymi}{24}{paragraph.4.1.2.3.4}
+\contentsline {paragraph}{\numberline {4.1.2.3.5}Sterowanie stacj\IeC {\k a} czyszcz\IeC {\k a}c\IeC {\k a}}{24}{paragraph.4.1.2.3.5}
+\contentsline {paragraph}{\numberline {4.1.2.3.6}Sterowanie robotem}{24}{paragraph.4.1.2.3.6}
+\contentsline {paragraph}{\numberline {4.1.2.3.7}Symulacja ruchu robota}{24}{paragraph.4.1.2.3.7}
+\contentsline {subsubsection}{\numberline {4.1.2.4}Wizualizacja aplikacji}{24}{subsubsection.4.1.2.4}

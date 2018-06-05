@@ -3,6 +3,7 @@
 W poniższym rozdziale przedstawiono zagadnienia 
 
 \section{Obraz całkowy}
+\label{sec:IntegralImage}
 Obraz całkowy (z ang. \textit{Integral Image} \cite{ViolaJonesIntegralImage}) to struktura danych wykorzystywana w celu efektywnej i szybkiej generacji sum pikseli dla podanego regionu obrazu. Dowolny piksel \textit{(x, y)} obrazu \textit{I} może zostać przedstawiony jako suma wszystkich pikseli na lewo oraz powyżej \textit{(x, y)}:
 \begin{equation}
 \textit{Obraz całkowy}(x^{'},y^{'}) = \sum_{x<x^{'},y<y^{'}}^{}I(x,y).
@@ -21,16 +22,20 @@ Użycie takiej reprezentacji umożliwia uzyskanie sumy pikseli dowolnego obszaru
 Wyliczenie sumy wyróżnionego regionu na obrazie wejściowym można zastąpić operacjami na obrazie całkowym. Sumę obszaru można uzyskać korzystając z czterech wartości powyżej oraz na lewo od zaznaczonych kropek: \textit{46 - 22 - 20 + 10 = 14}. Jak nietrudno obliczyć, wynik ten jest równy sumie zaznaczonych elementów obrazu wejściowego.
 
 \section{Ciągła przestrzeń skali dla obrazu}
-W cyfrowym przetwarzaniu obrazów model ciągłej przestrzeni skali może zostać użyty do reprezentacji obrazu jako rodziny stopniowo rozmywających się obrazów. To zagadnienie jest bardzo ogólne i istnieje wiele reprezentacji przestrzeni skali. Typowym podejściem do zdefiniowania szczególnej reprezentacji przestrzeni skali jest zdefiniowanie zbioru aksjomatów opisujących podstawowe własności szukanej przestrzeni. Najbardziej powszechnym zbiorem aksjomatów jest zbiór definiujący liniową przestrzeń skali powiązaną z funkcją Gaussa. 
-Wykorzystanie ciągłej przestrzeni skali umożliwia znalezienie punktów na obrazie, które są niewrażliwe na zmiany skali (z ang. \textit{scale invariant}).
+\label{sec:StateSpace}
+W cyfrowym przetwarzaniu obrazów model ciągłej przestrzeni skali może zostać użyty do reprezentacji obrazu jako rodziny stopniowo rozmywających się obrazów. Wykorzystanie ciągłej przestrzeni skali umożliwia znalezienie punktów na obrazie, które są niewrażliwe na zmiany skali (z ang. \textit{scale invariant}). 
 
-Źródłem konieczności generowania reprezentacji przestrzeni skali są obserwacje dokonane na obiektach rzeczywistych. 
+To zagadnienie jest bardzo ogólne i istnieje wiele reprezentacji przestrzeni skali. Typowym podejściem do zdefiniowania szczególnej reprezentacji przestrzeni skali jest zdefiniowanie zbioru aksjomatów opisujących podstawowe własności szukanej przestrzeni. Najbardziej powszechnym zbiorem aksjomatów jest zbiór definiujący liniową przestrzeń skali powiązaną z funkcją Gaussa. 
 
-Własności liniowej przestrzeni skali:
-\begin{itemize}
-	\item liniwość
-	\item asdas
-\end{itemize}
+\begin{figure}[h]
+	%\centering
+	\includegraphics[width=10cm]{ScaleSpaceRepresentation}
+	\centering
+	\caption{Reprezentacja przestrzeni skali dla różnych wartości $\sigma$}
+	\label{im: Scale Space Representation}
+\end{figure} 
+
+Problem sprowadza się do znalezienia takiego zbioru operatorów $\tau_s$, który operaując na obrazie oryginalnym zdefiniuje zbiór obrazów rozmytych:  
 
 Gaussowska przestrzeń skali (dla obrazu dwuwymiarowego) zdefiniowana jest jako splot obrazu \textit{I(x,y)} z dwuwymiarową funkcją Gaussa \textit{g(x,y,$\sigma$)}:
 \begin{equation}
@@ -41,15 +46,8 @@ gdzie:
 g(x,y,\sigma) = \frac{1}{2\pi\sigma}e^{-(x^2+y^2)/2\sigma}
 \end{equation}
 
-Podany wzór spełniony jest dla \textit{$\sigma$$\geq$0}
-Dla $\sigma = 0$ filtr Gaussa staje się funkcją impulsową, zatem \textit{L(x,y,0) = f(x,y)}. Wraz z momentem zwiększania parametru $\sigma$ przestrzeń skali \textit{L} staje się coraz bardziej rozmyta, czyli coraz mniej szczegółów przestaje być widoczne. Na rysunku \ref{im: Scale Space Representation} przedstawiono przykład tworzenia przestrzennej reprezentacji skali.
-\begin{figure}[h]
-	%\centering
-	\includegraphics[width=10cm]{ScaleSpaceRepresentation}
-	\centering
-	\caption{Reprezentacja przestrzeni skali dla różnych wartości $\sigma$}
-	\label{im: Scale Space Representation}
-\end{figure} 
+%Podany wzór spełniony jest dla \textit{$\sigma$$\geq$0}
+Dla $\sigma = 0$ filtr Gaussa staje się funkcją impulsową, zatem \textit{L(x,y,0) = f(x,y)}. Wraz ze zwiększaniem parametru $\sigma$ przestrzeń skali \textit{L} staje się coraz bardziej rozmyta, czyli coraz mniej szczegółów przestaje być widoczne. Na rysunku \ref{im: Scale Space Representation} przedstawiono przykład tworzenia przestrzennej reprezentacji skali.
 
 \section{Windows Presentation Foundation (WPF)}
 Windows Presentation Foundation jest silnikiem graficznym dostarczanym przez firmę Microsoft. Jego premiera nastąpiła w 2006 roku, gdy stał się częścią platformy programistycznej .NET w wersji 3.0.  Jest wykorzystywany głównie do budowania aplikacji okienkowych nowej generacji dla systemu opracyjnego Windows. WPF zbudowany został całkowicie niezależnie do dotychczasowego silnika renderujacego GDI. Dostarcza model programistyczny umożliwiajacy budowanie aplikacji oraz pozwalający na bezwzględną separację logiki biznesowej od interfejsu użytkownika. 
@@ -83,15 +81,15 @@ Architektura silnika WPF została oparta zarówno o kod zarządzany, jak i o kod
 
 Silnik WPF udostępnia system własności dla obiektów, które dziedziczą z DependencyObject. Obiekt ten monitoruje  wszytkie zależności pomiędzy własnościami i jest w stanie wykonywać odpowiednie akcje bazujac na ich zmianach. Własności implementują mechanizm informujący o zmianach (z ang. Change notifications), który wywołuje wbudowane zachowania (z ang. Behaviors) w przypadku wykrycia jakiejkolwiek zmiany. Dodatkowo isniej możliwość definiowania własnych zachowań w celu propagowania informacji o zmianie własności do innych elementów . System zarządzania rozkładem elementów w obrzarze interfejsu użytkownika wykorzystuje powyższy zbior zachowań do przeliczania nowego rozkładu w przypadku zmiany własności. Dzięki temu architektura systemu WPF spełnia deklaratywny paradygmat programowania, w którym praktycznie wszystko, począwszy od ustawania wielkości kontrolek do tworzenia animacji może zostać osiągnięte poprzez zmianę własności. Takie zachowanie umożliwia tworzenie aplikacji WPF w XAML (z ang. Extensible Application Markup Language) – deklaratywnym języku znaczników, gdzie przy pomocy atrybutów oraz słów kluczowych tworzone jest bezpośrednie połączenie z własnościami oraz klasami technologii WPF. 
 
-Każdy element interfejsu aplikacji WPF dziedziczy z abstrakcyjnej klasy Visual. Obiekty tej klasy dostarczają interfejs do drzewa kompozycji zarządzanego przez MIL. Kazdy element WPF tworzy oraz dodaje przynajmniej jeden węzeł kopozycji do drzewa. Węzły te zawierają przede wszytkim istrukcje renderowania takie jak przycinanie elementu bądź transformacja wizualna. Zatem cała aplikacja może być traktowana jako kolekcja węzłów kompozycji, które są przechwowywane w buforze pamięci. Okresowo MIL przechodzi po strukturze drzewa i wykonuje instrukcje renderowania dla każdego węzła. Powoduje to tworzenie kopozytu na powierzchni DirectX, która następnie jest wyświetlana na ekranie.  MIL wykorzystuje algorytm malarza, w którym wyświetlanie elementów na monitorze rozpoczyna się od tych najbardziej odległych (tło). Takie zachowanie umożliwia renderowanie złożonych efektów takich jak rozmycie czy transparentność. Dodatkowo proces rysowania jest sprzętowo wspomagany przy pomocy GPU. 
+Każdy element interfejsu aplikacji WPF dziedziczy z abstrakcyjnej klasy Visual. Obiekty tej klasy dostarczają interfejs do drzewa kompozycji zarządzanego przez MIL. Każdy element WPF tworzy oraz dodaje przynajmniej jeden węzeł kompozycji do drzewa. Węzły te zawierają przede wszystkim instrukcje renderowania takie jak przycinanie elementu bądź transformacja wizualna. Zatem cała aplikacja może być traktowana jako kolekcja węzłów kompozycji, które są przechowywane w buforze pamięci. Okresowo MIL przechodzi po strukturze drzewa i wykonuje instrukcje renderowania dla każdego węzła. Powoduje to tworzenie kompozytu na powierzchni DirectX, która następnie jest wyświetlana na ekranie.  MIL wykorzystuje algorytm malarza, w którym wyświetlanie elementów na monitorze rozpoczyna się od tych najbardziej odległych (tło). Takie zachowanie umożliwia renderowanie złożonych efektów takich jak rozmycie czy transparentność. Dodatkowo proces rysowania jest sprzętowo wspomagany przy pomocy GPU. 
 
-Każda z aplikacji WPF statuje z dwoma wątkami: pierwszy służy do obsługi interfejsu użytkownika, a drugi, działający w tle, obsługuje renderowanie oraz przerysowywanie – jego działanie jest autoamtyczne, więc nie wymaga żadenj interwencji dewelopera. Wątek powiązany z UI przechowuje obiekt Dispacher’a (poprzez instancję klasy DispacherObject), który zajmuje się kolejkowaniem operacji koniecznych do wykonania na interfejsie użytkownika.
+Każda z aplikacji WPF staruje z dwoma wątkami: pierwszy służy do obsługi interfejsu użytkownika, a drugi, działający w tle, obsługuje renderowanie oraz przerysowywanie – jego działanie jest automatyczne, więc nie wymaga żadnej interwencji dewelopera. Wątek powiązany z UI przechowuje obiekt Dispacher’a (poprzez instancję klasy DispacherObject), który zajmuje się kolejkowaniem operacji koniecznych do wykonania na interfejsie użytkownika.
 
-Etap tworzenia układu interfesu użytkownika podzialony jest na dwie fazy: Mierzenie (z ang. Measure) oraz Porządkowanie (z ang. Arrange). Faza mierzenia rekursywnie wywołuje wszystkoe elementy określa rozmiar, z jakim one będą wyświetlane. Porządkowanie to faza, podczas której następuje rekursywne układanie wszystkich elementów w stosunku do ich rodziców w drzewie kompozycji. 
+Etap tworzenia układu interfejsu użytkownika podzielony jest na dwie fazy: Mierzenie (z ang. Measure) oraz Porządkowanie (z ang. Arrange). Faza mierzenia rekursywnie wywołuje wszystkie elementy określa rozmiar, z jakim one będą wyświetlane. Porządkowanie to faza, podczas której następuje rekursywne układanie wszystkich elementów w stosunku do ich rodziców w drzewie kompozycji. 
 
 
 \section{Algorytm SURF}
-Algorytm SURF (skrót od ang. \textit{Speeded Up Robust Features}) został opantentowany przez grupę naukowców w 2007 roku [BIBLIOGRAFIA]. Należy do rodziny algorytmów bazujacych na punktach kluczowych i służy do porównywania dwóch obrazów operujac w odcieniach szarości. Działania algorytmu można podzielić na 3 etapy:
+Algorytm SURF (skrót od ang. \textit{Speeded Up Robust Features}) został opatentowany przez grupę naukowców w 2007 roku [BIBLIOGRAFIA]. Należy do rodziny algorytmów bazujących na punktach kluczowych i służy do porównywania dwóch obrazów operując w odcieniach szarości. Działania algorytmu można podzielić na 3 etapy:
 
 \begin{itemize}
 	\item Detekcja (z ang. \textit{Detection}) – faza automatycznej identyfikcji punktów kluczowych (z ang. \textit{interest points}). Te same punkty powinny zostać wykryte niezależnie od zmian w położeniu, naświetleniu oraz orientacji obrazu, również w pewnym stopniu od zmiany skali oraz punktu widzenia. 
@@ -99,16 +97,22 @@ Algorytm SURF (skrót od ang. \textit{Speeded Up Robust Features}) został opant
 	\item Zestawienie (z ang. \textit{Matching}) – faza, podczas której określa się (na podstawie podanych punktów kluczowych) jakie obiekty znajdują się na obrazie. 
 \end{itemize}
 
+W dalszej części rozdziału przedstawiono bardziej dokładną analizę dwóch pierwszych etapów.
+
+\subsection{Detekcja}
+Algorytm SURF do detekcji punktów kluczowych wykorzystuje aproksymację Hesjanu. W celu redukcji czasu obliczeń korzysta z obrazu całkowego opisanego w podrozdziale \ref{sec:IntegralImage}. Dodatkowo wykorzystuje technikę utworzenia ciągłej przestrzeni skali opartej na rozkładzie Gaussa opisaną w podrozdziale \ref{sec:StateSpace}.
+Mając do dyspozycji punkt \textit{\textbf{x}=(x,y)} z obrazu całkowego, macierz Hessego \textit{H(\textbf{x},$\sigma$)} dla skali $\sigma$ jest zdefiniowana następująco:
+\begin{equation}\textsl{}
+H(\textbf{x},\sigma) = 
+\begin{bmatrix}
+L_{xx}(\textbf{x},\sigma) & L_{xy}(\textbf{x},\sigma) \\ L_{xy}(\textbf{x},\sigma) & L_{yy}(\textbf{x},\sigma)
+\end{bmatrix}
+\end{equation}
 
 
-\subsection{Paradygmaty Przemysłu 4.0}
+Udowodniono, że przestrzeń skali oparta o rozkład Gaussa jest rozwiązaniem optymalnym {BIBLIOGRAFIA}, jednakże w zastosowaniach praktycznych rozkład ten musi zostać poddany dyskretyzacji. Aproksymacje drugich pochodnych cząstkowych zostały zastąpione filtrami tak jak pokazano na rysunku \ref{im: GaussianApproximation}. 
+%Algorytm SURF wykorzystuje opisaną w podrozdziale \ref{sec:StateSpace} technikę utworzenia ciągłej przestrzeni skali opartej na rozkładzie Gaussa. Metoda ta dzieli przestrzeń skali na poziomy oraz oktawy. Każda oktawa w tej przestrzeni  
 
-Przemysł 4.0 odnosi się do trzech paradygmatów \cite{StockIndustry}:
-\begin{itemize}
-	\item integracja horyzontalna obejmuje zasoby społeczne i techniczne w przedsiębiorstwach. Powiązanie oraz wykorzystanie obu czynników wpływa na zrównoważone wdrażanie i wspieranie strategii biznesowej firmy oraz utworzenie odpowiednich modeli biznesowych. 		
-	\item kompleksowa integracja cyfrowa obejmuje cały cykl życia produktu, który monitorowany jest od statusu surowca, przez produkcję, użytkowanie, aż do końca jego istnienia. Pozwala to na uzyskanie kompleksowego procesu biznesowego z uwzględnieniem przepływu pracy inżynierskiej dostarczanej przez CPS. 	
-	\item integracja wertykalna łączy sieć wszystkich systemów produkcyjnych z systemami ERP. Dane płynące z rozwoju produktu trafiają do logistyki i marketingu pozwalając utworzyć inteligentne środowisko produkcyjne. Przyczyniając się do powstawania elastycznych i rekonfigurowalnych systemów produkcyjnych.
-\end{itemize}
 
 Na rysunku \ref{fig:Paradygmat} przedstawiono paradygmaty Przemysłu 4.0 w obrębie inteligentnej fabryki. 
 

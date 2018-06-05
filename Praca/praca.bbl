@@ -1,7 +1,11 @@
 \begin{thebibliography}{10}
 
-\bibitem{ModbusRys}
-\\\texttt{http://www.modbus.org/}.
+\bibitem{BibliografiaScaleSpace}
+Pauwels E., van Gool~L., Fiddelaers P., Moons T.
+\newblock : An extended class of scale-invariant and recursive scale space
+  filters.
+\newblock {\em IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  wolumen~17, strony 691--701.
 
 \bibitem{NotationD-H}
 Wang H., Qi~H., Xu~M., Tang Y., Yao J., Yan X., Li~M.
@@ -37,6 +41,11 @@ Sishi~M. N.,  Telukdarie A.
   case study.
 \newblock IEEE, 2017.
 
+\bibitem{ViolaJonesIntegralImage}
+Viola P.,  Jones M.
+\newblock : Rapid object detection using a boosted cascade of simple features.
+\newblock {\em Computer Vision and Pattern Recognition}. IEEE, 2001.
+
 \bibitem{Industry40Wittbrodt}
 Wittbrodt P.,  {\L{}}apu{\'n}ka I.
 \newblock Przemysł 4.0 - wyzwanie dla wsp{\'o}łczesnych przedsiębiorstw
@@ -44,12 +53,6 @@ Wittbrodt P.,  {\L{}}apu{\'n}ka I.
 \newblock {\em Innowacje w zarz{\k{a}}dzaniu i inżynierii produkcji}, strony
   793--799, Opole, 2017. Oficyna Wydawnicza Polskiego Towarzystwa
   Zarz{\k{a}}dzania Produkcj{\k{a}}.
-
-\bibitem{ViolaJonesIntegralImage}
-M.Jones P.Viola.
-\newblock Rapid object detection using a boosted cascade of simple
-  features.incomputer vision and pattern recognition.
-\newblock IEEE, 2001.
 
 \bibitem{SCADA}
 Jakuszewski R.
