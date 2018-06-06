@@ -89,7 +89,16 @@ Etap tworzenia układu interfejsu użytkownika podzielony jest na dwie fazy: Mie
 
 
 \section{Algorytm SURF}
-Algorytm SURF (skrót od ang. \textit{Speeded Up Robust Features}) został opatentowany przez grupę naukowców w 2007 roku [BIBLIOGRAFIA]. Należy do rodziny algorytmów bazujących na punktach kluczowych i służy do porównywania dwóch obrazów operując w odcieniach szarości. Działania algorytmu można podzielić na 3 etapy:
+Algorytm SURF (skrót od ang. \textit{Speeded Up Robust Features}) został opatentowany przez grupę naukowców w 2007 roku [BIBLIOGRAFIA]. Należy do rodziny algorytmów bazujących na punktach kluczowych i służy do porównywania dwóch obrazów operując w odcieniach szarości. W celu znalezienia cech obrazu niezależnych od zmiany skali wykorzystuje opisaną w podrozdziale \ref{sec:StateSpace} technikę utworzenia ciągłej przestrzeni skali opartej na rozkładzie Gaussa. Dodatkowo algorytm ten dzieli przestzeń skali na poziomy oraz oktawy. Oktawa odpowiada zbiorowi splotów, w którym wartość parametru $\sigma$ zostaje podwojona. Każda oktawa podzielona jest na jednakowo odległe (ze względu na parametr $\sigma$) poziomy. Przykład przedstawiono na rysunku \ref{im: OctavesAndLevels}.
+\begin{figure}[h]
+	%\centering
+	\includegraphics[width=10cm]{OctavesAndLevels}
+	\centering
+	\caption{Trzy oktawy z trzema poziomami. Szukanie cech obrazu obejmuje sąsiedztwo badanego punktu.}
+	\label{im: OctavesAndLevels}
+\end{figure}
+
+Działanie algorytmu można podzielić na 3 etapy:
 
 \begin{itemize}
 	\item Detekcja (z ang. \textit{Detection}) – faza automatycznej identyfikcji punktów kluczowych (z ang. \textit{interest points}). Te same punkty powinny zostać wykryte niezależnie od zmian w położeniu, naświetleniu oraz orientacji obrazu, również w pewnym stopniu od zmiany skali oraz punktu widzenia. 
@@ -100,7 +109,7 @@ Algorytm SURF (skrót od ang. \textit{Speeded Up Robust Features}) został opate
 W dalszej części rozdziału przedstawiono bardziej dokładną analizę dwóch pierwszych etapów.
 
 \subsection{Detekcja}
-Algorytm SURF do detekcji punktów kluczowych wykorzystuje aproksymację Hesjanu. W celu redukcji czasu obliczeń korzysta z obrazu całkowego opisanego w podrozdziale \ref{sec:IntegralImage}. Dodatkowo wykorzystuje technikę utworzenia ciągłej przestrzeni skali opartej na rozkładzie Gaussa opisaną w podrozdziale \ref{sec:StateSpace}.
+Algorytm SURF do wykrycia punktów kluczowych wykorzystuje aproksymację wyznacznika Hesjanu. Najważniejszy element detekcji to proces polegający na ograniczaniu lokalnych wartości niemaksymalnych (z ang. \textit{non-maximal suppression}) dla wyznaczników macierzy Hessego przy różnych wartościach parametru $\sigma$. W celu redukcji czasu obliczeń korzysta z obrazu całkowego opisanego w podrozdziale \ref{sec:IntegralImage}.
 Mając do dyspozycji punkt \textit{\textbf{x}=(x,y)} z obrazu całkowego, macierz Hessego \textit{H(\textbf{x},$\sigma$)} dla skali $\sigma$ jest zdefiniowana następująco:
 \begin{equation}\textsl{}
 H(\textbf{x},\sigma) = 
@@ -109,13 +118,35 @@ L_{xx}(\textbf{x},\sigma) & L_{xy}(\textbf{x},\sigma) \\ L_{xy}(\textbf{x},\sigm
 \end{bmatrix}
 \end{equation}
 
+gdzie 
+\begin{equation}\textsl{}
+L_{xx}(\textbf{x},\sigma) = I(\textbf{x})*\frac{\delta^2}{\delta x^2}g(\sigma)
+\end{equation}
+\begin{equation}\textsl{}
+L_{xy}(\textbf{x},\sigma) = I(\textbf{x})*\frac{\delta^2}{\delta xy}g(\sigma)
+\end{equation}
 
-Udowodniono, że przestrzeń skali oparta o rozkład Gaussa jest rozwiązaniem optymalnym {BIBLIOGRAFIA}, jednakże w zastosowaniach praktycznych rozkład ten musi zostać poddany dyskretyzacji. Aproksymacje drugich pochodnych cząstkowych zostały zastąpione filtrami tak jak pokazano na rysunku \ref{im: GaussianApproximation}. 
-%Algorytm SURF wykorzystuje opisaną w podrozdziale \ref{sec:StateSpace} technikę utworzenia ciągłej przestrzeni skali opartej na rozkładzie Gaussa. Metoda ta dzieli przestrzeń skali na poziomy oraz oktawy. Każda oktawa w tej przestrzeni  
+Udowodniono, że przestrzeń skali oparta o funkcję Gaussa jest rozwiązaniem optymalnym {BIBLIOGRAFIA}, jednakże w zastosowaniach praktycznych wyliczanie splotu jest niezwykle kosztowne obliczeniowo. W celu przyspieszenia obliczeń dokonano aproksymacji drugich pochodnych cząstkowych filtrami przedstawionymi na rysunku \ref{im: GaussianApproximation}. Dodatkowo wykorzystanie obrazu całkowego powoduje, że czas wyliczania splotów nie zależy od wielkości filtra. 
+\begin{figure}[h]
+	%\centering
+	\includegraphics[width=8cm]{SurfLxyLyy}
+	\centering
+	\caption{Dwa rysunki po lewej to sploty \textit{$L_{xy}$} oraz \textit{$L_{yy}$} poddane dyskretyzacji oraz przycięciu. Po prawej stronie przedstawiono aproksymacje wyżej wymienionych splotów (odpowiednio \textit{$D_{xy}$} oraz \textit{$D_{yy}$}). Szare regiony są równe zero [BIBLIOGRAFIA]}
+	\label{im: GaussianApproximation}
+\end{figure}
+Przedstawione aproksymacje odpowiadają splotom, dla których parametr $\sigma$ jest równy 1.2. Jest to najmniejsza wartość skali, dla której algorytm SURF może dawać zadowalające rezultaty.
 
+Biorąc pod uwagę powyższe założenia, wyznacznik aproksymowanej macierzy Hessego wynosi:
+\begin{equation}\textsl{}
+det(H_{aproks}) = D_{xx}D_{yy} - (wD_{xy})^2.
+\end{equation}
+Aby uczynić aproksymację Hesjanu bardziej dokładną wprowadzono parametr \textit{w}. Teoretycznie jest on zależny od skali, jednakże badania wykazały [BIBLIOGRAFIA], że można uczynić go stałą równą \textit{0.9}.  
 
-Na rysunku \ref{fig:Paradygmat} przedstawiono paradygmaty Przemysłu 4.0 w obrębie inteligentnej fabryki. 
+Najważniejszy element detekcji to proces polegający na ograniczaniu lokalnych wartości niemaksymalnych (z ang. \textit{non-maximal suppression}) dla wyznaczników macierzy Hessego przy różnych wartościach parametru $\sigma$.
 
+Aby wykryć cechy obrazu w przestrzeni skali, algorytm SURF wykonuje proces polegający na ograniczaniu lokalnych wartości niemaksymalnych (z ang. \textit{non-maximal suppression}) dla wyznaczników macierzy Hessego przy różnych wartościach parametru $\sigma$. Jego działanie sprowadza się do wyliczania zwiększania  
+
+Tworząc przestrzeń skali algorytm SURF dokonuje splotu obrazu całkowego z coraz większymi filtrami - aproksymacjami drugiej pochodnej rozkładu Gaussa. Podział przestrzni na oktawy i poziomy jest stały i został dokładnie opisany w pracy [BIBLIOGRAFIA] oraz na rysunku [RYSUNEK].
 
 \subsection{Przemysł 4.0 i Big Data}
 
