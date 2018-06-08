@@ -89,17 +89,10 @@ Etap tworzenia układu interfejsu użytkownika podzielony jest na dwie fazy: Mie
 
 
 \section{Algorytm SURF}
-Algorytm SURF (skrót od ang. \textit{Speeded Up Robust Features}) został opatentowany przez grupę naukowców w 2007 roku [BIBLIOGRAFIA]. Należy do rodziny algorytmów bazujących na punktach kluczowych i służy do porównywania dwóch obrazów operując w odcieniach szarości. W celu znalezienia cech obrazu niezależnych od zmiany skali wykorzystuje opisaną w podrozdziale \ref{sec:StateSpace} technikę utworzenia ciągłej przestrzeni skali opartej na rozkładzie Gaussa. Dodatkowo algorytm ten dzieli przestzeń skali na poziomy oraz oktawy. Oktawa odpowiada zbiorowi splotów, w którym wartość parametru $\sigma$ zostaje podwojona. Każda oktawa podzielona jest na jednakowo odległe (ze względu na parametr $\sigma$) poziomy. Przykład przedstawiono na rysunku \ref{im: OctavesAndLevels}.
-\begin{figure}[h]
-	%\centering
-	\includegraphics[width=10cm]{OctavesAndLevels}
-	\centering
-	\caption{Trzy oktawy z trzema poziomami. Szukanie cech obrazu obejmuje sąsiedztwo badanego punktu.}
-	\label{im: OctavesAndLevels}
-\end{figure}
+Algorytm SURF (skrót od ang. \textit{Speeded Up Robust Features}) został opatentowany przez grupę naukowców w 2007 roku [BIBLIOGRAFIA]. Należy do rodziny algorytmów bazujących na punktach kluczowych i służy do porównywania dwóch obrazów operując w odcieniach szarości. W celu znalezienia cech obrazu niezależnych od zmiany skali wykorzystuje opisaną w podrozdziale \ref{sec:StateSpace} technikę utworzenia ciągłej przestrzeni skali opartej na rozkładzie Gaussa. 
+%Dodatkowo algorytm ten dzieli przestzeń skali na poziomy oraz oktawy. Oktawa odpowiada zbiorowi splotów, w którym wartość parametru $\sigma$ zostaje podwojona. Każda oktawa podzielona jest na jednakowo odległe (ze względu na parametr $\sigma$) poziomy. Przykład przedstawiono na rysunku \ref{im: OctavesAndLevels}.
 
 Działanie algorytmu można podzielić na 3 etapy:
-
 \begin{itemize}
 	\item Detekcja (z ang. \textit{Detection}) – faza automatycznej identyfikcji punktów kluczowych (z ang. \textit{interest points}). Te same punkty powinny zostać wykryte niezależnie od zmian w położeniu, naświetleniu oraz orientacji obrazu, również w pewnym stopniu od zmiany skali oraz punktu widzenia. 
 	\item Opis (z ang. \textit{Description}) – każdy punkt kluczowy powinien zostać opisany w unikatowy sposób., aby był niezależny od rotacji oraz przeskalowaniu obrazu.
@@ -109,7 +102,15 @@ Działanie algorytmu można podzielić na 3 etapy:
 W dalszej części rozdziału przedstawiono bardziej dokładną analizę dwóch pierwszych etapów.
 
 \subsection{Detekcja}
-Algorytm SURF do wykrycia punktów kluczowych wykorzystuje aproksymację wyznacznika Hesjanu. Najważniejszy element detekcji to proces polegający na ograniczaniu lokalnych wartości niemaksymalnych (z ang. \textit{non-maximal suppression}) dla wyznaczników macierzy Hessego przy różnych wartościach parametru $\sigma$. W celu redukcji czasu obliczeń korzysta z obrazu całkowego opisanego w podrozdziale \ref{sec:IntegralImage}.
+Algorytm SURF do wykrycia punktów kluczowych wykorzystuje wyznacznik Hesjanu. Dokładniej rzecz ujmując, metoda ta wyszukuje na obrazie regionów, w których wyznacznik macierzy Hessego jest maksymalny. 
+
+
+
+
+
+
+%Najważniejszy element detekcji to proces polegający na ograniczaniu lokalnych wartości niemaksymalnych (z ang. \textit{non-maximal suppression}) dla wyznaczników macierzy Hessego przy różnych wartościach parametru $\sigma$. W celu redukcji czasu obliczeń korzysta z obrazu całkowego opisanego w podrozdziale \ref{sec:IntegralImage}.
+
 Mając do dyspozycji punkt \textit{\textbf{x}=(x,y)} z obrazu całkowego, macierz Hessego \textit{H(\textbf{x},$\sigma$)} dla skali $\sigma$ jest zdefiniowana następująco:
 \begin{equation}\textsl{}
 H(\textbf{x},\sigma) = 
@@ -134,19 +135,40 @@ Udowodniono, że przestrzeń skali oparta o funkcję Gaussa jest rozwiązaniem o
 	\caption{Dwa rysunki po lewej to sploty \textit{$L_{xy}$} oraz \textit{$L_{yy}$} poddane dyskretyzacji oraz przycięciu. Po prawej stronie przedstawiono aproksymacje wyżej wymienionych splotów (odpowiednio \textit{$D_{xy}$} oraz \textit{$D_{yy}$}). Szare regiony są równe zero [BIBLIOGRAFIA]}
 	\label{im: GaussianApproximation}
 \end{figure}
-Przedstawione aproksymacje odpowiadają splotom, dla których parametr $\sigma$ jest równy 1.2. Jest to najmniejsza wartość skali, dla której algorytm SURF może dawać zadowalające rezultaty.
+
+Przedstawione filtry o rozmiarze \textit{9 x 9} odpowiadają splotom, dla których parametr $\sigma$ jest równy 1.2. Jest to najmniejsza wartość skali, dla której algorytm SURF może dawać zadowalające rezultaty.
 
 Biorąc pod uwagę powyższe założenia, wyznacznik aproksymowanej macierzy Hessego wynosi:
 \begin{equation}\textsl{}
 det(H_{aproks}) = D_{xx}D_{yy} - (wD_{xy})^2.
 \end{equation}
 Aby uczynić aproksymację Hesjanu bardziej dokładną wprowadzono parametr \textit{w}. Teoretycznie jest on zależny od skali, jednakże badania wykazały [BIBLIOGRAFIA], że można uczynić go stałą równą \textit{0.9}.  
+Wynikiem powyższych działań jest uzyskanie aproksymowanego wyznacznika Hesjanu dla każdego punktu obrazu \textit{\textbf{x}} przy różnych wartościach parametru $\sigma$.
 
-Najważniejszy element detekcji to proces polegający na ograniczaniu lokalnych wartości niemaksymalnych (z ang. \textit{non-maximal suppression}) dla wyznaczników macierzy Hessego przy różnych wartościach parametru $\sigma$.
+ Algorytm SURF dzieli przestrzeń skali na oktawy. Oktawa reprezentuje zbiór odpowiedzi filtrów otrzymanych przez splot obrazu z filtrami coraz większych rozmiarów. Każda oktawa odpowiada fragmentowi przestrzeni skali, w którym nastąpiło podojenie parametru $\sigma$ oraz jest podzielona na stałą liczbę poziomów. Wraz ze wzrostem wielkości filtrów musi zostać spełnione dwa założenia: o istnieniu piksela centralnego oraz o zachowaniu proporcji poszczególnych obszarów maski. W pracy [BIBLIOGRAFIA] opisano szczegółowo, w jaki sposób definiować oktawy oraz liczbę poziomów dla nich. Przykład poprawnego skalowania filtra przedstawiono na rysunku \ref{im: FiltersScale}. 
+ 
+ \begin{figure}[h]
+ 	%\centering
+ 	\includegraphics[width=12cm]{FiltersScale}
+ 	\centering
+ 	\caption{Filtr $D_{yy}$ oraz $D_{xy}$ dla dwóch kolejnych poziomów w oktawie (\textit{9 x 9} oraz \textit{15 x 15}). Długość czarnego regionu dla górnego filtra może zostać zwiększona tylko o parzystą liczbę pikseli w celu zagwarantowania istnienia piksela centralnego.}
+ 	\label{im: FiltersScale}
+ \end{figure}
+ 
+W celu zlokalizowania punktów kluczowych na obrazie we wszystkich skalach, algorytm SURF wykorzystuje ograniczanie lokalnych wartości niemaksymalnych (z ang. \textit{non-maximal suppression}) dla obszaru wielkości \textit{3 x 3 x 3} piksele. Zasada działania została opisana w pracy [BIBLIOGRAFIA]. Następnie maksima wyznacznika Hessjanu dla poszczególnych skal sa interpolowane na obraz oryginalny.
 
-Aby wykryć cechy obrazu w przestrzeni skali, algorytm SURF wykonuje proces polegający na ograniczaniu lokalnych wartości niemaksymalnych (z ang. \textit{non-maximal suppression}) dla wyznaczników macierzy Hessego przy różnych wartościach parametru $\sigma$. Jego działanie sprowadza się do wyliczania zwiększania  
+\subsection{Deskryptor} 
+Aby punkty kluczowe były niezależne od rotacji obrazu, 
+ %O0ktawa odpowiada zbiorowi splotów, w którym wartość parametru $\sigma$ zostaje podwojona. Każda oktawa podzielona jest na jednakowo odległe (ze względu na parametr $\sigma$) poziomy. Przykład przedstawiono na rysunku \ref{im: OctavesAndLevels}.
 
-Tworząc przestrzeń skali algorytm SURF dokonuje splotu obrazu całkowego z coraz większymi filtrami - aproksymacjami drugiej pochodnej rozkładu Gaussa. Podział przestrzni na oktawy i poziomy jest stały i został dokładnie opisany w pracy [BIBLIOGRAFIA] oraz na rysunku [RYSUNEK].
+
+
+
+%Najważniejszy element detekcji to proces polegający na ograniczaniu lokalnych wartości niemaksymalnych (z ang. \textit{non-maximal suppression}) dla wyznaczników macierzy Hessego przy różnych wartościach parametru $\sigma$.
+
+%Aby wykryć cechy obrazu w przestrzeni skali, algorytm SURF wykonuje proces polegający na ograniczaniu lokalnych wartości niemaksymalnych (z ang. \textit{non-maximal suppression}) dla wyznaczników macierzy Hessego przy różnych wartościach parametru $\sigma$. Jego działanie sprowadza się do wyliczania zwiększania  
+
+%Tworząc przestrzeń skali algorytm SURF dokonuje splotu obrazu całkowego z coraz większymi filtrami - aproksymacjami drugiej pochodnej rozkładu Gaussa. Podział przestrzni na oktawy i poziomy jest stały i został dokładnie opisany w pracy [BIBLIOGRAFIA] oraz na rysunku [RYSUNEK].
 
 \subsection{Przemysł 4.0 i Big Data}
 
