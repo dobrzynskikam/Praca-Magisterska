@@ -7,21 +7,23 @@
 \BOOKMARK [1][-]{section.2.3}{Windows Presentation Foundation \(WPF\)}{chapter.2}% 7
 \BOOKMARK [1][-]{section.2.4}{Algorytm SURF}{chapter.2}% 8
 \BOOKMARK [2][-]{subsection.2.4.1}{Detekcja}{section.2.4}% 9
-\BOOKMARK [2][-]{subsection.2.4.2}{Opis}{section.2.4}% 10
-\BOOKMARK [2][-]{subsection.2.4.3}{Przemysl 4.0 i Big Data}{section.2.4}% 11
-\BOOKMARK [1][-]{section.2.5}{Systemy SCADA}{chapter.2}% 12
-\BOOKMARK [0][-]{chapter.3}{Technologie i pojecia wykorzystane w projekcie}{}% 13
-\BOOKMARK [1][-]{section.3.1}{Protok\363l Modbus}{chapter.3}% 14
-\BOOKMARK [2][-]{subsection.3.1.1}{Komunikacja typu Master-Slave}{section.3.1}% 15
-\BOOKMARK [2][-]{subsection.3.1.2}{Zasady adresacji}{section.3.1}% 16
-\BOOKMARK [2][-]{subsection.3.1.3}{Opis pojedynczej ramki}{section.3.1}% 17
-\BOOKMARK [2][-]{subsection.3.1.4}{Modbus TCP/IP}{section.3.1}% 18
-\BOOKMARK [1][-]{section.3.2}{Kod uzupelnien do dw\363ch}{chapter.3}% 19
-\BOOKMARK [1][-]{section.3.3}{Proste zadanie kinematyki}{chapter.3}% 20
-\BOOKMARK [2][-]{subsection.3.3.1}{Macierz orientacji oraz macierz przeksztalcenia}{section.3.3}% 21
-\BOOKMARK [2][-]{subsection.3.3.2}{Kinematyka prosta}{section.3.3}% 22
-\BOOKMARK [2][-]{subsection.3.3.3}{Notacja Denavita-Hartenberga}{section.3.3}% 23
-\BOOKMARK [0][-]{chapter.4}{Opis realizacji aplikacji}{}% 24
-\BOOKMARK [1][-]{section.4.1}{Aplikacja SCADA}{chapter.4}% 25
-\BOOKMARK [2][-]{subsection.4.1.1}{Komunikacja z robotem}{section.4.1}% 26
-\BOOKMARK [2][-]{subsection.4.1.2}{Utworzenie obiektu}{section.4.1}% 27
+\BOOKMARK [2][-]{subsection.2.4.2}{Deskryptor}{section.2.4}% 10
+\BOOKMARK [1][-]{section.2.5}{Accord .NET}{chapter.2}% 11
+\BOOKMARK [1][-]{section.2.6}{C\043}{chapter.2}% 12
+\BOOKMARK [1][-]{section.2.7}{.NET}{chapter.2}% 13
+\BOOKMARK [1][-]{section.2.8}{Systemy SCADA}{chapter.2}% 14
+\BOOKMARK [0][-]{chapter.3}{Technologie i pojecia wykorzystane w projekcie}{}% 15
+\BOOKMARK [1][-]{section.3.1}{Protok\363l Modbus}{chapter.3}% 16
+\BOOKMARK [2][-]{subsection.3.1.1}{Komunikacja typu Master-Slave}{section.3.1}% 17
+\BOOKMARK [2][-]{subsection.3.1.2}{Zasady adresacji}{section.3.1}% 18
+\BOOKMARK [2][-]{subsection.3.1.3}{Opis pojedynczej ramki}{section.3.1}% 19
+\BOOKMARK [2][-]{subsection.3.1.4}{Modbus TCP/IP}{section.3.1}% 20
+\BOOKMARK [1][-]{section.3.2}{Kod uzupelnien do dw\363ch}{chapter.3}% 21
+\BOOKMARK [1][-]{section.3.3}{Proste zadanie kinematyki}{chapter.3}% 22
+\BOOKMARK [2][-]{subsection.3.3.1}{Macierz orientacji oraz macierz przeksztalcenia}{section.3.3}% 23
+\BOOKMARK [2][-]{subsection.3.3.2}{Kinematyka prosta}{section.3.3}% 24
+\BOOKMARK [2][-]{subsection.3.3.3}{Notacja Denavita-Hartenberga}{section.3.3}% 25
+\BOOKMARK [0][-]{chapter.4}{Opis realizacji aplikacji}{}% 26
+\BOOKMARK [1][-]{section.4.1}{Aplikacja SCADA}{chapter.4}% 27
+\BOOKMARK [2][-]{subsection.4.1.1}{Komunikacja z robotem}{section.4.1}% 28
+\BOOKMARK [2][-]{subsection.4.1.2}{Utworzenie obiektu}{section.4.1}% 29

@@ -158,37 +158,76 @@ Wynikiem powyższych działań jest uzyskanie aproksymowanego wyznacznika Hesjan
 W celu zlokalizowania punktów kluczowych na obrazie we wszystkich skalach, algorytm SURF wykorzystuje ograniczanie lokalnych wartości niemaksymalnych (z ang. \textit{non-maximal suppression}) dla obszaru wielkości \textit{3 x 3 x 3} piksele. Zasada działania została opisana w pracy [BIBLIOGRAFIA]. Następnie maksima wyznacznika Hessjanu dla poszczególnych skal sa interpolowane na obraz oryginalny.
 
 \subsection{Deskryptor} 
-Aby punkty kluczowe były niezależne od rotacji obrazu, 
- %O0ktawa odpowiada zbiorowi splotów, w którym wartość parametru $\sigma$ zostaje podwojona. Każda oktawa podzielona jest na jednakowo odległe (ze względu na parametr $\sigma$) poziomy. Przykład przedstawiono na rysunku \ref{im: OctavesAndLevels}.
+Aby punkt kluczowy był niewrażliwy na zmiany orientacji, punktowi przypisywana zostaje orientacja. W tym celu algorytm SURF wylicza odpowiedź falki Haara dla kolistego otoczenia punktu orientacji. Falka jest wyliczana w kierunku poziomym (\textit{dx}) oraz pionowym (\textit{dy}) dla każdego elementu z otoczenia punktu kluczowego.
+Główna orientacja jest wyliczana następująco: mając odpowiedzi falki Haara dla każdego punktu z otoczenia, skonstruowano przesuwne okno o kącie rozwarcia równym 60 stopni. Dla każdego okna wyliczano sumę wszystkich elementów, a maska zostaje przesunięta. Najdłuższy znaleziony wektor stanowi główną orientację znalezionego punktu kluczowego. Szczegóły na rysunku \ref{im: SurfOrientationTwo}.
 
+ \begin{figure}[h]
+	%\centering
+	\includegraphics[width=12cm]{SurfOrientationTwo}
+	\centering
+	\caption{Przypisanie orientacji. Okno o kącie rozwarcia 60 stopni obraca się wokół początku układu współrzędnych, a wyliczone odpowiedzi falki Haara zostają sumowane tworząc wektory oznaczone kolorem czerwonym. Najdłuższy wektor determinuje główną orientację punku kluczowego.}
+	\label{im: SurfOrientationTwo}
+\end{figure}
 
+Kolejnym etapem tworzenia deskryptora jest podzielenie obszaru wokół punktu kluczowego na  \textit{4 x 4} kwadratowe obszary. Taki podział zachowuje istotne przestrzenne informacje. Każdy z podregionów zawiera \textit{5 x 5} punktów rozmieszczonych regularnie w wierzchołkach siatki. Dla każdego punktu wyliczone zostają odpowiedzi falki Haara w kierunku poziomym oraz pionowym. Odpowiedzi te uwzględniają rotację całego obszaru zgodnie z orientacją badanego punktu kluczowego. Schemat przedstawiono na rysunku \ref{im: Description}. Następnie odpowiedzi \textit{dx} oraz \textit{dy} są sumowane dla każdego z podregionów. Stanowią one pierwszą część deskryptora cechy. Dodatkowo w celu uwzględnienia informacji o zmianach intensywności wyliczane są sumy modułów odpowiedzi falki Haara. 
 
+Zatem, dla każdego z podregionów otrzymano czterowymiarowy wektor opisujacy o strukturze \textit{\textbf{v} = ($\sum$$d_x$, $\sum$$d_y$, $\sum$$|d_x|$, $\sum$$|d_y|)$}. Uwzględniając wszystkie podregiony, punkt kluczowy opisany jest 64-elementowym wektorem. 
 
-%Najważniejszy element detekcji to proces polegający na ograniczaniu lokalnych wartości niemaksymalnych (z ang. \textit{non-maximal suppression}) dla wyznaczników macierzy Hessego przy różnych wartościach parametru $\sigma$.
+ \begin{figure}[h]
+	%\centering
+	\includegraphics[width=16cm]{Description}
+	\centering
+	\caption{Tworzenie deskryptora. Otoczenie punktu kluczowego obrócono zgodnie z orientacją cechy. Dla wszystkich elementów podregionu wyliczono odpowiedź falki Haara w dwóch kierunkach.}
+	\label{im: Description}
+\end{figure}
 
-%Aby wykryć cechy obrazu w przestrzeni skali, algorytm SURF wykonuje proces polegający na ograniczaniu lokalnych wartości niemaksymalnych (z ang. \textit{non-maximal suppression}) dla wyznaczników macierzy Hessego przy różnych wartościach parametru $\sigma$. Jego działanie sprowadza się do wyliczania zwiększania  
+MOŻNA DOPISAC O ZNAKU LAPLASJANU I O ROZRZERZENIU DO 128 ELEMENTOW.
 
-%Tworząc przestrzeń skali algorytm SURF dokonuje splotu obrazu całkowego z coraz większymi filtrami - aproksymacjami drugiej pochodnej rozkładu Gaussa. Podział przestrzni na oktawy i poziomy jest stały i został dokładnie opisany w pracy [BIBLIOGRAFIA] oraz na rysunku [RYSUNEK].
-
-\subsection{Przemysł 4.0 i Big Data}
-
-Big Data według \cite{BigDataTabakow} to termin stosowany do dużych zbiorów danych, które charakteryzują się różnorodnością gromadzonych informacji, dużą objętością, strumieniowym napływem danych w czasie rzeczywistym, złożonością oraz wykorzystaniem innowacyjnych technologii w celu uzyskania użytecznej wiedzy. Przedstawione cechy Big Data można zdefiniować w następujący sposób: 
+\section{Accord .NET}
+Accord .NET jest to szkielet aplikacyjny oparty o środowisko .NET. Zawiera biblioteki implementujące bardzo wiele algorytmów z szerokiej listy dziedzin nauki takich jak:
 
 \begin{itemize}
-	\item Objętość - charakteryzuje się dużym wzrostem otrzymanych danych, dla których stosuje się najnowsze technologie bazodanowe. Według \cite{Industry40} w nowoczesnym przemyśle ponad 1000 eksabajtów (2$^{60}$ bajtów) danych jest tworzonych przez systemy oparte na chmurze, czujniki, inteligentne maszyny i urządzenia. Szacowane jest, że ilość tych danych w przeciągu paru najbliższych lat wzrośnie.
-	
-	\item Przepływ strumieniowy - poprzez szybkie i strumieniowe napływanie informacji do procesów przemysłowych i biznesowych wymagane jest zwiększenie mocy obliczeniowej do analizy tych danych w czasie rzeczywistym. Pozwala to na ,,wyłuskanie'' istotnych informacji dla ww. procesów.
-	
-	\item Różnorodność - pochodzenie danych może mieć wiele źródeł i często zapisywane są w postaci różnych modeli, a ich wartość może być wyrażona w dowolnej formie, np. liczba, tekst, dźwięk, obraz, itp.
-	
-	\item Złożoność - charakteryzuje się rożnym uporządkowaniem danych, które możemy podzielić na dane z uporządkowaną strukturą (np. pesel, nr telefonu), częściowo uporządkowaną (np. e-mail, pliki XML) oraz nieuporządkowaną (np. zdjęcia, pliki wideo). Wydobycie informacji z tych rekordów oraz dobranie odpowiedniej metody do ich analizy jest niezbędne do dalszych czynności związanych z tymi danymi. 
-	
-\end{itemize} 
+	\item klasyfikacja: sieci neuronowe, metody wektorów nośnych (z ang. Support Vector Machine, SVM), algorytm Levenberga-Marquardta, model Markova, tworzenie drzew decyzyjnych
+	\item regresja: regularyzacja, regresja liniowa, wielomianowa, 
+	\item analiza skupień (z ang. \textit{clustering}): algorytm k-średnich, podział binarny. 
+	\item rozkład prawdopodobieństwa: rozkład normalny, Poissona, Cauchy'ego
+	\item Przetwarzanie obrazów cyfrowych (z ang. \textit{digital image processing, DIP}): deskryptory punktów kluczowych - SURF, FREAK, FAST; deskryptory gęstości - HOG, LBP
+	\item Rozpoznawanie obrazów (z ang. computer vision): metody do detekcji, śledzenia oraz transformacji obiektów w strumieniu wideo. 
+\end{itemize}
+
+Szkielet ten został zaimplementowany aby rozszerzyć możliwości istniejącego rozwiązania - AForge .NET, jednak z czasem oba podmioty zostały ze sobą połączone pod jedną nazwą Accord .NET. Framework jest dostępny do pobrania z poziomu kodu zródłowego jak również za pomocą systemu zarządzania pakietami - \textit{NuGet}.
+
+\section{C\#}
+ C\# jest językiem programowania spełniającym wiele paradygmatów takich jak programowanie funkcyjne, obiektowe, imperatywne czy generyczne. Został utworzony przez firmę \textit{Microsoft} wewnątrz platformy .NET i zatwierdzony jako standard przez ISO (ISO/IEC 23270:2006) oraz Ecma (ECMA-334). Jest jednym z języków wchodzącym w skład Architektury Wspólnego Języka (z ang. \textit{Common Language Infrastructure, }). Najnowsza wersja języka to C\# 7.3, która ukazała się w 2018 roku wraz z środowiskiem programistycznym \textit{Visual Studio 2017} w wersji 15.7.2.
+ Przykładowe cechy języka C\#:
+ \begin{itemize}
+ 	\item C\# z założenia ma być językiem prostym, nowoczesnym, obiektowym
+ 	\item Język posiada hierarchię klas, a wszystkie elementy (nawet najprostsze typy) dziedziczą z klasy \textit{System.Object}.
+ 	\item Język ma zapewniać wsparcie w tworzeniu oprogramowania, w skład którego wchodzą: sprawdzanie silnego typowania, kontrola zakresu tablic, detekcja prób użycia niezainicjowanych zmiennych.
+ 	\item Automatyczne odśmiecanie pamięci (usuwanie nieużywanych elementów) - wykorzystanie mechanizmu \textit{Garbage Collector}.
+ 	\item Wielodziedziczenie, czyli dziedziczenie od więcej niż jednej klasy jest niedozwolone. Wielokrotne dziedziczenie jest możliwe jedynie po interfejsach.
+ 	\item Wsparcie dla internacjonalizacji.
+ 	\item Przenośność oprogramowania oraz łatwość wdrożenia w rozproszonych środowiskach. 
+ 	\item Język C\# jest bezpieczny w kontekście konwersji typów. Automatyczna konwersja jest dokonywana tylko w przypadku, gdy dane rzutowanie jest uznawane za bezpieczne.
+ 	\item Mechanizm refleksji oraz dynamicznego tworzenia kodu. Takie wsparcie umożliwia tworzenie oprogramowania, którego części nie jest w całości znane podczas kompilacji.
+ 	Takie działanie jest szeroko wykorzystywane w procesie mapowania obiektowo-relacyjnego (z ang. Object-Relational Mapping, ORM).
+ \end{itemize} 
+
+\section{.NET}
+Platforma programistyczna .NET została zaprojektowana przez firmę \textit{Microsoft}. Zawiera w sobie obszerną bibliotekę klas FCL (z ang. \textit{Framework Class Library}) oraz zapewnia kompatybilność dla kilku języków programowania. Programy napisane z wykorzystaniem .NET są wykonywane w środowisku CLR (z ang. \textit{Common Language Runtime}) - jest to maszyna wirtualna, która dostarcza usługi takie jak bezpieczeństwo, zarządzanie pamięcią czy obsługę wyjątków. 
+W skład architektury wchodzą:
 
 
-Zwiększająca się liczba danych, tworzenie inteligentnych fabryk oraz produktów, które będą miały zdolność do gromadzenia i przysłaniach danych w czasie rzeczywistym, to główne argumenty do wykorzystania Big Data w Przemyśle 4.0. Dodatkowo wykorzystanie obu koncepcji pozwoli na osiągnięcie niedrogich i bezbłędnych procesów, które będą osiągać wysoką wydajność \cite{Industry40}.  
 
-
+Cechy platformy .NET:
+\begin{itemize}
+	\item Głównym elementem platformy .NET jest Środowisko Uruchomieniowe Wspólnego Języka (z ang. \textit{Common Language Runtime}, CLR). Stanowi ono implementację CLI gwarantując wiele właściwości oraz zachowań w obszarach zarządzania pamięcią bądź bezpieczeństwa. Głównym zadaniem komponentu CLR jest zamiana skompilowanego kodu CIL (z ang. Common Intermediate Language) na kod maszynowy, który jest dostosowany do maszyny, na jakiej został uruchomiony. MOŻE RYSUNEK?
+	\item Kompatybilność wsteczna: ponieważ systemu komputerowe bardzo często wymagają interakcji pomiędzy nowszymi i starszymi komponentami, platforma .NET daje możliwość wykonywania funkcji poza platformą. Dostęp do komponentów COM jest możliwy dzięki wykorzystaniu przestrzeni nazw \textit{System.Runtime.InteropServices} oraz \textit{System.EnterpriseServices}.
+	\item W skład platformy .NET wchodzi komponent CTS (z ang. \textit{Common Type System}), który definiuje wszystkie możliwe typy danych wspierane przez CLR oraz w jaki sposób mogą one ze sobą ingerować. Dzięki temu jest możliwa wymiana typów bądz instancji obiektów pomiędzy bibliotekami oraz aplikacjami napisanymi w różnych językach opartych o .NET.
+	\item Przenośność: platforma została zaprojektowana w taki sposób, aby jej implementacja była możliwa dla różnych systemów operacyjnych.
+	\item Bezpieczeństwo: platforma .NET dostarcza wspólny model bezpieczeństwa dla programów tworzonych w jej ramach. Została zaprojektowana w taki sposób, aby uniknąć wielu problemów z bezpieczeństwem aplikacji, do których należy m.in. przepełnienie bufora, które jest bardzo często używane przez złośliwe oprogramowanie (z ang. \textit{malicious software}, w skrócie \textit{malware}).
+	
+\end{itemize}
 %Już teraz w nowoczesnym przemyśle ponad 1000 eksabajtów (2$_{60}$ bajtów) danych jest tworzonych przez systemy oparte na chmurze, czujniki, inteligentne maszyny i urządzenia. Szacowane jest, że ilość tych danych w przeciągu paru najbliższych lat wzrośnie. Dlatego wykorzystanie Big Data, czyli gromadzenie i przetwarzanie dużych różnorodnych zbiorów danych, w Przemyśle 4.0 będzie odgrywać kluczową rolę. Celem Big Data jest pomoc w tworzeniu inteligentnych fabryk, w których maszyny i zasoby będą wymieniać ze sobą różne informacje. Dodatkowo inteligentne produkty będą miały zdolność do gromadzenia i przesyłania danych w takcie ich użytkowania. Spowoduje to ogromną ilość zebranych informacji, które trzeba będzie przeanalizować w czasie rzeczywistym.  
 
 %Głównymi założeniami Big Data w przemyśle jest osiągnięcie niedrogich i bezbłędnych procesów, które będą osiągać wysoka wydajność [082 - 7].  
