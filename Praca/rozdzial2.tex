@@ -50,6 +50,7 @@ g(x,y,\sigma) = \frac{1}{2\pi\sigma}e^{-(x^2+y^2)/2\sigma}
 Dla $\sigma = 0$ filtr Gaussa staje się funkcją impulsową, zatem \textit{L(x,y,0) = f(x,y)}. Wraz ze zwiększaniem parametru $\sigma$ przestrzeń skali \textit{L} staje się coraz bardziej rozmyta, czyli coraz mniej szczegółów przestaje być widoczne. Na rysunku \ref{im: Scale Space Representation} przedstawiono przykład tworzenia przestrzennej reprezentacji skali.
 
 \section{Windows Presentation Foundation (WPF)}
+\label{sec: WPF}
 Windows Presentation Foundation jest silnikiem graficznym dostarczanym przez firmę Microsoft. Jego premiera nastąpiła w 2006 roku, gdy stał się częścią platformy programistycznej .NET w wersji 3.0.  Jest wykorzystywany głównie do budowania aplikacji okienkowych nowej generacji dla systemu opracyjnego Windows. WPF zbudowany został całkowicie niezależnie do dotychczasowego silnika renderujacego GDI. Dostarcza model programistyczny umożliwiajacy budowanie aplikacji oraz pozwalający na bezwzględną separację logiki biznesowej od interfejsu użytkownika. 
 
 \begin{figure}[h]
@@ -215,8 +216,7 @@ Szkielet ten został zaimplementowany aby rozszerzyć możliwości istniejącego
 
 \section{.NET}
 Platforma programistyczna .NET została zaprojektowana przez firmę \textit{Microsoft}. Zawiera w sobie obszerną bibliotekę klas FCL (z ang. \textit{Framework Class Library}) oraz zapewnia kompatybilność dla kilku języków programowania. Programy napisane z wykorzystaniem .NET są wykonywane w środowisku CLR (z ang. \textit{Common Language Runtime}) - jest to maszyna wirtualna, która dostarcza usługi takie jak bezpieczeństwo, zarządzanie pamięcią czy obsługę wyjątków. 
-W skład architektury wchodzą:
-
+W skład architektury wchodzą: MOŻNA COS DOPISAĆ
 
 
 Cechy platformy .NET:
@@ -228,79 +228,22 @@ Cechy platformy .NET:
 	\item Bezpieczeństwo: platforma .NET dostarcza wspólny model bezpieczeństwa dla programów tworzonych w jej ramach. Została zaprojektowana w taki sposób, aby uniknąć wielu problemów z bezpieczeństwem aplikacji, do których należy m.in. przepełnienie bufora, które jest bardzo często używane przez złośliwe oprogramowanie (z ang. \textit{malicious software}, w skrócie \textit{malware}).
 	
 \end{itemize}
-%Już teraz w nowoczesnym przemyśle ponad 1000 eksabajtów (2$_{60}$ bajtów) danych jest tworzonych przez systemy oparte na chmurze, czujniki, inteligentne maszyny i urządzenia. Szacowane jest, że ilość tych danych w przeciągu paru najbliższych lat wzrośnie. Dlatego wykorzystanie Big Data, czyli gromadzenie i przetwarzanie dużych różnorodnych zbiorów danych, w Przemyśle 4.0 będzie odgrywać kluczową rolę. Celem Big Data jest pomoc w tworzeniu inteligentnych fabryk, w których maszyny i zasoby będą wymieniać ze sobą różne informacje. Dodatkowo inteligentne produkty będą miały zdolność do gromadzenia i przesyłania danych w takcie ich użytkowania. Spowoduje to ogromną ilość zebranych informacji, które trzeba będzie przeanalizować w czasie rzeczywistym.  
 
-%Głównymi założeniami Big Data w przemyśle jest osiągnięcie niedrogich i bezbłędnych procesów, które będą osiągać wysoka wydajność [082 - 7].  
+\section{Microsoft Visual Studio}
+Microsoft Visual Studio to zintegrowane środowisko programistyczne (z ang. \textit{Integrated Deveopment Environment, IDE}) dostarczane prze firmę \textit{Microsoft}. Służy do budowania aplikacji konsolowych, jak również stron internetowych, aplikacji webowych oraz mobilnych. Visual Studio używa dostarczanych przez firmę Microsoft platform do tworzenia oprogramowania, do których należą m.in Windows Forms oraz Windows Presentation Foundation. Umożliwia tworzenie oprogramowania w 36 różnych językach programowania tj: C\#, C, C++, Visual Basic .NET, JavaScript czy CSS. Obecnie najnowsza wersja to Visual Studio 2017. 
 
+Jednym z najważniejszych elementów wchodzących w skład środowiska jest edytor kodu. Jak każde IDE, Visual Studio zawiera edytor umożliwiający podświetlanie składni oraz auto-uzupełnianie brakujących fraz wykorzystując mechanizm \textit{IntelliSense}. Środowisko programistyczne wspiera tzw. kompilację w tle. W trakcie pisania kodu, Visual Studio kompiluje kod w tle w celu dostarczenia informacji o składni oraz ewentualnych błędach kompilacji. 
 
-\section{Systemy SCADA}
-\label{sec:SCADA}
+Visual Studio zawiera debugger umożliwiający redukcję błędów w oprogramowaniu zarówno dla kodu zarządzanego, jak i natywnego. Dodatkowo istnieje możliwość dopięcia debuggera do procesu w celu monitorowania zachowania. Visual Studio umożliwia dokonywania zrzutów pamięci (z ang. \textit{memory dumps}) jak również wczytywania ich w dalszych momentach debugowania. Debugger umożliwia tworzenie punktu wstrzymania (z ang. \textit{breakpiont}) - miejsca celowego zatrzymania wykonywania programu w celu analizy jego zachowania. Dodatkowo punkty wstrzymania mogą być warunkowe, czyli zatrzymanie w punkcie następuje w momencie spełnienia warunku. Debugger wspiera tzw. "Edytuj i Kontynuuj" - jak nazwa sugeruje, istnieje możliwość zmiany wartosci zmiennej podczas procesu debugowania.
 
-SCADA (ang. Supervisory Control and Data Acquisition) jest to system, składający się zarówno z oprogramowania jak i części sprzętowej, który pozwala przemysłowym organizacjom na usprawnienie procesu produkcyjnego. Usprawnienie to polega na możliwości kontrolowania procesu lokalnie oraz ze zdalnych lokalizacji, monitorowania i zbierania danych procesu w czasie rzeczywistym, bezpośredniej interakcji pomiędzy urządzeniami a człowiekiem, a także rejestrowanie zdarzeń w formie plików tekstowych.
-%jest to system informatyczny nadzorujący przebieg procesu technologicznego lub produkcyjnego. Do jego głównych funkcji należy zbieranie danych z aktualnych pomiarów, ich wizualizacja, sterowanie procesem, alarmowanie oraz archiwizacja danych. 
+Visual Studio zawiera narzędzia do tworzenia interfejsu użytkownika. Jeden z przykładów może stanowić narzędzie \textit{Cider} pomocne w budowaniu aplikacji WPF. Umożliwia tworzenie aplikacji poprzez przeciąganie istniejących elementów z przybornika oraz ustawianiu ich własciwości w dedykowanym oknie. Ponadto istnieje możliwość edycji widoku z poziomu języka znaczników XAML. Szczegółowy opis technologii WPF znajduje się w podrozdziale \ref{sec: WPF}.
 
-Systemy te obejmują swoim działaniem większą część produkcji, od kilku stanowisk, aż po kompletny proces. Umożliwiają pełny monitoring procesu w postaci wizualizacji poszczególnych etapów produkcji. Integracja systemów SCADA z systemami sterowania (np. ze sterownikami PLC lub urządzeniami RTU) oraz urządzeniami pomiarowymi i wykonawczymi pozwala na sterowanie elementami procesu. Przyczynia się to do minimalizacji czasu przestoju występującego na produkcji, poprawnego eksploatowania maszyn, przez co maleje prawdopodobieństwo awarii.
+\section{Algorytm centroidów}
+Algorytm K-średnich (z ang. \textit{K-means}) jest jedną z najprostszych metod klasyfikacji bez nadzoru (z ang. \textit{unsupervised learning}). Grupowanie elementów oparte jest o wstępne podzielenie zbioru danych na z góry założoną liczbę klastrów. W kolejnych krokach niektóre z elementów skupień są przenoszone do innych klastrów w taki sposób, aby wariancja wewnątrz każdej z grup była jak najmniejsza. Minimalizacja wartosci wariancji powoduje, że elementy wewnątrz poszczególnych klastrów są do siebie maksymalnie podobne. 
 
-
-Wykorzystanie systemów SCADA pozwala na szybki i przejrzysty wgląd w rzeczywisty stan urządzeń produkcyjnych i wykonawczych. Umożliwia także nie tylko zmianę języka maszyn na język ludzki, ale również na podstawowe rejestrowanie danych, szybką lokalizację awarii, czy też automatyczną reakcję na określone zdarzenie. 
-
-W opisywanych systemach można zdefiniować również algorytmy postępowania oraz tzw. receptury, które przyśpieszają i wspomagają pracę operatora. Dodatkowym mechanizmem jest logowanie historyczne, które gromadzi dane na serwerze, następnie umożliwia szybką i intuicyjną analizę procesów za pomocą przygotowanych raportów. Całość tych narzędzi przyczynia się do optymalizacji procesu produkcyjnego.  
-
-
-
-Systemy SCADA znajdują zastosowanie w organizacjach przemysłowych i w firmach obejmujących sektory publiczne i prywatne. Celem zastosowania systemów tego typu jest kontrolowanie i utrzymywanie wydajnego procesu, a także podejmowanie lepszych decyzji w celu uniknięcia awarii lub skrócenia czasu przestoju. Systemy SCADA obejmują zarówno proste konfiguracje, jak również te złożone, dzięki czemu sprawdzają się w różnych przedsiębiorstwach, np:
-
-\begin{itemize}
-	\item energetyka,
-	\item wod-kan (wodociągi i kanalizacja),
-	\item branża spożywcza,
-	\item wydobywanie oleju i gazu. 
-\end{itemize}
-
-
-
-
-
-Współczesne systemy SCADA umożliwiają dostęp do danych w czasie rzeczywistym z dowolnego miejsca na świecie. Taki dostęp pozwala na podejmowanie decyzji o dalszym przebiegu procesu z dala od hali produkcyjnej. Dodatkowo nowoczesne aplikacje projektowe pozwalają na szybkie programowanie (ang. RAD - rapid application development), które umożliwia użytkownikowi stosunkowo łatwą implementacje aplikacji.
-
-%W ostatnich latach wprowadzono w systemach SCADA nowoczesne standardy i praktyki IT (ang. information technology), takie jak SQL i aplikacje internetowe. Poprawiło to wydajność, bezpieczeństwo i niezawodność opisywanego systemu. Dodatkowo użycie baz danych SQL (w myśl koncepcji Big Data) ułatwiło integrację SCADA z systemami MES i ERP.
-
-W ostatnich latach wprowadzono w systemach SCADA nowoczesne standardy i praktyki IT (ang. information technology), w myśl koncepcji Przemysłu 4.0, które poprawiły wydajność, bezpieczeństwo i niezawodność opisywanego systemu. Jednym z unowocześnień jest wykorzystanie Big Data, które pozwoliło na usprawnienie podstawowego zadania systemów SCADA, tzn. archiwizacje danych. Narzędzie, które jest odpowiedzialne za tą funkcjonalność to tzw. Historian. Większość systemów SCADA jest wyposażone w to narzędzie, które wraz z rozwojem technologii także się zmieniło. Do kluczowych zmian zalicza się: przetwarzanie danych w czasie rzeczywistym, predykcję, wspieranie systemów rozproszonych. Dodatkowo użycie relacyjnych baz danych w Historian-ach ułatwiło integrację SCADA z systemami MES i ERP. 
-
-\begin{table}[htbp]
-	\renewcommand{\arraystretch}{1.5}
-	\label{tab:SCADAPorownanie}
-	\begin{tabular}{| >{\centering\arraybackslash}m{2.5cm} | >{\centering\arraybackslash}m{6cm} |>{\centering\arraybackslash}m{6.5cm} |}
-		\hline 
-		& \Large  Tradycyjny system SCADA & \Large  Nowoczesny system SCADA\\ 
-		\hline 
-		Zastosowanie & 
-		Zdalne monitorowanie i zbieranie danych & 
-		Poprawa ogólnej efektywności wyposażania (OEE - ang. Overall Equipment Effectiveness) oraz przeglądu całego procesu, w celu zarządzania procesem długoterminowo  \\ 
-		\hline
-		Sterowanie & 
-		Sterowanie nadrzędne &
-		Zoptymalizowane i proaktywne sterowanie  \\ 
-		\hline
-		Raporty & 
-		Wykresy trendów historycznych & 
-		Analityka dla nowych modeli biznesowych\\ 
-		\hline
-		Alarmy & 
-		Alarmowanie centrali operacyjnej & 
-		Alarmowanie wielu urządzeń (wliczając urządzenia mobilne)  \\ 
-		\hline
-	\end{tabular} 
-	\caption{Porównianie tradycjnych i nowoczesnych systemów SCADA \cite{SCADATabela}.}
-\end{table}
-
-W tabeli 2.1 przedstawiono różnice pomiędzy tradycyjnymi, a nowoczesnymi systemami SCADA.
-
-%Jednym z podstawowych zadań systemów SCADA jest archiwizacja danych, której sposób przechowywania napływających informacji uległ zmianie pod wpływem rozwijającej się technologii. Nie sposób tutaj nie dostrzec koncepcji Big Data, w myśl której zaawansowane narzędzia zwane Historianami. 
-
-
-% a także na łatwiejszą analizę danych gromadzonych przez system SCADA. 
-
-
-
-
+\begin{enumerate}
+	\item Wybór centroidów klastrów: dla podanej z góry liczby klas (skupień)  środki klastrów powinny zostać dobrane w taki sposób, aby były możliwie jak najdalej od siebie.
+	\item Przyporządkowanie każdego elementu ze zbioru danych do najbliższego środka klastra, normę może stanowić odległość euklidesowa lub Czebyszewa.
+	\item Ponowne wyliczenie środków skupień: w większości zastosowań nowym środkiem klastra jest punkt o współrzędnych stanowiących średnią arytmetyczną elementów wewnątrz skupienia.
+	\item Powtarzanie algorytmu do momentu osiągnięcia kryterium zbieżności: sytuacja, podczas której środki klastrów pozostają bez zmian bądź nie zmienia się przynależność elementów do klas.
+\end{enumerate}
