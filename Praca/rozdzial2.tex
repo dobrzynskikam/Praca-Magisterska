@@ -247,3 +247,73 @@ Algorytm K-średnich (z ang. \textit{K-means}) jest jedną z najprostszych metod
 	\item Ponowne wyliczenie środków skupień: w większości zastosowań nowym środkiem klastra jest punkt o współrzędnych stanowiących średnią arytmetyczną elementów wewnątrz skupienia.
 	\item Powtarzanie algorytmu do momentu osiągnięcia kryterium zbieżności: sytuacja, podczas której środki klastrów pozostają bez zmian bądź nie zmienia się przynależność elementów do klas.
 \end{enumerate}
+
+Na rysunku \ref{im: Clustering} przedstawiono graf przepływu wyjaśniający zasadę działania algorytmu K-średnich.
+ \begin{figure}[h]
+	%\centering
+	\includegraphics[width=16cm]{Clustering1}
+	\centering
+	\caption{Algorytm K-średnich. Pierwszy etap to wybór środków dla klastrów. Następnie dokonywane jest przypisanie punktów do odpowiedniej klasy. Kolejny etap to ponowne wyliczenie centroidów oraz reorganizacja klastrów. Algorytm działa dopóki środki klas ulegają zmianie.}
+	\label{im: Clustering}
+\end{figure}
+
+
+\section{Metoda Wektorów Nośnych}
+Metoda wektorów nośnych (z ang. \textit{Support Vector Machine}, SVM) to jeden z modeli uczenia maszynowego służący do klasyfikacji danych. Model SVM po raz pierwszy został opublikowany przez dwóch naukowców: Vladimira N. Vapnika oraz Alexey'a Chervonenkisa w 1963 roku. 
+
+Początkowo służył do klasyfikacji liniowej, czyli 
+
+SVM może zostać użyty do rozpoznawania tekstu pisanego czy klasyfikacji obrazów.
+
+Mając do dyspozycji zbiór punktów uczących, w którym każdy z elementów należy do jednej z dwóch klas, SVM tworzy model, który przypisuje próbki testowe do jednej z dwóch kategorii. Model SVM jest reprezentowany jako zbiór punktów na przestrzeni skonstruowany w taki sposób, aby istniała wyraźna przerwa oddzielająca elementy rożnych klas. W zależności od tego, po której stronie przerwy próbka testowa została umiejscowiona, do tej kategorii zostanie przypisana. Bardziej formalnie SVM konstruuje hiperpłaszczyznę rozdzielającą zbiór próbek uczących. Najlepsza separacja zachodzi wtedy, gdy odległość hiperpłaszczyzny od najbliższego elementu dla każdej z klas jest maksymalna. 
+
+Zbiór $n$-punktów uczących opisano następująco:
+\begin{equation}
+(\vec{x}_1,y_1), ..., (\vec{x}_n,y_n)
+\end{equation}
+gdzie $\vec{x}_i$ oznacza \textit{\textbf{p}}-wymiarowy wektor. Zmienna $y_i$ przyjmuje wartości -1 bądź 1 w zależności od tego, do której kategorii należy $\vec{x}_i$. Równianie płaszczyzny może zostać opisane następująco:
+\begin{equation}
+\vec{w}\cdot \vec{x} - b = 0
+\end{equation}
+gdzie $\vec{w}$ oznacza wektor normaly do szukanej hiperpłaszczyzny. W przypadku, gdy zbiór danych jest separowany liniowo, istnieje możliwość wyboru dwóch równoległych hiperpłaszczyzn, których odległość względem siebie jest maksymalna. Region leżący pomiędzy tymi hiperpłaszczyznami jest nazywany \textit{marginesem}, a optymalna hiperpłaszczyzna leży w jego połowie. Równania dla dwóch równoległych hiperpłaszczyzn są opisane następująco:
+\begin{equation}
+\vec{w}\cdot \vec{x}_i - b = 1
+\end{equation}
+\begin{equation}
+\vec{w}\cdot \vec{x}_i - b = -1
+\end{equation}
+Dystans pomiędzy dwoma hiperpłaszczyznami jest równy $2 /||\vec{w}||$. Zatem w celu maksymalizacji dystansu pomiędzy płaszczyznami należy dokonać minimalizacji $||\vec{w}||$. Dodatkowo wymuszono obecność dowolnej próbki po właściwej stronie marginesu używając następujących zależności:
+\begin{equation}
+\vec{w}\cdot \vec{x}_i - b \geq 1 \hspace{0.5cm} dla \hspace{0.5cm} y_i = 1 
+\end{equation}
+\begin{equation}
+\vec{w}\cdot \vec{x}_i - b \leq -1 \hspace{0.5cm} dla \hspace{0.5cm} y_i = -1
+\end{equation}
+Powyższe nierówności mogą zostać przekształcone do:
+\begin{equation}
+y_i(\vec{w}\cdot \vec{x}_i - b) \geq 1 \hspace{0.5cm} dla \hspace{0.2cm} wszystkich \hspace{0.2cm} 1 \leq i \leq n
+\end{equation}
+Zadanie minimalizacji może zostać postawione w następujacy sposób:
+"Minimalizacja normy wektora $\vec{w}$ dla zależności $y_i(\vec{w}\cdot \vec{x}_i - b) \geq 1$ dla $i=1 \ldots n$"
+
+
+W latach 90-tych Vapnik przy wsparciu innych naukowców zaproponował sposób udoskonalenia modelu przez zastosowanie tzw. \textit{"kernel trick"}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
