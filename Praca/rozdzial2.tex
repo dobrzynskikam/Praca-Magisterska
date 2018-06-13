@@ -249,7 +249,7 @@ Algorytm K-średnich (z ang. \textit{K-means}) jest jedną z najprostszych metod
 \end{enumerate}
 
 Na rysunku \ref{im: Clustering} przedstawiono graf przepływu wyjaśniający zasadę działania algorytmu K-średnich.
- \begin{figure}[h]
+\begin{figure}[h]
 	%\centering
 	\includegraphics[width=16cm]{Clustering1}
 	\centering
@@ -259,11 +259,7 @@ Na rysunku \ref{im: Clustering} przedstawiono graf przepływu wyjaśniający zas
 
 
 \section{Metoda Wektorów Nośnych}
-Metoda wektorów nośnych (z ang. \textit{Support Vector Machine}, SVM) to jeden z modeli uczenia maszynowego służący do klasyfikacji danych. Model SVM po raz pierwszy został opublikowany przez dwóch naukowców: Vladimira N. Vapnika oraz Alexey'a Chervonenkisa w 1963 roku. 
-
-Początkowo służył do klasyfikacji liniowej, czyli 
-
-SVM może zostać użyty do rozpoznawania tekstu pisanego czy klasyfikacji obrazów.
+Metoda wektorów nośnych (z ang. \textit{Support Vector Machine}, SVM) to jeden z modeli uczenia maszynowego służący do klasyfikacji danych. Model SVM po raz pierwszy został opublikowany przez dwóch naukowców: Vladimira N. Vapnika oraz Alexey'a Chervonenkisa w 1963 roku. Może zostać użyty do rozwiązywania takich problemów jak rozpoznawanie tekstu pisanego czy klasyfikacja obrazów.
 
 Mając do dyspozycji zbiór punktów uczących, w którym każdy z elementów należy do jednej z dwóch klas, SVM tworzy model, który przypisuje próbki testowe do jednej z dwóch kategorii. Model SVM jest reprezentowany jako zbiór punktów na przestrzeni skonstruowany w taki sposób, aby istniała wyraźna przerwa oddzielająca elementy rożnych klas. W zależności od tego, po której stronie przerwy próbka testowa została umiejscowiona, do tej kategorii zostanie przypisana. Bardziej formalnie SVM konstruuje hiperpłaszczyznę rozdzielającą zbiór próbek uczących. Najlepsza separacja zachodzi wtedy, gdy odległość hiperpłaszczyzny od najbliższego elementu dla każdej z klas jest maksymalna. 
 
@@ -275,7 +271,7 @@ gdzie $\vec{x}_i$ oznacza \textit{\textbf{p}}-wymiarowy wektor. Zmienna $y_i$ pr
 \begin{equation}
 \vec{w}\cdot \vec{x} - b = 0
 \end{equation}
-gdzie $\vec{w}$ oznacza wektor normaly do szukanej hiperpłaszczyzny. W przypadku, gdy zbiór danych jest separowany liniowo, istnieje możliwość wyboru dwóch równoległych hiperpłaszczyzn, których odległość względem siebie jest maksymalna. Region leżący pomiędzy tymi hiperpłaszczyznami jest nazywany \textit{marginesem}, a optymalna hiperpłaszczyzna leży w jego połowie. Równania dla dwóch równoległych hiperpłaszczyzn są opisane następująco:
+gdzie $\vec{w}$ oznacza wektor normalny do szukanej hiperpłaszczyzny. W przypadku, gdy zbiór danych może być separowany liniowo, istnieje możliwość wyboru dwóch równoległych hiperpłaszczyzn, których odległość względem siebie jest maksymalna. Region leżący pomiędzy tymi hiperpłaszczyznami jest nazywany \textit{marginesem}, a optymalna hiperpłaszczyzna leży w jego połowie. Równania dla dwóch równoległych hiperpłaszczyzn są opisane następująco:
 \begin{equation}
 \vec{w}\cdot \vec{x}_i - b = 1
 \end{equation}
@@ -293,12 +289,41 @@ Powyższe nierówności mogą zostać przekształcone do:
 \begin{equation}
 y_i(\vec{w}\cdot \vec{x}_i - b) \geq 1 \hspace{0.5cm} dla \hspace{0.2cm} wszystkich \hspace{0.2cm} 1 \leq i \leq n
 \end{equation}
-Zadanie minimalizacji może zostać postawione w następujacy sposób:
-"Minimalizacja normy wektora $\vec{w}$ dla zależności $y_i(\vec{w}\cdot \vec{x}_i - b) \geq 1$ dla $i=1 \ldots n$"
+Zadanie minimalizacji może zostać postawione w następujący sposób:
+"Minimalizacja normy wektora $\vec{w}$ dla zależności $y_i(\vec{w}\cdot \vec{x}_i - b) \geq 1$ dla $i=1 \ldots n$".
+Szczegóły tworzenia hiperprzestrzeni w dwóch wymiarach przedstawiono na rysunku \ref{im: SvmMargin}
+\begin{figure}[h]
+	%\centering
+	\includegraphics[width=12cm]{SvmMargin}
+	\centering
+	\caption{Sposób wyznaczania optymalnej hiperpłaszczyzny.}
+	\label{im: SvmMargin}
+\end{figure}
 
+Oryginalny algorytm do szukania hiperpłaszczyzny rozdzielającej z maksymalnym marginesem stworzony w 1963 roku był liniowym klasyfikatorem. Jednakże w latach 90-tych Vapnik przy wsparciu innych naukowców zaproponował sposób umożliwiający konstrukcję nieliniowego klasyfikatora przez zastosowanie tzw. \textit{"kernel trick"}. Algorytm w swoim działaniu jest bardzo podobny do oryginału z tą różnicą, że każdy iloczyn skalarny zostaje zastąpiony przez nieliniową funkcję jądra. Do najbardziej znanych funkcji jądra należą:
 
-W latach 90-tych Vapnik przy wsparciu innych naukowców zaproponował sposób udoskonalenia modelu przez zastosowanie tzw. \textit{"kernel trick"}.
-
+\begin{itemize}\textsl{}
+	\item Wielomianowa jednorodna: 
+	\begin{equation}
+	k(\vec{x}_i,\vec{x}_j) = (\vec{x}_i \cdot \vec{x}_j)^d
+	\end{equation}
+	\item Wielomianowa niejednorodna:
+	\begin{equation}
+	k(\vec{x}_i,\vec{x}_j) = (\vec{x}_i \cdot \vec{x}_j + 1)^d
+	\end{equation}
+	\item Jądro RBF (z ang. Radial Basis Funcion):
+	\begin{equation}
+	k(\vec{x}_i,\vec{x}_j) = \exp\bigg( -\frac{||\vec{x}_i - \vec{x}_j||^2}{2\sigma^2}\bigg)
+	\end{equation}
+\end{itemize}
+Przykład zastosowania funkcji jądra przedstawiono na rysunku \ref{im: KernelMachine}.
+\begin{figure}[h]
+	%\centering
+	\includegraphics[width=12cm]{KernelMachine}
+	\centering
+	\caption{Sposób wyznaczania optymalnej hiperpłaszczyzny.}
+	\label{im: KernelMachine}
+\end{figure}
 
 
 
