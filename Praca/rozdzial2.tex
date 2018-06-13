@@ -302,7 +302,7 @@ Szczegóły tworzenia hiperprzestrzeni w dwóch wymiarach przedstawiono na rysun
 
 Oryginalny algorytm do szukania hiperpłaszczyzny rozdzielającej z maksymalnym marginesem stworzony w 1963 roku był liniowym klasyfikatorem. Jednakże w latach 90-tych Vapnik przy wsparciu innych naukowców zaproponował sposób umożliwiający konstrukcję nieliniowego klasyfikatora przez zastosowanie tzw. \textit{"kernel trick"}. Algorytm w swoim działaniu jest bardzo podobny do oryginału z tą różnicą, że każdy iloczyn skalarny zostaje zastąpiony przez nieliniową funkcję jądra. Do najbardziej znanych funkcji jądra należą:
 
-\begin{itemize}\textsl{}
+\begin{itemize}
 	\item Wielomianowa jednorodna: 
 	\begin{equation}
 	k(\vec{x}_i,\vec{x}_j) = (\vec{x}_i \cdot \vec{x}_j)^d
@@ -325,7 +325,10 @@ Przykład zastosowania funkcji jądra przedstawiono na rysunku \ref{im: KernelMa
 	\label{im: KernelMachine}
 \end{figure}
 
+Istnieje również sposób na klasyfikację elementów dla większej niż dwa liczby kategorii. 
 
+Redukcja klasyfikacji dla wielu kategorii do problemu binarnego dla wielu przypadków. Isnieje
+Jednym ze sposobów sprowadza się do redukcji problemu 
 
 
 

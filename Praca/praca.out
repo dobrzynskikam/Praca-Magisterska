@@ -14,7 +14,12 @@
 \BOOKMARK [1][-]{section.2.8}{Microsoft Visual Studio}{chapter.2}% 14
 \BOOKMARK [1][-]{section.2.9}{Algorytm centroid\363w}{chapter.2}% 15
 \BOOKMARK [1][-]{section.2.10}{Metoda Wektor\363w Nosnych}{chapter.2}% 16
-\BOOKMARK [0][-]{chapter.3}{Opis realizacji aplikacji}{}% 17
-\BOOKMARK [1][-]{section.3.1}{Aplikacja SCADA}{chapter.3}% 18
-\BOOKMARK [2][-]{subsection.3.1.1}{Komunikacja z robotem}{section.3.1}% 19
-\BOOKMARK [2][-]{subsection.3.1.2}{Utworzenie obiektu}{section.3.1}% 20
+\BOOKMARK [0][-]{chapter.3}{Aplikacja do rozpoznawania gest\363w}{}% 17
+\BOOKMARK [1][-]{section.3.1}{Wzorzec MVVM}{chapter.3}% 18
+\BOOKMARK [1][-]{section.3.2}{Wzorzec Mediator}{chapter.3}% 19
+\BOOKMARK [1][-]{section.3.3}{Widoki aplikacji}{chapter.3}% 20
+\BOOKMARK [2][-]{subsection.3.3.1}{Widok gl\363wny}{section.3.3}% 21
+\BOOKMARK [0][-]{chapter.4}{Opis realizacji aplikacji}{}% 22
+\BOOKMARK [1][-]{section.4.1}{Aplikacja SCADA}{chapter.4}% 23
+\BOOKMARK [2][-]{subsection.4.1.1}{Komunikacja z robotem}{section.4.1}% 24
+\BOOKMARK [2][-]{subsection.4.1.2}{Utworzenie obiektu}{section.4.1}% 25
