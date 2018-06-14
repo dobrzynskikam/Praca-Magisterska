@@ -19,7 +19,7 @@
 \contentsline {section}{\numberline {3.1}Wzorzec MVVM}{22}{section.3.1}
 \contentsline {section}{\numberline {3.2}Wzorzec Mediator}{22}{section.3.2}
 \contentsline {section}{\numberline {3.3}Widoki aplikacji}{22}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Widok g\IeC {\l }\IeC {\'o}wny}{22}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.1}G\IeC {\l }\IeC {\'o}wny widok aplikacji}{22}{subsection.3.3.1}
 \contentsline {chapter}{\numberline {4}Opis realizacji aplikacji}{23}{chapter.4}
 \contentsline {section}{\numberline {4.1}Aplikacja SCADA}{23}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Komunikacja z robotem}{23}{subsection.4.1.1}
