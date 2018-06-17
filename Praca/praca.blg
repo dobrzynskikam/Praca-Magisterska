@@ -2,12 +2,19 @@ This is BibTeX, Version 0.99dThe top-level auxiliary file: praca.aux
 A level-1 auxiliary file: rozdzial1.aux
 A level-1 auxiliary file: rozdzial2.aux
 A level-1 auxiliary file: rozdzial3a.aux
+A level-1 auxiliary file: rozdzial4.aux
+A level-1 auxiliary file: rozdzial5.aux
 The style file: plplain.bst
 Database file #1: bibfile.bib
+Warning--I'm ignoring ViolaJonesRobustDetection's extra "booktitle" field
+--line 31 of file bibfile.bib
+Warning--entry type for "ViolaJonesIntegralImage" isn't style-file defined
+--line 37 of file bibfile.bib
 Warning--empty year in BibliografiaScaleSpace
+Warning--empty booktitle in SiftBowSvm
 Warning--empty booktitle in NotationD-H
 Warning--empty booktitle in CyberPhysicalForIndustry
 Warning--empty booktitle in ManufacturingForIndustry
 Warning--empty booktitle in Industry40
 Warning--empty booktitle in IarovyiIndustry
-(There were 6 warnings)
+(There were 9 warnings)

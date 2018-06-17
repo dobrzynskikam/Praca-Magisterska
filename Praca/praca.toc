@@ -1,7 +1,7 @@
 \babel@toc {polish}{}
 \contentsline {chapter}{\numberline {1}Wprowadzenie}{3}{chapter.1}
-\contentsline {section}{\numberline {1.1}Cele pracy}{3}{section.1.1}
-\contentsline {section}{\numberline {1.2}Zawarto\IeC {\'s}\IeC {\'c} pracy}{3}{section.1.2}
+\contentsline {section}{\numberline {1.1}Cele pracy}{4}{section.1.1}
+\contentsline {section}{\numberline {1.2}Zawarto\IeC {\'s}\IeC {\'c} pracy}{4}{section.1.2}
 \contentsline {chapter}{\numberline {2}Technologie i poj\IeC {\k e}cia wykorzystane w projekcie }{5}{chapter.2}
 \contentsline {section}{\numberline {2.1}Obraz ca\IeC {\l }kowy}{5}{section.2.1}
 \contentsline {section}{\numberline {2.2}Ci\IeC {\k a}g\IeC {\l }a przestrze\IeC {\'n} skali dla obrazu}{6}{section.2.2}
@@ -18,20 +18,9 @@
 \contentsline {chapter}{\numberline {3}Aplikacja do rozpoznawania gest\IeC {\'o}w}{21}{chapter.3}
 \contentsline {section}{\numberline {3.1}Wzorzec MVVM}{22}{section.3.1}
 \contentsline {section}{\numberline {3.2}Wzorzec Mediator}{22}{section.3.2}
-\contentsline {section}{\numberline {3.3}Widoki aplikacji}{22}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}G\IeC {\l }\IeC {\'o}wny widok aplikacji}{22}{subsection.3.3.1}
-\contentsline {chapter}{\numberline {4}Opis realizacji aplikacji}{23}{chapter.4}
-\contentsline {section}{\numberline {4.1}Aplikacja SCADA}{23}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Komunikacja z robotem}{23}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Utworzenie obiektu}{23}{subsection.4.1.2}
-\contentsline {subsubsection}{\numberline {4.1.2.1}Definicje atrybut\IeC {\'o}w}{24}{subsubsection.4.1.2.1}
-\contentsline {subsubsection}{\numberline {4.1.2.2}Definicje skrypt\IeC {\'o}w}{26}{subsubsection.4.1.2.2}
-\contentsline {subsubsection}{\numberline {4.1.2.3}Obiekty graficzne}{27}{subsubsection.4.1.2.3}
-\contentsline {paragraph}{\numberline {4.1.2.3.1}Strona g\IeC {\l }\IeC {\'o}wna}{27}{paragraph.4.1.2.3.1}
-\contentsline {paragraph}{\numberline {4.1.2.3.2}Status}{27}{paragraph.4.1.2.3.2}
-\contentsline {paragraph}{\numberline {4.1.2.3.3}Statusy celi}{28}{paragraph.4.1.2.3.3}
-\contentsline {paragraph}{\numberline {4.1.2.3.4}Sterowanie bram\IeC {\k a} i drzwiami serwisowymi}{28}{paragraph.4.1.2.3.4}
-\contentsline {paragraph}{\numberline {4.1.2.3.5}Sterowanie stacj\IeC {\k a} czyszcz\IeC {\k a}c\IeC {\k a}}{28}{paragraph.4.1.2.3.5}
-\contentsline {paragraph}{\numberline {4.1.2.3.6}Sterowanie robotem}{28}{paragraph.4.1.2.3.6}
-\contentsline {paragraph}{\numberline {4.1.2.3.7}Symulacja ruchu robota}{28}{paragraph.4.1.2.3.7}
-\contentsline {subsubsection}{\numberline {4.1.2.4}Wizualizacja aplikacji}{28}{subsubsection.4.1.2.4}
+\contentsline {section}{\numberline {3.3}Architektura aplikacji}{23}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}G\IeC {\l }\IeC {\'o}wny widok aplikacji}{24}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Okno filtrowania}{25}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Okno bazy danych}{25}{subsection.3.3.3}
+\contentsline {chapter}{\numberline {4}Testy oraz prezentacja wynik\IeC {\'o}w}{27}{chapter.4}
+\contentsline {chapter}{\numberline {5}Podsumowanie oraz kierunki dalszych prac}{29}{chapter.5}

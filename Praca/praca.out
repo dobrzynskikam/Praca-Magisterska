@@ -17,9 +17,9 @@
 \BOOKMARK [0][-]{chapter.3}{Aplikacja do rozpoznawania gest\363w}{}% 17
 \BOOKMARK [1][-]{section.3.1}{Wzorzec MVVM}{chapter.3}% 18
 \BOOKMARK [1][-]{section.3.2}{Wzorzec Mediator}{chapter.3}% 19
-\BOOKMARK [1][-]{section.3.3}{Widoki aplikacji}{chapter.3}% 20
+\BOOKMARK [1][-]{section.3.3}{Architektura aplikacji}{chapter.3}% 20
 \BOOKMARK [2][-]{subsection.3.3.1}{Gl\363wny widok aplikacji}{section.3.3}% 21
-\BOOKMARK [0][-]{chapter.4}{Opis realizacji aplikacji}{}% 22
-\BOOKMARK [1][-]{section.4.1}{Aplikacja SCADA}{chapter.4}% 23
-\BOOKMARK [2][-]{subsection.4.1.1}{Komunikacja z robotem}{section.4.1}% 24
-\BOOKMARK [2][-]{subsection.4.1.2}{Utworzenie obiektu}{section.4.1}% 25
+\BOOKMARK [2][-]{subsection.3.3.2}{Okno filtrowania}{section.3.3}% 22
+\BOOKMARK [2][-]{subsection.3.3.3}{Okno bazy danych}{section.3.3}% 23
+\BOOKMARK [0][-]{chapter.4}{Testy oraz prezentacja wynik\363w}{}% 24
+\BOOKMARK [0][-]{chapter.5}{Podsumowanie oraz kierunki dalszych prac}{}% 25

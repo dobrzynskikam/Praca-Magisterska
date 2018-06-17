@@ -7,6 +7,12 @@ Pauwels E., van Gool~L., Fiddelaers P., Moons T.
 \newblock {\em IEEE Transactions on Pattern Analysis and Machine Intelligence},
   wolumen~17, strony 691--701.
 
+\bibitem{SiftBowSvm}
+Dardas~N. H.,  Georganas D.
+\newblock Real-time hand gesture detection and recognition using
+  bag-of-features and support vector machine techniques.
+\newblock IEEE, 2011.
+
 \bibitem{NotationD-H}
 Wang H., Qi~H., Xu~M., Tang Y., Yao J., Yan X., Li~M.
 \newblock Research on the relationship between classic denavit-hartenberg and
@@ -24,6 +30,13 @@ Lee J., Bagheri B., Kao H.
 Qina J., Liua Y., Grosvenora R.
 \newblock A categorical framework of manufacturing for industry 4.0 and beyond.
 \newblock ScienceDirect, 2016.
+
+\bibitem{Temp1}
+Bretzner L., Laptev I., Lindeberg T.
+\newblock Hand gesture recognition using multi-scale colour features,
+  hierarchical models and particle filtering.
+\newblock {\em 5th IEEE International Conference on Automatic Face and Gesture
+  Recognition}, strony 405--410, 2002.
 
 \bibitem{BigDataTabakow}
 Tabakow M., Korczak J., Franczyk B.
@@ -43,8 +56,14 @@ Sishi~M. N.,  Telukdarie A.
 
 \bibitem{ViolaJonesIntegralImage}
 Viola P.,  Jones M.
-\newblock : Rapid object detection using a boosted cascade of simple features.
-\newblock {\em Computer Vision and Pattern Recognition}. IEEE, 2001.
+\newblock Rapid object detection using a boosted cascade of simple features.,
+  2001.
+
+\bibitem{ViolaJonesRobustDetection}
+Viola P.,  Jones M.
+\newblock Robust real-time object detection.
+\newblock {\em Computer Vision and Pattern Recognition}, wolumen~2, strony
+  137--154, 2004.
 
 \bibitem{Industry40Wittbrodt}
 Wittbrodt P.,  {\L{}}apu{\'n}ka I.
@@ -65,6 +84,12 @@ Iarovyi S., Mohammed W., Lobov A., Ferrer B., Lastra J.
 \newblock Cyber–physical systems for open-knowledge-driven manufacturing
   execution systems.
 \newblock wolumen 104, strony 1142--1152, 2016.
+
+\bibitem{Temp2}
+McKenna S.,  Morrison K.
+\newblock A comparison of skin history and trajectory-based representation
+  schemes for the recognition of user-specific gestures.
+\newblock {\em Pattern Recognition}, wolumen~37, strony 999--1009, 2004.
 
 \bibitem{SystemDwojkowy}
 Finley T.

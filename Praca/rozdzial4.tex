@@ -1,0 +1,29 @@
+\chapter{Testy oraz prezentacja wyników}
+\label{cha: Tests}
+Testy sprawdzające działanie aplikacji zostały przeprowadzone za pomocą komputera wyposażonego w czterordzeniowy procesor Intel\textregistered CORE\texttrademark i7 oraz pamięć RAM 16GB DDR3. W ramach testów wykorzystano ogólnie dostępne bazy danych zawierające gesty dłoni w zmieniających się warunkach oświetlenia. 
+Pierwszą z wykorzystanych baz była baza danych wykorzystana w pracy BIBLIOGRAFIA. Zawiera ona 900 sekwencji obrazów tworząc 9 różnych klas. Klasy te są utworzone na podstawie 3 prostych gestów dłoni, która jest poddawana rotacji oraz zaciskaniu w pięść. Szczegóły na rysunku RYSUNEK. Każda z klas zawiera 100 sekwencji obrazów (5 odmiennych warunków oświetleniowych, 10 różnych sekwencji ruchu dłoni w dwóch kierunkach). Każdy z gestów jest umieszczony na ciemnym tle bez dodatkowych elementów. 
+
+Na potrzeby pracy z bazy wybrano 5 różnych gestów, do których należały: dłoń ze (i) złączonymi oraz (ii) rozłączonymi palcami, (iii) pięść oraz dwa palce (iv) złączone oraz (v) rozłączone. 
+
+W ramach testów sprawdzono poprawność klasyfikacji gestu dla zmieniających się wartosci parametrów. Parametry poddane testom to: długość wektora opisującego gest, wybór metody \textit{kernel trick} (wraz z wpływem wartości poszczególnych parametrów), zmiany parametru funkcji kary oraz tolerancji.
+
+Dla każdego gestu 70\% wszystkich próbek zostało użyte w celu uczenia klasyfikatora, reszta to część testowa. 
+
+Dla każdego testu sprawdzono poprawność algorytmu rozpoznawania gestów dla część treningowej oraz testowej.  
+
+
+BOW = 36 Wielomianowa deg 1 con 1 compl= 1 tol = 1 czas wyliczenia poprawnosc testowa i treningowa
+
+BOW = 12 Wielomianowa deg 1 con 1 compl= 1 tol = 1 czas wyliczenie
+
+BOW = 72 Wielomianowa deg 1 con 1 compl= 1 tol = 1 czas wyliczenie
+
+BOW = 36 Gauss sigma = 1 compl= 1 tol = 1 czas wyliczenia
+
+BOW = 12 Gauss sigma = 1 compl= 1 tol = 1 czas wyliczenie
+
+BOW = 72 Gauss sigma = 1 compl= 1 tol = 1 czas wyliczenie
+
+Kolejna baza danych to zbiór obrazów dostępny 
+
+%Ostatni etap to testowanie aplikacji wykorzystując urządzenie do rejestracji strumienia wideo. Do testów wykorzystano kamerę KAMERA operującą w rozdzielczości ROZDZIELCZOSC. 

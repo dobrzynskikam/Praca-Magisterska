@@ -259,6 +259,7 @@ Na rysunku \ref{im: Clustering} przedstawiono graf przepływu wyjaśniający zas
 
 
 \section{Metoda Wektorów Nośnych}
+\label{sec: SVM}
 Metoda wektorów nośnych (z ang. \textit{Support Vector Machine}, SVM) to jeden z modeli uczenia maszynowego służący do klasyfikacji danych. Model SVM po raz pierwszy został opublikowany przez dwóch naukowców: Vladimira N. Vapnika oraz Alexey'a Chervonenkisa w 1963 roku. Może zostać użyty do rozwiązywania takich problemów jak rozpoznawanie tekstu pisanego czy klasyfikacja obrazów.
 
 Mając do dyspozycji zbiór punktów uczących, w którym każdy z elementów należy do jednej z dwóch klas, SVM tworzy model, który przypisuje próbki testowe do jednej z dwóch kategorii. Model SVM jest reprezentowany jako zbiór punktów na przestrzeni skonstruowany w taki sposób, aby istniała wyraźna przerwa oddzielająca elementy rożnych klas. W zależności od tego, po której stronie przerwy próbka testowa została umiejscowiona, do tej kategorii zostanie przypisana. Bardziej formalnie SVM konstruuje hiperpłaszczyznę rozdzielającą zbiór próbek uczących. Najlepsza separacja zachodzi wtedy, gdy odległość hiperpłaszczyzny od najbliższego elementu dla każdej z klas jest maksymalna. 
@@ -325,12 +326,7 @@ Przykład zastosowania funkcji jądra przedstawiono na rysunku \ref{im: KernelMa
 	\label{im: KernelMachine}
 \end{figure}
 
-Istnieje również sposób na klasyfikację elementów dla większej niż dwa liczby kategorii. 
-
-Redukcja klasyfikacji dla wielu kategorii do problemu binarnego dla wielu przypadków. Isnieje
-Jednym ze sposobów sprowadza się do redukcji problemu 
-
-Istnieje kilka strategii slużących do redukcji problemu klasyfikacji dla wielu kategorii. Do najpopularniejszej metody należy redukcja takiego problemu do wielu przypadków dla dwóch klas. Metoda ma dwa warianty: jeden kontra res
+Istnieje kilka strategii służących do redukcji problemu klasyfikacji dla wielu klas. Do najpopularniejszej metody należy redukcja takiego problemu do wielu przypadków dwuklasowych. Metoda ma dwa warianty: \textit{"jeden-na-resztę"} oraz \textit{"jeden-na-jednego"}. DOPISAĆ
 
 
 
