@@ -3,11 +3,15 @@ using Accord.Video.DirectShow;
 using MasterThesisApplication.Model.Annotations;
 using MasterThesisApplication.Model.Utility;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using MasterThesisApplication;
 
 namespace MasterThesisApplication.Model
 {
@@ -17,11 +21,23 @@ namespace MasterThesisApplication.Model
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         private VideoCaptureDevice _videoCaptureDevice;
+        private List<VideoCapabilities> _cameraResolutionCollection;
+
+        public List<VideoCapabilities> CameraResolutionCollection
+        {
+            get { return _cameraResolutionCollection; }
+            set
+            {
+                _cameraResolutionCollection = value;
+                OnPropertyChanged(nameof(CameraResolutionCollection));
+            }
+        }
+
         private bool _isRunning;
         private BitmapImage _cameraImage;
         private Rectangle _rectangle;
@@ -90,11 +106,18 @@ namespace MasterThesisApplication.Model
             _videoCaptureDevice.NewFrame -= Video_NewFrame;
         }
 
-        public void StartCamera()
+        public void StartCamera(VideoCapabilities resolution)
         {
             _videoCaptureDevice = new VideoCaptureDevice(MonikerString);
+            _videoCaptureDevice.VideoResolution = resolution;
             _videoCaptureDevice.NewFrame += Video_NewFrame;
             _videoCaptureDevice.Start();
+        }
+
+        public void GetSupportedResolutions()
+        {
+            _videoCaptureDevice = new VideoCaptureDevice(MonikerString);
+            CameraResolutionCollection = _videoCaptureDevice.VideoCapabilities.ToList();
         }
     }
 }

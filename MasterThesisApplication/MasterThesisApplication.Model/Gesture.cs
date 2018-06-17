@@ -16,7 +16,6 @@ namespace MasterThesisApplication.Model
         }
 
         private string _gestureName;
-        private ObservableCollection<Feature> _featureList;
 
         public string GestureName
         {
@@ -54,6 +53,9 @@ namespace MasterThesisApplication.Model
             }
 
         }
+
+        private ObservableCollection<Feature> _featureList;
+
         public ObservableCollection<Feature> FeatureList
         {
             get { return _featureList; }

@@ -41,7 +41,11 @@
                           SelectedItem="{Binding SelectedCamera}"
                           IsEnabled="{Binding SelectedCamera.IsRunning, Mode=OneWay, Converter={StaticResource BooleanConverter}}">
                 </ComboBox>
-                <ComboBox Grid.Column="1" Grid.Row="1" Margin="5"></ComboBox>
+                <ComboBox Grid.Column="1" Grid.Row="1" Margin="5"
+                          ItemsSource="{Binding SelectedCamera.CameraResolutionCollection}"
+                          SelectedItem="{Binding SelectedResolution}"
+                          IsEnabled="{Binding SelectedCamera.IsRunning, Mode=OneWay, Converter={StaticResource BooleanConverter}}">
+                </ComboBox>
                 <Button Grid.Row="0" Grid.Column="2" Margin="5" 
                         Content="Connect"
                         Command="{Binding StartCameraCommand}">

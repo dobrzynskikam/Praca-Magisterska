@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Accord.Math;
+using Accord.Video.DirectShow;
 using Messenger = MasterThesisApplication.Utility.Messenger;
 
 namespace MasterThesisApplication.ViewModel
@@ -50,6 +51,19 @@ namespace MasterThesisApplication.ViewModel
                 _selectedCamera = value;
                 OnPropertyChanged(nameof(VideoDevicesCollection));
                 SelectedCamera.PropertyChanged += CameraModel_PropertyChanged;
+                SelectedCamera.GetSupportedResolutions();
+            }
+        }
+
+        private VideoCapabilities _selectedResolution;
+
+        public VideoCapabilities SelectedResolution
+        {
+            get { return _selectedResolution; }
+            set
+            {
+                _selectedResolution = value;
+                OnPropertyChanged(nameof(SelectedResolution));
             }
         }
 
@@ -122,6 +136,7 @@ namespace MasterThesisApplication.ViewModel
             ICameraDataService cameraDataService = new CameraDataService();
             VideoDevicesCollection = cameraDataService.GetAllCameras();
             SelectedCamera = VideoDevicesCollection[0];
+            SelectedResolution = SelectedCamera.CameraResolutionCollection[0];
             LoadCommands();
             Messenger.Default.Register<string>(ResultLabel, OnResultLabelReceived);
         }
@@ -175,7 +190,7 @@ namespace MasterThesisApplication.ViewModel
         {
             if (SelectedCamera != null)
             {
-                SelectedCamera.StartCamera();
+                SelectedCamera.StartCamera(SelectedResolution);
                 SelectedCamera.IsRunning = true;
             }
         }
