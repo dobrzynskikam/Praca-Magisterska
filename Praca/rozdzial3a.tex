@@ -10,8 +10,7 @@ Projekt zakładał utworzenie aplikacji do rozpoznawania gestów w czasie rzeczy
 \end{figure}
 
 Zasada działania aplikacji została przedstawiona na rysunku \ref{im: ApplicationFlowChart}. Próbki treningowe wraz z odpowiednimi etykietami są poddawane działaniu algorytmu SURF. Wynik operacji to zbiór punktów kluczowych dla każdego z obrazów. Następnie dokonywane jest grupowanie odpowiednich punktów w znaną z góry liczbę klastrów. Wyniki grupowania lądują w bazie danych, która jest wykorzystywana do utworzenia modelu SVM. 
-Próbka testowa poddawana jest takim samym operacjom co wszystkie próbki uczące - jest ona przekształcana za pomocą algorytmu SURF oraz K-średnich w wektor o znanej liczbie klastrów. Model SVM klasyfikuje próbkę do jednej z podanych kategorii. 
-
+Próbka testowa poddawana jest takim samym operacjom co wszystkie próbki uczące - jest ona przekształcana za pomocą algorytmów SURF oraz K-średnich w wektor o znanej liczbie klastrów. Model SVM klasyfikuje próbkę do jednej z podanych kategorii. 
 
 W dalszej części rozdziału przedstawiono szczegółową implementację aplikacji. Pierwszy podrozdział zawiera opis wykorzystanych wzorców projektowych. W kolejnych podrozdziałach opisano każdy z widoków dostępnych w aplikacji wraz ze wzajemnymi zależnościami pomiędzy nimi.
 
@@ -23,27 +22,20 @@ W skład wzorca MVVM wchodzą następujące elementy:
 	\item View (widok): jest to struktura, którą użytkownik widzi na ekranie swojego monitora.
 	\item ViewModel: abstrakcyjna warstwa dla widoku udostępniająca publiczne własności oraz komendy. Za pomocą techniki \textit{data binding} widok wymienia informację z powiązanym z nim ViewModelem. ViewModel odpytuje model w celu pobrania lub zmiany danych. Zastosowanie struktury ViewModelu eliminuje istnienie bezpośredniego połączania pomiędzy widokiem a modelem.
 \end{itemize}
-RYSUNEK
 
 \section{Wzorzec Mediator}
 \label{sec: mediator}
 W inżynierii oprogramowania mediator jest wzorcem projektowym należącym do grupy wzorców czynnościowych. Jest jednym z 23 wzorców projektowych opisanych przez tzw. \textit{"Bandę Czworga"} (z ang. \textit{Gang of Four}, GoF) w książce \textit{"Design Patterns: Elements of Reusable Object-Oriented Software"} stanowiącej jeden z kanonów tworzenia oprogramowania. Zastosowanie wzorca powoduje, że komunikacja pomiędzy obiektami jest zawarta w obiekcie mediatora. Obiekty nie komunikują się bezpośrednio ze sobą, lecz wykorzystują mediatora do pośredniej komunikacji, który koordynuje wzajemną interakcję.  Dzięki temu następuje redukcja wzajemnych zależności pomiędzy komunikującymi się obiektami. Klasa klienta może wykorzystać mediatora w celu wysłania wiadomości do innych klientów oraz może otrzymać powiadomienie zwrotne poprzez zdarzenie pochodzące od klasy mediatora. Obiekty sa w ten sposób luźno powiązane pomiędzy sobą, dzięki temu komunikacja jest łatwa w implementacji. Testowanie oraz ponowne wykorzystanie kodu jest możliwe, ponieważ obiekty muszą jedynie odnosić się do mediatora oraz nie posiadają żadnej informacji o innych elementach.
 
-RYSUNEK
-
-
-
-
-
 \section{Architektura aplikacji}
-Architektura aplikacji została przedstawiona na rysunku \ref{im: AppArchitectureWithHsl}. Składa się ona z jednego modelu, trzech widoków oraz z powiązanymi z nimi modelami widoków. W skład modelu wchodzi klasa \textit{Camera} posiadająca flagę informującą o stanie urządzenia (czy jest włączone) oraz właściwości opisujące nazwę kamery oraz bieżącą ramkę. Model ten jest powiązany z dwoma modelami widoków: z oknem głównym oraz z oknem służącym do filtrowania obrazu w przestrzeni barw HSL. Model kamery informuje widoki modelu o zmianie swoich właściwości za pomocą zdarzenia. Możliwość zmian kamery lub jej właściwości jest możliwe jedynie za pomocą głównego okna aplikacji. Kolejną częścią modelu jest klasa powiązana z gestem. Posiada ona właściwości opisujące nazwę gestu, etykietę oraz zawiera listę wektorów opisujących każdy obraz wchodzący w skład gestu. Model ten jest powiązany z widokiem modelu dla bazy danych, jak również 
+Architektura aplikacji została przedstawiona na rysunku \ref{im: AppArchitectureWithHsl}. Składa się ona z dwóch klas stanowiących model, trzech widoków oraz z powiązanymi z nimi modelami widoków. W skład modelu wchodzi klasa \textit{Camera} posiadająca flagę informującą o stanie urządzenia (czy jest włączone) oraz właściwości opisujące nazwę kamery oraz bieżącą ramkę. Model ten jest powiązany z dwoma modelami widoków: z oknem głównym oraz z oknem służącym do filtrowania obrazu w przestrzeni barw HSL. Model kamery informuje widoki modelu o zmianie swoich właściwości za pomocą zdarzenia. Zmiana kamery lub jej właściwości jest możliwa jedynie za pomocą głównego okna aplikacji. Kolejną częścią modelu jest klasa powiązana z gestem. Posiada właściwości opisujące nazwę gestu, etykietę oraz zawiera listę wektorów opisujących każdy obraz wchodzący w skład gestu. Model ten jest powiązany z widokiem modelu dla bazy danych, jak również z pomocniczymi widokami do dodawania oraz edycji gestów w bazie.
 
 Wymiana informacji pomiędzy modelami widoków zachodzi z wykorzystaniem opisanego w sekcji \ref{sec: mediator} mediatora. Dzięki niemu elementy aplikacji są ze sobą luźno powiązane i ewentualna zmiana w architekturze aplikacji jest łatwo wykonywalna. 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=16cm]{AppArchitectureWithHsl}
 	\centering
-	\caption{Architektura aplikacji.}
+	\caption{Architektura aplikacji. DO ZMIANY}
 	\label{im: AppArchitectureWithHsl}
 \end{figure}
 
@@ -55,26 +47,27 @@ Powiązanie pomiędzy modelem widoku a widokiem wykorzystuje wzorzec projektowy 
 	\item Wysłanie danych ustawionych w widoku do \textit{View Model'u}.
 \end{enumerate}
 
-Baza danych jest w postaci pliku XML (skrót on ang. \textit{Extensible Markup Language}). Zawiera ona informacje o wszystkich gestach dodanych do bazy. Każdy węzeł występujący w pliku posiada dwa atrybuty: nazwę gestu oraz numer etykiety. Wewnątrz każdego węzła znajdują się rekordy, które są mapowane na  poszczególne obrazy w obrębie gestu. Pojedynczy rekord posiada dwa atrybuty: nazwę pliku oraz wektor cech opisujący dany gest.
+Baza danych jest w postaci pliku XML (skrót on ang. \textit{Extensible Markup Language}). Zawiera ona informacje o wszystkich gestach dostępnych w bazie. Każdy węzeł występujący w pliku posiada dwa atrybuty: nazwę gestu oraz numer etykiety. Wewnątrz każdego węzła znajdują się rekordy, które są mapowane na  poszczególne obrazy w obrębie gestu. Pojedynczy rekord posiada dwa atrybuty: nazwę pliku oraz wektor cech opisujący dany gest.
 
 \subsection{Główny widok aplikacji}
-Na rysunku RYSUNEK przedstawiono widok główny aplikacji do rozpoznawania gestów. W jego skład wchodzą następujące elementy:
+Na rysunku RYSUNEK DODAĆ przedstawiono widok główny aplikacji do rozpoznawania gestów. W jego skład wchodzą następujące elementy:
 \begin{itemize}
 	\item Bieżąca ramka kamery. Jest to element stanowiący największą część głównego okna. Odświeżanie obrazu zachodzi po każdym zdarzeniu wynikającym z pojawienia się nowej ramki w modelu kamery.
 	\item Lista rozwijana, której elementy reprezentują urządzenia wideo podłączone do komputera. Zmiana kamery możliwa jedynie w przypadku, gdy obecnie wybrana kamera jest rozłączona.
-	\item Element umożliwiający zmianę rozdzielczości dla wybranej kamery. Zmiana jest możliwa jedynie w przypadku, gdy wybrana kamera jest nie rejestruje strumienia wideo.
-	\item Przyciski \textit{CONNECT} oraz \textit{DISCONNECT}. Odpowiadają za start oraz zatrzymanie wybranej kamery. W przypadku, gdy kamera jest uruchomiona przycisk powiązany z startem kamery zostaje wyszarzany. Analogiczne zachowanie występuje dla przycisku \textit{DISCONNECT}.
-	\item Przycisk \textit{TAKE SNAPSHOT}. Naciśnięcie przycisku powoduje pobranie prostokąta otaczającego stanowiącego część bieżącej ramki ze strumienia wideo. Prostokąt zostaje wysłany do widoku modelu powiązanego z bazą danych, gdzie zostaje sklasyfikowany oraz przypisany do istniejącego gestu. Działanie jest możliwe wyłącznie wtedy, gdy wybrana kamera jest włączona oraz gdy w bazie danych jest więcej niż jeden gest. 
-	\item Przycisk \textit{SET HSL FILTER}. Otwarcie okna, w którym możliwa jest edycja składowych filtra przestrzeni barw HSL. Szczegóły w podrozdziale PODROZDZIAŁ
-	\item Przycisk \textit{OPEN DATABASE}. Naciśnięcie przycisku otwiera widok bazy gestów. Szczegółowe informacje o zachowaniu bazy są dostępne w podrozdziale ROZDZIAŁ
+	\item Element umożliwiający zmianę rozdzielczości dla wybranej kamery. Zmiana jest możliwa jedynie w przypadku, gdy wybrana kamera nie rejestruje strumienia wideo.
+	\item Przyciski \textit{CONNECT} oraz \textit{DISCONNECT}. Odpowiadają za start oraz zatrzymanie wybranej kamery. W przypadku, gdy kamera jest uruchomiona, niemożliwe jest użycie przycisku związanego ze startem kamery. Analogiczne zachowanie występuje dla przycisku \textit{DISCONNECT}.
+	\item Przycisk \textit{TAKE SNAPSHOT}. Naciśnięcie przycisku powoduje pobranie prostokąta otaczającego stanowiącego część bieżącej ramki ze strumienia wideo. Prostokąt zostaje wysłany do widoku modelu powiązanego z bazą danych, gdzie zachodzi jego klasyfikacja oraz przypisanie do istniejącego gestu. Działanie jest możliwe wyłącznie wtedy, gdy wybrana kamera jest włączona oraz gdy w bazie danych jest więcej niż jeden gest. 
+	\item Przycisk \textit{SET HSL FILTER}. Otwarcie okna, w którym możliwa jest edycja składowych filtra przestrzeni barw HSL. Szczegóły w podrozdziale \ref{subsec: HslFIlter}.
+	\item Przycisk \textit{OPEN DATABASE}. Naciśnięcie przycisku otwiera widok bazy gestów. Szczegółowe informacje o zachowaniu widoku bazy są dostępne w podrozdziale \ref{subsec: Database}.
 \end{itemize}
 
 
 \subsection{Okno filtrowania}
+\label{subsec: HslFIlter}
 Okno filtrowania zostało przedstawione na rysunku RYSUNEK. Podobnie jak w  przypadku głównego okna, najważniejszy element stanowi obraz z bieżącą ramką kamery. Powyżej ramki znajdują się elementy związane z filtrowaniem przestrzeni barw HSL. Istnieje możliwość zmian zakresu wartości poszczególnej składowej, a wyniki tych operacji sa widoczne na ramce kamery. Wyliczanie obrazu z nałożonym filtrem następuje po każdym zdarzeniu powiązanym z pojawieniem się nowej ramki w modelu kamery.
 Obraz jest tworzony w taki sposób, że jeżeli dany piksel z oryginalnego obrazu spełnia kryteria nałożonego filtru, to taki piksel zostaje wyświetlony. W przeciwnym wypadku przypisuje mu się wartość koloru czarnego. Dodatkowo na obszarze obrazu zastosowano prostokąt otaczający, który obejmuje największy element znaleziony po etapie filtrowania. Następnie prostokąt zostaje wysłany do widoku głównego i tam wyświetlony na obrazie oryginalnym. 
 \subsection{Okno bazy danych}
-
+\label{subsec: Database}
 Na rysunku RYSUNEK przedstawiono okno bazy danych dla aplikacji rozpoznawania gestów. W obrębie okna można wyodrębnić dwa główne elementy: widok zakładek oraz panel umożliwiający konfigurację bazy danych. 
 
 Wszystkie gesty dostępne w bazie są widoczne w widoku zakładek. Nazwy gestów stanowią nagłówki, które użytkownik może przełączać w celu zaciągnięcia informacji o danym geście. Pojedyncza zakładka zawiera listę elementów, a każdy rekord składa się ze zdjęcia gestu, nazwy pliku oraz deskryptora opisującego pojedynczy gest.

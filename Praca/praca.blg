@@ -8,13 +8,7 @@ The style file: plplain.bst
 Database file #1: bibfile.bib
 Warning--I'm ignoring ViolaJonesRobustDetection's extra "booktitle" field
 --line 31 of file bibfile.bib
-Warning--entry type for "ViolaJonesIntegralImage" isn't style-file defined
---line 37 of file bibfile.bib
-Warning--empty year in BibliografiaScaleSpace
+Warning--to sort, need author or key in Uni
+Warning--to sort, need author or key in Wpf
 Warning--empty booktitle in SiftBowSvm
-Warning--empty booktitle in NotationD-H
-Warning--empty booktitle in CyberPhysicalForIndustry
-Warning--empty booktitle in ManufacturingForIndustry
-Warning--empty booktitle in Industry40
-Warning--empty booktitle in IarovyiIndustry
-(There were 9 warnings)
+(There were 4 warnings)
