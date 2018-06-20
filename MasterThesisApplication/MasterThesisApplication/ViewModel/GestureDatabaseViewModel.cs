@@ -46,7 +46,7 @@ namespace MasterThesisApplication.ViewModel
         public IGestureDataService GestureDataService = new GestureDataService();
 
         Dictionary<string, Tuple<int, double[]>> VectorLabelDictionary { get; set; }
-        private Dictionary<string, Tuple<int, double[]>> _vectorLabelDictionary;
+        private Dictionary<string, Tuple<int, double[]>> _vectorLabelDictionary = new Dictionary<string, Tuple<int, double[]>>();
 
 
         private IBagOfWords<Bitmap> _bow;
@@ -125,12 +125,26 @@ namespace MasterThesisApplication.ViewModel
             if (GestureCollection.Count != 0)
             {
                 SelectedGesture = GestureCollection[0];
+                if (GestureCollection.All(g=>g.FeatureList.All(f=>f.Vector!=null)))
+                {
+                    foreach (var gesture in GestureCollection)
+                    {
+                        foreach (var feature in gesture.FeatureList)
+                        {
+                            var tempArray = feature.Vector.Split(' ').ToList().Select(s => double.Parse(s)).ToArray();
+                            _vectorLabelDictionary.Add(feature.ImageName, new Tuple<int, double[]>(gesture.Label, tempArray));
+                        }
+
+
+                        VectorLabelDictionary = _vectorLabelDictionary;
+                    }
+                }
             }
 
             LoadCommands();
 
             Messenger.Default.Register<Gesture>(GestureCollection, OnUpdateGestureListMessageReceived);
-            //Messenger.Default.Register<BitmapImage>(TestImage, OnCameraIMageReceived);
+            Messenger.Default.Register<BitmapImage>(TestImage, OnCameraImageReceived);
         }
 
         private void LoadCommands()
@@ -154,6 +168,8 @@ namespace MasterThesisApplication.ViewModel
 
         private void OnUpdateGestureListMessageReceived(Gesture obj)
         {
+            VectorLabelDictionary = null;
+            _vectorLabelDictionary = null;
             GestureCollection = GestureDataService.GetAllGestures();
             DialogService.CloseDialog();
         }
@@ -225,7 +241,8 @@ namespace MasterThesisApplication.ViewModel
 
         private bool CanStartTraining(object obj)
         {
-            return GestureCollection.All(g => g.FeatureList.All(f => f.Vector != null)) && GestureCollection.Count > 1;
+            return VectorLabelDictionary != null;
+            //return GestureCollection.All(g => g.FeatureList.All(f => f.Vector != null)) && GestureCollection.Count > 1;
         }
 
         private void StartTraining(object obj)
@@ -264,7 +281,7 @@ namespace MasterThesisApplication.ViewModel
 
         private void AddGesture(object obj)
         {
-            Messenger.Default.Send(this);
+            Messenger.Default.Send(GestureCollection.ToList());
             DialogService = new AddGestureDialogService();
             DialogService.ShowDialog();
         }
@@ -291,6 +308,7 @@ namespace MasterThesisApplication.ViewModel
             _bow = surfBow.Learn(images.Values.ToArray());
 
             _vectorLabelDictionary = new Dictionary<string, Tuple<int, double[]>>();
+            //_vectorLabelDictionary = new Dictionary<string, Tuple<int, double[]>>();
             foreach (var gesture in GestureCollection)
             {
                 foreach (var feature in gesture.FeatureList)

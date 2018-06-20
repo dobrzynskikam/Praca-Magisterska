@@ -9,7 +9,6 @@ using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using Accord.Math;
 using Accord.Video.DirectShow;
 using Messenger = MasterThesisApplication.Utility.Messenger;
 

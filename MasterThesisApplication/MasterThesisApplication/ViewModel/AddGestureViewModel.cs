@@ -4,8 +4,10 @@ using MasterThesisApplication.Services;
 using MasterThesisApplication.Utility;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
@@ -40,27 +42,37 @@ namespace MasterThesisApplication.ViewModel
         }
 
         private GestureDatabaseViewModel _gestureDatabaseViewModel;
+        private List<Gesture> _gestureList;
+
         public AddGestureViewModel(int numberOfBow)
         {
-            GestureToSave = new Gesture {BowNumber = numberOfBow};
+            //GestureToSave = new Gesture {BowNumber = numberOfBow};
+            GestureToSave = new Gesture();
             LoadCommands();
-            Messenger.Default.Register<GestureDatabaseViewModel>(this, OnGestureDatabaseViewModelReceived);
+            Messenger.Default.Register<List<Gesture>>(this, OnGestureDatabaseViewModelReceived);
         }
 
-        private void OnGestureDatabaseViewModelReceived(GestureDatabaseViewModel gesture)
+        private void OnGestureDatabaseViewModelReceived(List<Gesture> gestureList)
         {
-            _gestureDatabaseViewModel = gesture;
+            _gestureList = gestureList;
         }
 
         private void LoadCommands()
         {
-            ComputeCommand = new CustomCommand(ComputeBow, CanComputeBow);
+            //ComputeCommand = new CustomCommand(ComputeBow, CanComputeBow);
             LoadGestureCommand = new CustomCommand(LoadGesture, CanLoadGesture);
             SaveCommand = new CustomCommand(Save, CanSave);
         }
 
         private void Save(object obj)
         {
+            ////var gestureNameToSave = _gestureList.First(g => g.GestureName == GestureToSave.GestureName);
+            //if (_gestureList.Any(g => g.GestureName == GestureToSave.GestureName))
+            //{
+            //    //Add to existing gesture
+            //    _gestureList.AddRange(g => g.GestureName == GestureToSave.GestureName);
+
+            //}
             IGestureDataService gestureDataService = new GestureDataService();
            
             gestureDataService.AddNewGesture(GestureToSave);
@@ -104,33 +116,33 @@ namespace MasterThesisApplication.ViewModel
             }
         }
 
-        private bool CanComputeBow(object obj)
-        {
-            return true;
-        }
+        //private bool CanComputeBow(object obj)
+        //{
+        //    return true;
+        //}
 
-        private void ComputeBow(object obj)
-        {
+        //private void ComputeBow(object obj)
+        //{
             
-            //BinarySplit binarySplit = new BinarySplit(NumberOfBow);
+        //    //BinarySplit binarySplit = new BinarySplit(NumberOfBow);
 
-            //// Create bag-of-words (BoW) with the given algorithm
-            //BagOfVisualWords surfBow = new BagOfVisualWords(binarySplit);
+        //    //// Create bag-of-words (BoW) with the given algorithm
+        //    //BagOfVisualWords surfBow = new BagOfVisualWords(binarySplit);
 
-            //_images = GetImages(FeatureCollection);
+        //    //_images = GetImages(FeatureCollection);
 
-            //// Compute the BoW codebook using training images only
-            //_bow = surfBow.Learn(_images.Values.ToArray());
+        //    //// Compute the BoW codebook using training images only
+        //    //_bow = surfBow.Learn(_images.Values.ToArray());
 
-            //foreach (var feature in FeatureCollection)
-            //{
+        //    //foreach (var feature in FeatureCollection)
+        //    //{
                 
-            //    var image = (Bitmap)Image.FromFile(feature.ImageName);
+        //    //    var image = (Bitmap)Image.FromFile(feature.ImageName);
               
-            //    double[] featureVector = (_bow as ITransform<Bitmap, double[]>).Transform(image);
-            //    feature.Vector = featureVector.ToString(DefaultArrayFormatProvider.InvariantCulture);
-            //}
-        }
+        //    //    double[] featureVector = (_bow as ITransform<Bitmap, double[]>).Transform(image);
+        //    //    feature.Vector = featureVector.ToString(DefaultArrayFormatProvider.InvariantCulture);
+        //    //}
+        //}
 
         //private Dictionary<string, Bitmap> GetImages(ObservableCollection<Feature> featureCollection)
         //{

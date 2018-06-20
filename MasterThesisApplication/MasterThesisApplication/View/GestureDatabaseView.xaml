@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="GestureDatabaseView" Height="700" Width="900"
-        DataContext="{Binding Source={StaticResource Locator}, Path= GestureDatabaseViewModel}">
+        DataContext="{Binding Source={StaticResource Locator}, Path= GestureDatabaseViewModel}"
+        Background="SeaShell">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -49,10 +50,9 @@
         <Grid Grid.Column="1" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"></RowDefinition>
-                <RowDefinition Height="160"></RowDefinition>
+                <RowDefinition Height="120"></RowDefinition>
                 <RowDefinition Height="280"></RowDefinition>
-                <RowDefinition Height="40"></RowDefinition>
-                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="160"></RowDefinition>
             </Grid.RowDefinitions>
             <Button Margin="5"  Content="Add new gesture"
                         Command="{Binding AddGestureCommand}">
@@ -60,7 +60,6 @@
             <GroupBox Margin="5" Grid.Row="1" Header="Feature Extraction">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="40"></RowDefinition>
                         <RowDefinition Height="40"></RowDefinition>
                         <RowDefinition Height="40"></RowDefinition>
                     </Grid.RowDefinitions>
@@ -86,7 +85,7 @@
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <RadioButton Grid.Column="0" GroupName="FeatureExtractionMethod"
+                        <!--<RadioButton Grid.Column="0" GroupName="FeatureExtractionMethod"
                                      Margin="0 0 5 0" HorizontalAlignment="Center"
                                      Content="SURF"
                                      IsChecked="True">
@@ -98,9 +97,9 @@
                         <RadioButton Grid.Column="2" GroupName="FeatureExtractionMethod"
                                      Margin="0 0 5 0" HorizontalAlignment="Center"
                                      Content="FREAK">
-                        </RadioButton>
+                        </RadioButton>-->
                     </Grid>
-                    <Button Grid.Row="2" Grid.ColumnSpan="2" Margin="5"  Content="Compute Bag-of-Words"
+                    <Button Grid.Row="1" Grid.ColumnSpan="2" Margin="5"  Content="Compute Bag-of-Words"
                         Command="{Binding ComputeCommand}">
                     </Button>
                 </Grid>
@@ -108,39 +107,18 @@
             <GroupBox Margin="5" Grid.Row="2" Header="Classifier Settings">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="80"></RowDefinition>
                         <RowDefinition Height="40"></RowDefinition>
                         <RowDefinition Height="40"></RowDefinition>
-                        <RowDefinition Height="160"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
                         <RowDefinition Height="40"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <RadioButton Margin="5" GroupName="KernelType"
-                                 Content="Polynominal Kernel"
-                                 IsChecked="True">
-                    </RadioButton>
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50"></ColumnDefinition>
-                            <ColumnDefinition Width="50"></ColumnDefinition>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
-                            <ColumnDefinition Width="50"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Label Content="Degree:" VerticalContentAlignment="Center">
-                        </Label>
-                        <TextBox Grid.Column="1" Margin="5" VerticalContentAlignment="Center">
-                        </TextBox>
-                        <Label  Grid.Column="2"  Content="Constant:" VerticalContentAlignment="Center">
-                        </Label>
-                        <TextBox Grid.Column="3" Margin="5" VerticalContentAlignment="Center">
-                        </TextBox>
-                    </Grid>
-                    <Grid Grid.Row="2">
+                    <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition Width="1.5*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="40"></RowDefinition>
-                            <RowDefinition Height="40"></RowDefinition>
                             <RowDefinition Height="40"></RowDefinition>
                             <RowDefinition Height="40"></RowDefinition>
                         </Grid.RowDefinitions>
@@ -158,41 +136,61 @@
                                   VerticalContentAlignment="Center"
                                   Margin="5">
                         </TextBox>
-                        <Label Grid.Row="2" VerticalContentAlignment="Center"
-                               Content="Cache size:">
+                    </Grid>
+                    <RadioButton Margin="5" Grid.Row="1" GroupName="KernelType"
+                                 Content="Polynominal Kernel"
+                                 IsChecked="True">
+                    </RadioButton>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"></ColumnDefinition>
+                            <ColumnDefinition Width="50"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="50"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Degree:" VerticalContentAlignment="Center">
                         </Label>
-                        <TextBox  Grid.Row="2" Grid.Column="1"
-                                  VerticalContentAlignment="Center"
-                                  Margin="5">
+                        <TextBox Grid.Column="1" Margin="5" VerticalContentAlignment="Center">
                         </TextBox>
-                        <Label Grid.Row="3" VerticalContentAlignment="Center"
-                               Content="Strategy:">
+                        <Label  Grid.Column="2"  Content="Constant:" VerticalContentAlignment="Center">
                         </Label>
-                        <ComboBox  Grid.Row="3" Grid.Column="1"
-                                  VerticalContentAlignment="Center"
-                                  Margin="5">
-                        </ComboBox>
+                        <TextBox Grid.Column="3" Margin="5" VerticalContentAlignment="Center">
+                        </TextBox>
+                    </Grid>
+                    <RadioButton Margin="5" Grid.Row="3" GroupName="KernelType"
+                                 Content="Gaussian Kernel"
+                                 IsChecked="True">
+                    </RadioButton>
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"></ColumnDefinition>
+                            <ColumnDefinition Width="50"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Sigma:" VerticalContentAlignment="Center">
+                        </Label>
+                        <TextBox Grid.Column="1" Margin="5" VerticalContentAlignment="Center">
+                        </TextBox>
                     </Grid>
                 </Grid>
             </GroupBox>
-            <Button Grid.Row="3" Margin="5"  Content="Start Training"
-                    Command="{Binding StartTrainingCommand}">
-            </Button>
-            <Button Grid.Row="4" Margin="5"  Content="Classify"
-                    Command="{Binding ClassifyCommand}">
-            </Button>
-            <!--<Button Grid.Row="5" Margin="5"  Content="Add Test Image"
-                    Command="{Binding AddTestImageCommand}">
-            </Button>
-            <Button Grid.Row="6" Margin="5"  Content="Classify Test Image"
-                    Command="{Binding ClassifyTestImageCommand}">
-            </Button>
-            <Label Grid.Row="7"
-                   Content="{Binding TestedImageLabel}">
-            </Label>
-            <Image Grid.Row="8" 
-                   Source="{Binding TestImage}">
-            </Image>-->
+            <GroupBox Margin="5" Grid.Row="3" Header="Classification">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Button  Margin="5"  Content="Start Training"
+                            Command="{Binding StartTrainingCommand}">
+                    </Button>
+                    <Button Grid.Row="1" Margin="5"  Content="Classify"
+                            Command="{Binding ClassifyCommand}">
+                    </Button>
+                    <Button Grid.Row="2" Margin="5"  Content="Test Samples"
+                            Command="{Binding TestSamplesCommand}">
+                    </Button>
+                </Grid>
+            </GroupBox>
         </Grid>
     </Grid>
 </Window>

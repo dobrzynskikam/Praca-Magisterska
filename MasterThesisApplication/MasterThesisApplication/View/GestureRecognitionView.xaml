@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="GestureRecognitionApplication" Height="550" Width="650"
+        Title="GestureRecognitionApplication" Height="600" Width="700"
         DataContext="{Binding Source={StaticResource Locator}, Path=GestureRecognitionViewModel}"
         Background="SeaShell">
     <Grid>
@@ -15,12 +15,12 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"></RowDefinition>
                 <RowDefinition Height="3*"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition MaxWidth="110"></ColumnDefinition>
-                    <ColumnDefinition MinWidth="50"></ColumnDefinition>
+                    <ColumnDefinition Width="140"></ColumnDefinition>
+                    <ColumnDefinition MinWidth="40"></ColumnDefinition>
                     <ColumnDefinition Width="110"></ColumnDefinition>
                     <ColumnDefinition Width="110"></ColumnDefinition>
                     <ColumnDefinition Width="110"></ColumnDefinition>
@@ -29,11 +29,11 @@
                     <RowDefinition Height="40"></RowDefinition>
                     <RowDefinition Height="40"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Label Margin="5" VerticalContentAlignment="Center"
+                <Label Margin="5" VerticalAlignment="Center" FontSize="14" FontWeight="Bold"
                            Content="Video devices:">
                 </Label>
                 <Label Grid.Row="1" Grid.Column="0" Margin="5"
-                           VerticalContentAlignment="Center"
+                       VerticalAlignment="Center" FontSize="14" FontWeight="Bold"
                            Content="Video resolution:">
                 </Label>
                 <ComboBox Grid.Row="0" Grid.Column="1" Margin="5"
@@ -73,12 +73,16 @@
             </Image>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Label Content="Recognition:"></Label>
-                <Label Grid.Column="1" BorderThickness="1" 
-                       Content="{Binding ResultLabel}"></Label>
+                <Label Content="Recognition:"
+                       VerticalAlignment="Center" FontSize="14" FontWeight="Bold">
+                </Label>
+                <Label Grid.Column="1" 
+                       Content="{Binding ResultLabel}"
+                       VerticalAlignment="Center" FontSize="14" FontWeight="Bold">
+                </Label>
             </Grid>
         </Grid>
     </Grid>

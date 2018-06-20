@@ -16,6 +16,7 @@ namespace MasterThesisApplication.DAL
         private readonly string _gesturePath = Path.Combine(DatabasePath, @"Gestures.xml");
         private ObservableCollection<Gesture> _gestures;
         private ObservableCollection<Feature> _features;
+
         public ObservableCollection<Gesture> GetGestures()
         {
             LoadGestures();

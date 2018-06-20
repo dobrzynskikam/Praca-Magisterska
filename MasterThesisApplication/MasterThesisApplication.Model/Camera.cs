@@ -4,14 +4,12 @@ using MasterThesisApplication.Model.Annotations;
 using MasterThesisApplication.Model.Utility;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using MasterThesisApplication;
 
 namespace MasterThesisApplication.Model
 {
