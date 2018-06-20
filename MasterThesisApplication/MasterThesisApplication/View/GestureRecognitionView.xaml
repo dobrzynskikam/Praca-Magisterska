@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="GestureRecognitionApplication" Height="550" Width="650"
-        DataContext="{Binding Source={StaticResource Locator}, Path=GestureRecognitionViewModel}">
+        DataContext="{Binding Source={StaticResource Locator}, Path=GestureRecognitionViewModel}"
+        Background="SeaShell">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -73,12 +74,10 @@
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80"></ColumnDefinition>
-                    <ColumnDefinition Width="30"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Content="Recognition:"></Label>
-                <CheckBox Grid.Column="1"  IsChecked="{Binding IsRecognitionEnabled}"></CheckBox>
-                <Label Grid.Column="2" BorderThickness="1" 
+                <Label Grid.Column="1" BorderThickness="1" 
                        Content="{Binding ResultLabel}"></Label>
             </Grid>
         </Grid>

@@ -5,24 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="HslFilterView" Height="Auto" Width="Auto"
-        DataContext="{Binding Source={StaticResource Locator}, Path=HslFilterViewModel}">
+        DataContext="{Binding Source={StaticResource Locator}, Path=HslFilterViewModel}"
+        Background="SeaShell">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="80"></ColumnDefinition>
+            <ColumnDefinition Width="140"></ColumnDefinition>
             <ColumnDefinition Width="50"></ColumnDefinition>
             <ColumnDefinition MinWidth="100"></ColumnDefinition>
             <ColumnDefinition Width="50"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition MinHeight="200"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBox Margin="5" Text="Hue" BorderBrush="Transparent"></TextBox>
-        <TextBox Grid.Row="1" Grid.Column="0" Margin="5" Text="Saturation" BorderBrush="Transparent"></TextBox>
-        <TextBox Grid.Row="2" Grid.Column="0" Margin="5" Text="Luminance" BorderBrush="Transparent"></TextBox>
-        <TextBox Grid.Row="0" Grid.Column="1" Margin="5,5,5,0" TextAlignment="Center" Height="20" VerticalAlignment="Top"
+        <TextBox Margin="5" Text="Hue" BorderBrush="Transparent" Background="Transparent"
+                 VerticalAlignment="Center" FontSize="18" FontWeight="Bold"></TextBox>
+        <TextBox Grid.Row="1" Grid.Column="0" Margin="5" Text="Saturation" BorderBrush="Transparent" Background="Transparent"
+                 VerticalAlignment="Center" FontSize="18" FontWeight="Bold"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="0" Margin="5" Text="Luminance" BorderBrush="Transparent" Background="Transparent"
+                 VerticalAlignment="Center" FontSize="18" FontWeight="Bold"></TextBox>
+        <TextBox Grid.Row="0" Grid.Column="1" Margin="5" TextAlignment="Center"
                  Text="{Binding MinHue, Mode=TwoWay}">
         </TextBox>
         <TextBox Grid.Row="1" Grid.Column="1" Margin="5" TextAlignment="Center"
@@ -41,13 +45,13 @@
                  Text="{Binding MaxLuminance, Mode=TwoWay}">
         </TextBox>
         <Slider Grid.Row="0" Grid.Column="2" Margin="5"
-                Minimum="0" Maximum="365">
+                Minimum="0" Maximum="365" VerticalAlignment="Center">
         </Slider>
         <Slider Grid.Row="1" Grid.Column="2" Margin="5"
-                Minimum="0" Maximum="1">
+                Minimum="0" Maximum="1" VerticalAlignment="Center">
         </Slider>
         <Slider Grid.Row="2" Grid.Column="2" Margin="5"
-                Minimum="0" Maximum="1">
+                Minimum="0" Maximum="1" VerticalAlignment="Center">
         </Slider>
         <Image Grid.Row="3" Grid.ColumnSpan="4" Margin="5"
                Source="{Binding CameraImage}">
