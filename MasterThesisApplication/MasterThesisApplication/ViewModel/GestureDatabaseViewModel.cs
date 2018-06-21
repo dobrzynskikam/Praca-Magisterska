@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -118,9 +119,139 @@ namespace MasterThesisApplication.ViewModel
             }
         }
 
-        public GestureDatabaseViewModel(int numberOfBow)
+
+        #region SVM parameters
+        private float _complexity;
+
+        public float Complexity
         {
-            NumberOfBow = numberOfBow;
+            get { return _complexity; }
+            set
+            {
+                _complexity = value;
+                OnPropertyChanged(nameof(Complexity));
+                UpdateSvmModel();
+            }
+        }
+        private float _tolerance;
+        public float Tolerance
+        {
+            get { return _tolerance; }
+            set
+            {
+                _tolerance = value;
+                OnPropertyChanged(nameof(Tolerance));
+                UpdateSvmModel();
+            }
+        }
+
+        private int _degree;
+        public int Degree
+        {
+            get { return _degree; }
+            set
+            {
+                _degree = value;
+                OnPropertyChanged(nameof(Degree));
+                UpdateSvmModel();
+            }
+        }
+
+        private int _constant;
+        public int Constant
+        {
+            get { return _constant; }
+            set
+            {
+                _constant = value;
+                OnPropertyChanged(nameof(Constant));
+                UpdateSvmModel();
+            }
+        }
+
+        private int _sigma;
+        public int Sigma
+        {
+            get { return _sigma; }
+            set
+            {
+                _sigma = value;
+                OnPropertyChanged(nameof(Sigma));
+                UpdateSvmModel();
+            }
+        }
+
+        private IKernel _kernel;
+        private MulticlassSupportVectorLearning<IKernel> _svm;
+
+        private void UpdateSvmModel()
+        {
+            _svm = new MulticlassSupportVectorLearning<IKernel>()
+            {
+                Kernel = _kernel,
+                Learner = (param) => new SequentialMinimalOptimization<IKernel>()
+                {
+                    Kernel = _kernel,
+                    Complexity = Complexity,
+                    Tolerance = Tolerance,
+                }
+            };
+        }
+
+        private int _isSuccess;
+
+        public int IsSuccess
+        {
+            get { return _isSuccess; }
+            set
+            {
+                _isSuccess = value;
+                switch (_isSuccess)
+                {
+                    case 1:
+                        _kernel = new Linear(Constant);
+                        UpdateSvmModel();
+                        break;
+                    case 2:
+                        _kernel = new Gaussian(Sigma);
+                        UpdateSvmModel();
+                        break;
+
+                }
+                OnPropertyChanged(nameof(IsSuccess));
+            }
+        }
+
+
+
+        #endregion
+
+        private string _statusText;
+
+        public string StatusText
+        {
+            get { return _statusText; }
+            set
+            {
+                _statusText = value;
+                OnPropertyChanged(nameof(StatusText));
+            }
+        }
+
+
+
+        //Constructor
+        public GestureDatabaseViewModel()
+        {
+            //Set default parameters for SVM
+            NumberOfBow = 36;
+            Complexity = 100;
+            Tolerance = 0.0001f;
+            IsSuccess = 1;
+            Degree = 1;
+            Constant = 1;
+            Sigma = 1;
+
             GestureCollection = GestureDataService.GetAllGestures();
             if (GestureCollection.Count != 0)
             {
@@ -205,6 +336,8 @@ namespace MasterThesisApplication.ViewModel
 
         private void Classify(object obj)
         {
+            var sw1 = Stopwatch.StartNew();
+
             foreach (var record in VectorLabelDictionary)
             {
                 var input = record.Value.Item2;
@@ -218,6 +351,8 @@ namespace MasterThesisApplication.ViewModel
                 }
             }
 
+            var allFeatures = 0f;
+            var positiveHits = 0f;
             foreach (var gesture in GestureCollection)
             {
                 var expectedLabel = gesture.Label;
@@ -229,47 +364,42 @@ namespace MasterThesisApplication.ViewModel
                     {
                         //feature.IsClassifiedCorrectly = true;
                         feature.State = FeatureState.CorrectClassification;
+                        positiveHits++;
                     }
                     else
                     {
                         //feature.IsClassifiedCorrectly = false;
                         feature.State = FeatureState.IncorrectClassification;
                     }
+
+                    allFeatures++;
                 }
             }
+
+            sw1.Stop();
+
+            StatusText = "CLASSIFICATION OF ALL TRAINING IMAGES" +
+                         "\nIt took " + sw1.Elapsed.TotalSeconds.ToString("F") + ".s" +
+                         "Accuracy: " + positiveHits/allFeatures *100 + "%";
         }
 
         private bool CanStartTraining(object obj)
         {
             return VectorLabelDictionary != null;
-            //return GestureCollection.All(g => g.FeatureList.All(f => f.Vector != null)) && GestureCollection.Count > 1;
         }
 
         private void StartTraining(object obj)
         {
-            IKernel kernel = new Linear(1);
-            double complexity = 100;
-            double tolerance = 0.01;
-            int cacheSize = 500;
-            SelectionStrategy strategy = SelectionStrategy.Sequential;
-
-            var teacher = new MulticlassSupportVectorLearning<IKernel>()
-            {
-                Kernel = kernel,
-                Learner = (param) => new SequentialMinimalOptimization<IKernel>()
-                {
-                    Kernel = kernel,
-                    Complexity = complexity,
-                    Tolerance = tolerance,
-                }
-            };
-
-            var temp = new SequentialMinimalOptimization();
+            var sw1 = Stopwatch.StartNew();
 
             var inputs = VectorLabelDictionary.Values.Select(x => x.Item2).ToArray();
             var outputs = VectorLabelDictionary.Values.Select(x => x.Item1).ToArray();
-            Machine = teacher.Learn(inputs, outputs);
-            //Messenger.Default.Send(Machine);
+            Machine = _svm.Learn(inputs, outputs);
+
+            sw1.Stop();
+
+            StatusText = "TRAINING SVM MODEL" +
+                         "\nIt took " + sw1.Elapsed.TotalSeconds.ToString("F") + ".s";
         }
 
         private bool CanAddGesture(object obj)
@@ -291,6 +421,11 @@ namespace MasterThesisApplication.ViewModel
 
         private void ComputeBow(object obj)
         {
+           //StatusText = "Feature extraction for all images. It may take significant amount of time.";
+            StatusText = "Feature";
+
+            var sw1 = Stopwatch.StartNew();
+
             Accord.Math.Random.Generator.Seed = 0;
 
             // Create a Binary-Split clustering algorithm
@@ -304,6 +439,10 @@ namespace MasterThesisApplication.ViewModel
             
             // Compute the model
             _bow = surfBow.Learn(images.Values.ToArray());
+
+            sw1.Stop();
+
+            Stopwatch sw2 = Stopwatch.StartNew();
 
             _vectorLabelDictionary = new Dictionary<string, Tuple<int, double[]>>();
             //_vectorLabelDictionary = new Dictionary<string, Tuple<int, double[]>>();
@@ -319,6 +458,12 @@ namespace MasterThesisApplication.ViewModel
 
             VectorLabelDictionary = _vectorLabelDictionary;
             GestureDataService.SaveGestures(GestureCollection);
+
+            sw2.Stop();
+
+            StatusText = "CREATING DESCRIPTORS FOR ALL IMAGES" + 
+                         "Clustering took " + sw1.Elapsed.TotalSeconds.ToString("F") + "s." +
+                         "\nFeatures extracted in " + sw2.Elapsed.TotalSeconds.ToString("F") + "s.";
         }
     }
 }

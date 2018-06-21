@@ -4,10 +4,8 @@ using MasterThesisApplication.Services;
 using MasterThesisApplication.Utility;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
@@ -41,21 +39,19 @@ namespace MasterThesisApplication.ViewModel
             }
         }
 
-        private GestureDatabaseViewModel _gestureDatabaseViewModel;
-        private List<Gesture> _gestureList;
+        //private List<Gesture> _gestureList;
 
-        public AddGestureViewModel(int numberOfBow)
+        public AddGestureViewModel()
         {
-            //GestureToSave = new Gesture {BowNumber = numberOfBow};
             GestureToSave = new Gesture();
             LoadCommands();
-            Messenger.Default.Register<List<Gesture>>(this, OnGestureDatabaseViewModelReceived);
+            //Messenger.Default.Register<List<Gesture>>(this, OnGestureDatabaseViewModelReceived);
         }
 
-        private void OnGestureDatabaseViewModelReceived(List<Gesture> gestureList)
-        {
-            _gestureList = gestureList;
-        }
+        //private void OnGestureDatabaseViewModelReceived(List<Gesture> gestureList)
+        //{
+        //    _gestureList = gestureList;
+        //}
 
         private void LoadCommands()
         {

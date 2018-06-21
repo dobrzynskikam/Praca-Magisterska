@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="GestureDatabaseView" Height="700" Width="900"
+        Title="GestureDatabaseView" Height="750" Width="900"
         DataContext="{Binding Source={StaticResource Locator}, Path= GestureDatabaseViewModel}"
         Background="SeaShell">
     <Grid>
@@ -53,6 +53,7 @@
                 <RowDefinition Height="120"></RowDefinition>
                 <RowDefinition Height="280"></RowDefinition>
                 <RowDefinition Height="160"></RowDefinition>
+                <RowDefinition Height="80"></RowDefinition>
             </Grid.RowDefinitions>
             <Button Margin="5"  Content="Add new gesture"
                         Command="{Binding AddGestureCommand}">
@@ -125,21 +126,21 @@
                         <Label Grid.Row="0" VerticalContentAlignment="Center"
                                Content="Complexity:">
                         </Label>
-                        <TextBox  Grid.Row="0" Grid.Column="1"
+                        <TextBox  Grid.Row="0" Grid.Column="1" Margin="5"
                                   VerticalContentAlignment="Center"
-                                  Margin="5">
+                                  Text="{Binding Complexity}">
                         </TextBox>
                         <Label Grid.Row="1" VerticalContentAlignment="Center"
                                Content="Tolerance:">
                         </Label>
-                        <TextBox  Grid.Row="1" Grid.Column="1"
+                        <TextBox  Grid.Row="1" Grid.Column="1" Margin="5"
                                   VerticalContentAlignment="Center"
-                                  Margin="5">
+                                  Text="{Binding Tolerance}">
                         </TextBox>
                     </Grid>
                     <RadioButton Margin="5" Grid.Row="1" GroupName="KernelType"
-                                 Content="Polynominal Kernel"
-                                 IsChecked="True">
+                                 Content="Polynominal Kernel" Name="PolynominalRadioButton"
+                                 IsChecked="{Binding IsSuccess, Converter={StaticResource RadioButtonConverter}, ConverterParameter=1}">
                     </RadioButton>
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
@@ -150,16 +151,20 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="Degree:" VerticalContentAlignment="Center">
                         </Label>
-                        <TextBox Grid.Column="1" Margin="5" VerticalContentAlignment="Center">
+                        <TextBox Grid.Column="1" Margin="5" VerticalContentAlignment="Center"
+                                 IsEnabled="{Binding ElementName=PolynominalRadioButton, Path=IsChecked}"
+                                 Text="{Binding Degree, Mode=TwoWay}">
                         </TextBox>
                         <Label  Grid.Column="2"  Content="Constant:" VerticalContentAlignment="Center">
                         </Label>
-                        <TextBox Grid.Column="3" Margin="5" VerticalContentAlignment="Center">
+                        <TextBox Grid.Column="3" Margin="5" VerticalContentAlignment="Center"
+                                 IsEnabled="{Binding ElementName=PolynominalRadioButton, Path=IsChecked}"
+                                 Text="{Binding Constant, Mode=TwoWay}">
                         </TextBox>
                     </Grid>
-                    <RadioButton Margin="5" Grid.Row="3" GroupName="KernelType"
+                    <RadioButton Margin="5" Grid.Row="3" GroupName="KernelType" Name="GaussianRadioButton"
                                  Content="Gaussian Kernel"
-                                 IsChecked="True">
+                                 IsChecked="{Binding IsSuccess, Converter={StaticResource RadioButtonConverter}, ConverterParameter=2}">
                     </RadioButton>
                     <Grid Grid.Row="4">
                         <Grid.ColumnDefinitions>
@@ -168,7 +173,9 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="Sigma:" VerticalContentAlignment="Center">
                         </Label>
-                        <TextBox Grid.Column="1" Margin="5" VerticalContentAlignment="Center">
+                        <TextBox Grid.Column="1" Margin="5" VerticalContentAlignment="Center"
+                                 IsEnabled="{Binding ElementName=GaussianRadioButton, Path=IsChecked}"
+                                 Text="{Binding Sigma, Mode=TwoWay}">
                         </TextBox>
                     </Grid>
                 </Grid>
@@ -191,6 +198,9 @@
                     </Button>
                 </Grid>
             </GroupBox>
+            <Label Grid.Row="4" Margin="5 0"
+                   Content="{Binding StatusText, Mode=OneWay}">
+            </Label>
         </Grid>
     </Grid>
 </Window>
