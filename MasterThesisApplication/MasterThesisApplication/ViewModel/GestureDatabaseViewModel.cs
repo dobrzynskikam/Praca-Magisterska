@@ -261,8 +261,6 @@ namespace MasterThesisApplication.ViewModel
                     Kernel = kernel,
                     Complexity = complexity,
                     Tolerance = tolerance,
-                    CacheSize = cacheSize,
-                    Strategy = strategy,
                 }
             };
 
