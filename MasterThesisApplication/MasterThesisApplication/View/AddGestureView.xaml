@@ -16,19 +16,16 @@
             <ListView ItemsSource="{Binding GestureToSave.FeatureList}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
+                        <Grid Background="{Binding State, Converter={StaticResource BackgroundConverter}}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width ="150"></ColumnDefinition>
+                                <ColumnDefinition Width ="50"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Image Margin="5" Height ="100" 
+                            <Image Margin="5" Height ="50" 
                                    Source="{Binding ImageName, Converter={StaticResource ImageConverter}}">
                             </Image>
-                            <StackPanel Grid.Column="1">
-                                <TextBlock Text="{Binding ImageName}"/>
-                                <TextBlock Text=""/>
-                                <TextBlock Text="{Binding Vector}"/>
-                            </StackPanel>
+                            <TextBlock Grid.Column="1" TextAlignment="Center" Text="{Binding ImageName}"
+                                       VerticalAlignment="Center"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -36,29 +33,64 @@
             <Grid Grid.Column="1" Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="120"></RowDefinition>
+                    <RowDefinition Height="120"></RowDefinition>
+                    <!--<RowDefinition Height="40"></RowDefinition>-->
+                    <!--<RowDefinition Height="40"></RowDefinition>-->
                 </Grid.RowDefinitions>
-                <Button Margin="5" Content="Load new Gesture"
+                <Button Margin="5" Content="Load Images"
                         Command="{Binding LoadGestureCommand}"></Button>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="90"></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Label HorizontalContentAlignment="Center" 
-                           VerticalContentAlignment="Center" 
-                           Content="Gesture Name:">
-                    </Label>
-                    <TextBox Grid.Column="1" Margin="5" MinWidth="40"
-                             VerticalContentAlignment="Center"
-                             Text="{Binding GestureToSave.GestureName}">
-                    </TextBox>
-                </Grid>
-                <Button Grid.Row="2" Margin="5" Content="Save Gesture"
-                            Command="{Binding SaveCommand}">
-                </Button>
+                <GroupBox Margin="5" Grid.Row="1" Header="Add new Gesture">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"></RowDefinition>
+                            <RowDefinition Height="40"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label HorizontalContentAlignment="Center" 
+                               VerticalContentAlignment="Center" 
+                               Content="Gesture Name:">
+                        </Label>
+                        <TextBox Grid.Column="1" Margin="5" MinWidth="40"
+                                 VerticalContentAlignment="Center"
+                                 Text="{Binding GestureToSave.GestureName}">
+                        </TextBox>
+                        <Button Grid.Row="1" Grid.ColumnSpan="2" Margin="5" Content="Save Gesture"
+                                Command="{Binding SaveCommand}">
+                        </Button>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Margin="5" Grid.Row="2" Header="Test Loaded Images">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"></RowDefinition>
+                            <RowDefinition Height="40"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label HorizontalContentAlignment="Center" 
+                               VerticalContentAlignment="Center" 
+                               Content="Expected:">
+                        </Label>
+                        <ComboBox Grid.Row="0" Grid.Column="1" Margin="5" MinWidth="40"
+                                 VerticalContentAlignment="Center"
+                                 ItemsSource="{Binding GestureList}"
+                                  DisplayMemberPath="Value"
+                                  SelectedItem="{Binding ExpectedGesture}">
+                            <!--DisplayMemberPath="GestureName"
+                                 SelectedItem="{Binding GestureCollection[0]}">-->
+                        </ComboBox>
+                        <Button Grid.Row="1" Grid.ColumnSpan="2" Margin="5" Content="Test Images"
+                                Command="{Binding TestCommand}">
+                        </Button>
+                    </Grid>
+                </GroupBox>
+                
             </Grid>
         </Grid>
     </Grid>

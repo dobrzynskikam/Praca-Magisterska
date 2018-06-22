@@ -1,4 +1,5 @@
-﻿using MasterThesisApplication.DAL;
+﻿using System;
+using MasterThesisApplication.DAL;
 using MasterThesisApplication.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,7 +20,7 @@ namespace MasterThesisApplication.Services
             _repository.AddNewGesture(gesture);
         }
 
-        public Dictionary<string, Bitmap> GetAllImages()
+        public Dictionary<string, Tuple<double[], Bitmap>> GetAllImages()
         {
             return _repository.GetImages();
         }

@@ -77,8 +77,8 @@ namespace MasterThesisApplication.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private string _vector;
-        public string Vector
+        private double[] _vector;
+        public double[] Vector
         {
             get { return _vector; }
             set

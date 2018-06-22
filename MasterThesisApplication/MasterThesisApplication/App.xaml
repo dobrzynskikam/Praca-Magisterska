@@ -11,6 +11,7 @@
             <converter:ImageConverter x:Key="ImageConverter"></converter:ImageConverter>
             <converter:ClassificationStateConverter x:Key="BackgroundConverter"></converter:ClassificationStateConverter>
             <converter:RadioBoolToKernel x:Key="RadioButtonConverter"></converter:RadioBoolToKernel>
+            <converter:DoubleArrayToString x:Key="DoubleArrayConverter"></converter:DoubleArrayToString>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />

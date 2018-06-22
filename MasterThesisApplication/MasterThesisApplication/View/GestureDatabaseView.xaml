@@ -35,7 +35,7 @@
                                         <RowDefinition Height="30"></RowDefinition>
                                         <RowDefinition Height="30"></RowDefinition>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Vector}" />
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Vector, Converter={StaticResource DoubleArrayConverter}}" />
                                     <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
                                         <TextBlock Text="{Binding ImageName}"/>
                                     </StackPanel>
@@ -76,8 +76,7 @@
                         <TextBox Grid.Column="1" Margin="5"
                                  VerticalContentAlignment="Center"
                                  HorizontalContentAlignment="Center"
-                                 Text="{Binding NumberOfBow}"
-                                 IsEnabled="False">
+                                 Text="{Binding Svm.NumberOfBow, Mode=TwoWay}">
                         </TextBox>
                     </Grid>
                     <Grid Grid.Row="1">
@@ -128,19 +127,19 @@
                         </Label>
                         <TextBox  Grid.Row="0" Grid.Column="1" Margin="5"
                                   VerticalContentAlignment="Center"
-                                  Text="{Binding Complexity}">
+                                  Text="{Binding Svm.Complexity}">
                         </TextBox>
                         <Label Grid.Row="1" VerticalContentAlignment="Center"
                                Content="Tolerance:">
                         </Label>
                         <TextBox  Grid.Row="1" Grid.Column="1" Margin="5"
                                   VerticalContentAlignment="Center"
-                                  Text="{Binding Tolerance}">
+                                  Text="{Binding Svm.Tolerance}">
                         </TextBox>
                     </Grid>
                     <RadioButton Margin="5" Grid.Row="1" GroupName="KernelType"
                                  Content="Polynominal Kernel" Name="PolynominalRadioButton"
-                                 IsChecked="{Binding IsSuccess, Converter={StaticResource RadioButtonConverter}, ConverterParameter=1}">
+                                 IsChecked="{Binding Svm.IsSuccess, Converter={StaticResource RadioButtonConverter}, ConverterParameter=1}">
                     </RadioButton>
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
@@ -153,18 +152,18 @@
                         </Label>
                         <TextBox Grid.Column="1" Margin="5" VerticalContentAlignment="Center"
                                  IsEnabled="{Binding ElementName=PolynominalRadioButton, Path=IsChecked}"
-                                 Text="{Binding Degree, Mode=TwoWay}">
+                                 Text="{Binding Svm.Degree, Mode=TwoWay}">
                         </TextBox>
                         <Label  Grid.Column="2"  Content="Constant:" VerticalContentAlignment="Center">
                         </Label>
                         <TextBox Grid.Column="3" Margin="5" VerticalContentAlignment="Center"
                                  IsEnabled="{Binding ElementName=PolynominalRadioButton, Path=IsChecked}"
-                                 Text="{Binding Constant, Mode=TwoWay}">
+                                 Text="{Binding Svm.Constant, Mode=TwoWay}">
                         </TextBox>
                     </Grid>
                     <RadioButton Margin="5" Grid.Row="3" GroupName="KernelType" Name="GaussianRadioButton"
                                  Content="Gaussian Kernel"
-                                 IsChecked="{Binding IsSuccess, Converter={StaticResource RadioButtonConverter}, ConverterParameter=2}">
+                                 IsChecked="{Binding Svm.IsSuccess, Converter={StaticResource RadioButtonConverter}, ConverterParameter=2}">
                     </RadioButton>
                     <Grid Grid.Row="4">
                         <Grid.ColumnDefinitions>
@@ -175,7 +174,7 @@
                         </Label>
                         <TextBox Grid.Column="1" Margin="5" VerticalContentAlignment="Center"
                                  IsEnabled="{Binding ElementName=GaussianRadioButton, Path=IsChecked}"
-                                 Text="{Binding Sigma, Mode=TwoWay}">
+                                 Text="{Binding Svm.Sigma, Mode=TwoWay}">
                         </TextBox>
                     </Grid>
                 </Grid>

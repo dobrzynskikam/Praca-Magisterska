@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MasterThesisApplication.Model;
 using System.Collections.ObjectModel;
 using System.Drawing;
@@ -6,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
+using Accord;
 
 namespace MasterThesisApplication.DAL
 {
@@ -23,20 +25,23 @@ namespace MasterThesisApplication.DAL
             return _gestures;
         }
 
-        public Dictionary<string, Bitmap> GetImages()
+        public Dictionary<string, Tuple<double[], Bitmap>> GetImages()
         {
-            var bitmapDictionary = new Dictionary<string, Bitmap>();
-            var gestureCollection = GetGestures();
-            foreach (var gesture in gestureCollection)
-            {
-                {
-                    foreach (var feature in gesture.FeatureList)
-                    {
-                        var imageFullName = Path.Combine(DatabasePath, gesture.GestureName, feature.ImageName);
-                        bitmapDictionary.Add(feature.ImageName, (Bitmap)Image.FromFile(imageFullName));
-                    }
-                }
-            }
+            var bitmapDictionary = new Dictionary<string, Tuple<double[], Bitmap>>();
+            //var gestureCollection = GetGestures();
+            //foreach (var gesture in gestureCollection)
+            //{
+            //    {
+            //        foreach (var feature in gesture.FeatureList)
+            //        {
+            //            var imageFullName = Path.Combine(DatabasePath, gesture.GestureName, feature.ImageName);
+            //            var vec = feature.Vector.Split(' ').Select(x => double.Parse(x)).ToArray();
+            //            var bitMap = (Bitmap) Image.FromFile(imageFullName);
+
+            //            bitmapDictionary.Add(feature.ImageName, new Tuple<double[], Bitmap>(vec, bitMap));
+            //        }
+            //    }
+            //}
 
             return bitmapDictionary;
         }
@@ -124,7 +129,7 @@ namespace MasterThesisApplication.DAL
                 {
                     _features.Add(new Feature()
                     {
-                        Vector = feature.Attribute("Vector")?.Value,
+                        Vector = feature.Attribute("Vector")?.Value.Split(' ').Select(c=>double.Parse(c)).ToArray(),
                         ImageName = feature.Attribute("ImageName")?.Value
                     });
                 }
