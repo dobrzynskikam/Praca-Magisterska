@@ -1,5 +1,84 @@
 \chapter{Testy oraz prezentacja wyników}
 \label{cha: Tests}
+Testy sprawdzające działanie aplikacji zostały przeprowadzone za pomocą komputera wyposażonego w czterordzeniowy procesor Intel\textregistered CORE\texttrademark i7 oraz pamięć RAM 16GB DDR3. W ramach testów wykorzystano jedną z ogólnie dostępnych baz danych zawierające gesty dłoni w zmieniających się warunkach oświetlenia.
+
+W ramach testów wykorzystano bazę gestów opsianą w pracy BIBLIOGRAFIA. Zawiera ona 900 sekwencji obrazów tworząc 9 różnych klas. Klasy te są utworzone na podstawie 3 prostych gestów dłoni, która jest poddawana rotacji oraz zaciskaniu w pięść. Szczegóły na rysunku RYSUNEK. Każda z klas zawiera 100 sekwencji obrazów (5 odmiennych warunków oświetleniowych, 10 różnych sekwencji ruchu dłoni w dwóch kierunkach). Każdy z gestów jest umieszczony na ciemnym tle bez dodatkowych elementów.
+
+Stworzono łącznie 33 sekwencje testowe. Różnią się one względem siebie wartościami poszczególnych parametrów. Pierwszy podział dotyczy ilości klastrów, na jakie podzielona zostanie przestrzeń zmiennych opisujących cechy obrazu. Wybrano 3 wartości: 10, 36 oraz 50. Dla każdej z nich przeprowadzono następujące sekwencje testowe: 
+\begin{enumerate}
+	\item Wartość współczynnika funkcji kary: 100; Funkcja jądra: wielomianowa; Stopień wielomianu: 1; Stała wielomianu: 1; 
+	\begin{enumerate}
+		\item Tolerancja: 0.00001
+		\item Tolerancja: 0.01
+		\item Tolerancja: 10
+	\end{enumerate}
+	\item Wartość współczynnika funkcji kary: 100; 
+	Tolerancja: 0.00001; Funkcja jądra: wielomianowa;
+	\begin{enumerate}
+		\item Stopień wielomianu: 1; Stała wielomianu: 1;
+		\item Stopień wielomianu: 1; Stała wielomianu: 50;
+		\item Stopień wielomianu: 1; Stała wielomianu: 1000;
+		\item Stopień wielomianu: 3; Stała wielomianu: 1;
+		\item Stopień wielomianu: 10; Stała wielomianu: 1;
+	\end{enumerate}
+	\item Wartość współczynnika funkcji kary: 100; 
+	Tolerancja: 0.00001; Funkcja jądra: metoda RBF;
+	\begin{enumerate}
+		\item Sigma: 10
+		\item Sigma: 20
+		\item Sigma: 5
+	\end{enumerate}
+\end{enumerate}
+
+\begin{table}
+	\centering
+	\begin{tabular}{|l|c|c|c|c|}
+		\hline
+		 					& \textbf{Palm} & \textbf{Fist} & \textbf{Five Fingers} & \textbf{Two Fingers} \\ \hline
+		Tolerancja=0.00001 	& 88.6\% 		& 94.7\%		& 87.2\%				& 98.3\% \\ \hline
+		Tolerancja=0.01 	& 88.6\% 		& 94.7\%		& 87.2\%				& 98.3\% \\ \hline
+		Tolerancja=10		& 100\%			& 0\%			& 0\%					& 0\% \\ \hline
+		\multirow{4}{*}{Pozostałe parametry} & \multicolumn{4}{|l|}{Liczba klastrów: 36} \\ 
+							& \multicolumn{4}{|l|}{Współczynnik funkcji kary: 100} \\ 
+							& \multicolumn{4}{|l|}{Metoda funkcji jądra: wielomianowa} \\
+							& \multicolumn{4}{|l|}{Stopień: 1; Stała: 1} \\ \hline
+	\end{tabular}
+	\caption{Proba.}
+\end{table}
+
+
+\begin{table}
+	\centering
+	\begin{tabular}{|l|c|c|c|c|}
+		\hline
+		& \textbf{Palm} & \textbf{Fist} & \textbf{Five Fingers} & \textbf{Two Fingers} \\ \hline
+		Stopień=1; Stała=1 	& 88.6\% 		& 94.7\%		& 87.2\%				& 98.3\% \\ \hline
+		Stopień=1; Stała=50 	& 88.6\% 		& 94.7\%		& 87.2\%				& 98.3\% \\ \hline
+		Stopień=1; Stała=1000		& 100\%			& 0\%			& 0\%					& 0\% \\ \hline
+		Stopień=3; Stała=1		& 100\%			& 0\%			& 0\%					& 0\% \\ \hline
+		\multirow{3}{*}{Pozostałe parametry} & \multicolumn{4}{|l|}{Liczba klastrów: 36} \\ 
+		& \multicolumn{4}{|l|}{Współczynnik funkcji kary: 100} \\ 
+		& \multicolumn{4}{|l|}{Tolerancja: 0.00001} \\ \hline
+	\end{tabular}
+	\caption{Proba.}
+\end{table}
+
+
+\begin{table}
+	\centering
+	\begin{tabular}{|l|c|c|c|c|}
+		\hline
+		& \textbf{Palm} & \textbf{Fist} & \textbf{Five Fingers} & \textbf{Two Fingers} \\ \hline
+		Sigma=10 	& 88.6\% 		& 94.7\%		& 87.2\%				& 98.3\% \\ \hline
+		Sigma=20  	& 88.6\% 		& 94.7\%		& 87.2\%				& 98.3\% \\ \hline
+		Sigma=5 		& 100\%			& 0\%			& 0\%					& 0\% \\ \hline
+		\multirow{2}{*}{Pozostałe} & \multicolumn{4}{|l|}{Liczba klastrów: 36} \\ 
+		\multirow{2}{*}{parametry} & \multicolumn{4}{|l|}{Współczynnik funkcji kary: 100} \\ 
+		& \multicolumn{4}{|l|}{Tolerancja: 0.00001} \\ \hline
+	\end{tabular}
+	\caption{Proba.}
+\end{table}
+
 %Testy sprawdzające działanie aplikacji zostały przeprowadzone za pomocą komputera wyposażonego w czterordzeniowy procesor Intel\textregistered CORE\texttrademark i7 oraz pamięć RAM 16GB DDR3. W ramach testów wykorzystano ogólnie dostępne bazy danych zawierające gesty dłoni w zmieniających się warunkach oświetlenia. 
 %Pierwszą z wykorzystanych baz była baza danych wykorzystana w pracy BIBLIOGRAFIA. Zawiera ona 900 sekwencji obrazów tworząc 9 różnych klas. Klasy te są utworzone na podstawie 3 prostych gestów dłoni, która jest poddawana rotacji oraz zaciskaniu w pięść. Szczegóły na rysunku RYSUNEK. Każda z klas zawiera 100 sekwencji obrazów (5 odmiennych warunków oświetleniowych, 10 różnych sekwencji ruchu dłoni w dwóch kierunkach). Każdy z gestów jest umieszczony na ciemnym tle bez dodatkowych elementów. 
 
