@@ -23,4 +23,7 @@
 \contentsline {subsection}{\numberline {3.3.2}Okno filtrowania}{27}{subsection.3.3.2}
 \contentsline {subsection}{\numberline {3.3.3}Okno bazy danych}{27}{subsection.3.3.3}
 \contentsline {chapter}{\numberline {4}Testy oraz prezentacja wynik\IeC {\'o}w}{29}{chapter.4}
-\contentsline {chapter}{\numberline {5}Podsumowanie oraz kierunki dalszych prac}{31}{chapter.5}
+\contentsline {section}{\numberline {4.1}Wyniki test\IeC {\'o}w dla pr\IeC {\'o}bek treningowych}{30}{section.4.1}
+\contentsline {section}{\numberline {4.2}Wyniki dla pr\IeC {\'o}bek testowych}{32}{section.4.2}
+\contentsline {section}{\numberline {4.3}Podsumowanie test\IeC {\'o}w}{34}{section.4.3}
+\contentsline {chapter}{\numberline {5}Podsumowanie oraz kierunki dalszych prac}{37}{chapter.5}
