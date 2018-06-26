@@ -35,7 +35,7 @@
                     <RowDefinition Height="40"></RowDefinition>
                     <RowDefinition Height="120"></RowDefinition>
                     <RowDefinition Height="120"></RowDefinition>
-                    <!--<RowDefinition Height="40"></RowDefinition>-->
+                    <RowDefinition Height="120"></RowDefinition>
                     <!--<RowDefinition Height="40"></RowDefinition>-->
                 </Grid.RowDefinitions>
                 <Button Margin="5" Content="Load Images"
@@ -90,7 +90,9 @@
                         </Button>
                     </Grid>
                 </GroupBox>
-                
+                <Label Grid.Row="3" Margin="5 0"
+                       Content="{Binding StatusText, Mode=OneWay}">
+                </Label>
             </Grid>
         </Grid>
     </Grid>

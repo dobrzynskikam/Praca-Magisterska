@@ -4,10 +4,10 @@ using MasterThesisApplication.Services;
 using MasterThesisApplication.Utility;
 using Microsoft.Win32;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -65,6 +65,19 @@ namespace MasterThesisApplication.ViewModel
                 OnPropertyChanged(nameof(ExpectedGesture));
             }
         }
+
+        private string _statusText;
+
+        public string StatusText
+        {
+            get { return _statusText; }
+            set
+            {
+                _statusText = value;
+                OnPropertyChanged(nameof(StatusText));
+            }
+        }
+
         //private ObservableCollection<Gesture> _gestureCollection;
 
         //public ObservableCollection<Gesture> GestureCollection
@@ -115,19 +128,30 @@ namespace MasterThesisApplication.ViewModel
 
         private bool CanTest(object obj)
         {
-            return true;
+
+            return GestureToSave.FeatureList.Count != 0 && _svm.CanClassify();
             //return GestureToSave.FeatureList.Count != 0 && GestureCollection.Count != 0;
         }
 
         private void Test(object obj)
         {
-            Messenger.Default.Register<Classifier>(this, OnClassifierReceived);
+            var sw1 = Stopwatch.StartNew();
             _svm.CreateDescriptors(GestureToSave, false);
-            //POPRAWKA
-            var ssss = GestureList.Select(d => d.Value);
+            sw1.Stop();
 
+            var sw2 = Stopwatch.StartNew();
             var expectedLabel = GestureList.First(d => d.Value == ExpectedGesture.Value).Key;
             _svm.Classify(GestureToSave,expectedLabel);
+            sw2.Stop();
+
+            float positiveHits = GestureToSave.FeatureList.Count(f => f.State == FeatureState.CorrectClassification);
+
+            float allFeatures = GestureToSave.FeatureList.Count;
+
+            StatusText = "\nFeatures extracted in " + sw1.Elapsed.TotalSeconds.ToString("F") + "s."+
+                         "\nClassification took " + sw2.Elapsed.TotalSeconds.ToString("F") + ".s" +
+                         $"\nPositiveHits: {positiveHits}; Total: {allFeatures}" +
+                         "\nAccuracy: " + (positiveHits / allFeatures * 100).ToString("F") + "%";
         }
 
         private void Save(object obj)
@@ -162,63 +186,23 @@ namespace MasterThesisApplication.ViewModel
 
         private void LoadGesture(object obj)
         {
-            OpenFileDialog openFile = new OpenFileDialog();
-            openFile.Multiselect = true;
-            openFile.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
-            openFile.InitialDirectory = Environment.CurrentDirectory;
-            if (openFile.ShowDialog() == true)
+            var openFile = new OpenFileDialog
             {
-
-                var newFeatureList = new ObservableCollection<Feature>();
-                foreach (var fileName in openFile.FileNames)
+                Multiselect = true,
+                Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png",
+                InitialDirectory = Environment.CurrentDirectory
+            };
+            if (openFile.ShowDialog() != true) return;
+            var newFeatureList = new ObservableCollection<Feature>();
+            foreach (var fileName in openFile.FileNames)
+            {
+                newFeatureList.Add(new Feature()
                 {
-                    newFeatureList.Add(new Feature()
-                    {
-                        ImageName = fileName
-                    });
-                }
-
-                GestureToSave.FeatureList = newFeatureList;
+                    ImageName = fileName
+                });
             }
+
+            GestureToSave.FeatureList = newFeatureList;
         }
-
-        //private bool CanComputeBow(object obj)
-        //{
-        //    return true;
-        //}
-
-        //private void ComputeBow(object obj)
-        //{
-            
-        //    //BinarySplit binarySplit = new BinarySplit(NumberOfBow);
-
-        //    //// Create bag-of-words (BoW) with the given algorithm
-        //    //BagOfVisualWords surfBow = new BagOfVisualWords(binarySplit);
-
-        //    //_images = GetImages(FeatureCollection);
-
-        //    //// Compute the BoW codebook using training images only
-        //    //_bow = surfBow.Learn(_images.Values.ToArray());
-
-        //    //foreach (var feature in FeatureCollection)
-        //    //{
-                
-        //    //    var image = (Bitmap)Image.FromFile(feature.ImageName);
-              
-        //    //    double[] featureVector = (_bow as ITransform<Bitmap, double[]>).Transform(image);
-        //    //    feature.Vector = featureVector.ToString(DefaultArrayFormatProvider.InvariantCulture);
-        //    //}
-        //}
-
-        //private Dictionary<string, Bitmap> GetImages(ObservableCollection<Feature> featureCollection)
-        //{
-        //    Dictionary<string, Bitmap> imageDict = new Dictionary<string, Bitmap>();
-        //    foreach (var feature in featureCollection)
-        //    {
-        //        imageDict.Add(feature.ImageName, (Bitmap)Image.FromFile(feature.ImageName));
-        //    }
-
-        //    return imageDict;
-        //}
     }
 }

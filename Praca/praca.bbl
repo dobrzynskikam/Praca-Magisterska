@@ -3,6 +3,9 @@
 \bibitem{Uni}
 \url{http://www.motionsavvy.com/uni.html}.
 
+\bibitem{Svm}
+\url{https://en.wikipedia.org/wiki/Support_vector_machine}.
+
 \bibitem{Wpf}
 \url{https://docs.microsoft.com/en-us/dotnet/framework/wpf/advanced/wpf-architecture}.
 
@@ -52,5 +55,11 @@ Lindeberg T.
 \newblock Scale-space for discrete signals.
 \newblock {\em IEEE Transactions of Pattern Analysis and Machine Intelligence},
   wolumen~12, strony 234--254, 1990.
+
+\bibitem{Cambridge}
+Kim T-K., Wong S-F., Cipolla R.
+\newblock Tensor canonical correlation analysis for action classification.
+\newblock {\em Proc. of IEEE Conference on Computer Vision and Pattern
+  Recognition}, 2007.
 
 \end{thebibliography}

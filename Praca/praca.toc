@@ -1,29 +1,30 @@
 \babel@toc {polish}{}
-\contentsline {chapter}{\numberline {1}Wprowadzenie}{3}{chapter.1}
-\contentsline {section}{\numberline {1.1}Cele pracy}{4}{section.1.1}
-\contentsline {section}{\numberline {1.2}Zawarto\IeC {\'s}\IeC {\'c} pracy}{4}{section.1.2}
-\contentsline {chapter}{\numberline {2}Technologie i poj\IeC {\k e}cia wykorzystane w projekcie}{7}{chapter.2}
-\contentsline {section}{\numberline {2.1}Ci\IeC {\k a}g\IeC {\l }a przestrze\IeC {\'n} skali dla obrazu}{7}{section.2.1}
-\contentsline {section}{\numberline {2.2}Obraz ca\IeC {\l }kowy}{8}{section.2.2}
-\contentsline {section}{\numberline {2.3}Algorytm SURF}{9}{section.2.3}
-\contentsline {subsection}{\numberline {2.3.1}Detekcja}{10}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}Deskryptor}{12}{subsection.2.3.2}
-\contentsline {section}{\numberline {2.4}Algorytm centroid\IeC {\'o}w}{13}{section.2.4}
-\contentsline {section}{\numberline {2.5}Metoda Wektor\IeC {\'o}w No\IeC {\'s}nych}{15}{section.2.5}
-\contentsline {section}{\numberline {2.6}Windows Presentation Foundation (WPF)}{17}{section.2.6}
-\contentsline {section}{\numberline {2.7}C\#}{19}{section.2.7}
-\contentsline {section}{\numberline {2.8}.NET}{20}{section.2.8}
-\contentsline {section}{\numberline {2.9}Accord .NET}{21}{section.2.9}
-\contentsline {section}{\numberline {2.10}Microsoft Visual Studio}{22}{section.2.10}
-\contentsline {chapter}{\numberline {3}Aplikacja do rozpoznawania gest\IeC {\'o}w}{23}{chapter.3}
-\contentsline {section}{\numberline {3.1}Wzorzec MVVM}{24}{section.3.1}
-\contentsline {section}{\numberline {3.2}Wzorzec Mediator}{24}{section.3.2}
-\contentsline {section}{\numberline {3.3}Architektura aplikacji}{25}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}G\IeC {\l }\IeC {\'o}wny widok aplikacji}{26}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}Okno filtrowania}{27}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Okno bazy danych}{27}{subsection.3.3.3}
-\contentsline {chapter}{\numberline {4}Testy oraz prezentacja wynik\IeC {\'o}w}{29}{chapter.4}
-\contentsline {section}{\numberline {4.1}Wyniki test\IeC {\'o}w dla pr\IeC {\'o}bek treningowych}{30}{section.4.1}
-\contentsline {section}{\numberline {4.2}Wyniki dla pr\IeC {\'o}bek testowych}{32}{section.4.2}
-\contentsline {section}{\numberline {4.3}Podsumowanie test\IeC {\'o}w}{34}{section.4.3}
-\contentsline {chapter}{\numberline {5}Podsumowanie oraz kierunki dalszych prac}{37}{chapter.5}
+\contentsline {chapter}{\numberline {1}Wprowadzenie}{7}{chapter.1}
+\contentsline {section}{\numberline {1.1}Cele pracy}{8}{section.1.1}
+\contentsline {section}{\numberline {1.2}Zawarto\IeC {\'s}\IeC {\'c} pracy}{8}{section.1.2}
+\contentsline {chapter}{\numberline {2}Technologie i poj\IeC {\k e}cia wykorzystane w projekcie}{11}{chapter.2}
+\contentsline {section}{\numberline {2.1}Ci\IeC {\k a}g\IeC {\l }a przestrze\IeC {\'n} skali dla obrazu}{11}{section.2.1}
+\contentsline {section}{\numberline {2.2}Obraz ca\IeC {\l }kowy}{12}{section.2.2}
+\contentsline {section}{\numberline {2.3}Algorytm SURF}{13}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Detekcja}{14}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Deskryptor}{16}{subsection.2.3.2}
+\contentsline {section}{\numberline {2.4}Algorytm centroid\IeC {\'o}w}{17}{section.2.4}
+\contentsline {section}{\numberline {2.5}Metoda Wektor\IeC {\'o}w No\IeC {\'s}nych}{19}{section.2.5}
+\contentsline {section}{\numberline {2.6}Windows Presentation Foundation (WPF)}{21}{section.2.6}
+\contentsline {section}{\numberline {2.7}C\#}{23}{section.2.7}
+\contentsline {section}{\numberline {2.8}.NET}{24}{section.2.8}
+\contentsline {section}{\numberline {2.9}Accord .NET}{25}{section.2.9}
+\contentsline {section}{\numberline {2.10}Microsoft Visual Studio}{26}{section.2.10}
+\contentsline {chapter}{\numberline {3}Aplikacja do rozpoznawania gest\IeC {\'o}w}{27}{chapter.3}
+\contentsline {section}{\numberline {3.1}Wzorzec MVVM}{28}{section.3.1}
+\contentsline {section}{\numberline {3.2}Wzorzec Mediator}{28}{section.3.2}
+\contentsline {section}{\numberline {3.3}Architektura aplikacji}{29}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}G\IeC {\l }\IeC {\'o}wny widok aplikacji}{30}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Okno filtrowania}{32}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Okno bazy danych}{33}{subsection.3.3.3}
+\contentsline {chapter}{\numberline {4}Testy oraz prezentacja wynik\IeC {\'o}w}{37}{chapter.4}
+\contentsline {section}{\numberline {4.1}Wyniki test\IeC {\'o}w dla pr\IeC {\'o}bek treningowych}{38}{section.4.1}
+\contentsline {section}{\numberline {4.2}Wyniki dla pr\IeC {\'o}bek testowych}{41}{section.4.2}
+\contentsline {section}{\numberline {4.3}Podsumowanie test\IeC {\'o}w}{43}{section.4.3}
+\contentsline {chapter}{\numberline {5}Podsumowanie oraz kierunki dalszych prac}{45}{chapter.5}
+\contentsline {chapter}{\numberline {A}Dodatek: Spis zawarto\IeC {\'s}ci p\IeC {\l }yty CD}{49}{appendix.A}

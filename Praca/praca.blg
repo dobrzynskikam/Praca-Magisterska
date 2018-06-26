@@ -9,6 +9,7 @@ Database file #1: bibfile.bib
 Warning--I'm ignoring ViolaJonesRobustDetection's extra "booktitle" field
 --line 31 of file bibfile.bib
 Warning--to sort, need author or key in Uni
+Warning--to sort, need author or key in Svm
 Warning--to sort, need author or key in Wpf
 Warning--empty booktitle in SiftBowSvm
-(There were 4 warnings)
+(There were 5 warnings)

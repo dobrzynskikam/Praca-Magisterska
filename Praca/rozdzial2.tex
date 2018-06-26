@@ -1,6 +1,6 @@
 \chapter{Technologie i pojęcia wykorzystane w projekcie}
 \label{cha:Technologie}
-W poniższym rozdziale przedstawiono zagadnienia, które są pomocne w zrozumieniu kontekstu całej pracy. W pierwszej części rozdziału opisano pojęcia związane z przetwarzaniem, detekcją oraz opisem cech dla podanego obrazu. Dodatkowo opisano jedną z najbardziej popularnych metod klasyfikacji. Druga część to opis technologii oraz narzędzi wykorzystanych podczas tworzenia aplikacji.
+W poniższym rozdziale przedstawiono zagadnienia, które są pomocne w zrozumieniu kontekstu całej pracy. W pierwszej części rozdziału przedstawiono pojęcia związane z przetwarzaniem, detekcją oraz opisem cech dla podanego obrazu. Dodatkowo opisano jedną z najbardziej popularnych metod klasyfikacji. Druga część to opis technologii oraz narzędzi wykorzystanych podczas tworzenia aplikacji.
 
 \section{Ciągła przestrzeń skali dla obrazu}
 \label{sec:StateSpace}
@@ -34,7 +34,7 @@ Dla $\sigma = 0$ filtr Gaussa staje się funkcją impulsową, zatem \textit{L(x,
 
 \section{Obraz całkowy}
 \label{sec:IntegralImage}
-Obraz całkowy (z ang. \textit{Integral Image} \cite{ViolaJonesIntegralImage}) to struktura danych wykorzystywana w celu efektywnej i szybkiej generacji sum pikseli dla podanego regionu obrazu. Znalazła zastosowanie wszędzie tam, gdzie konieczna jest wysoka wydajność obliczeń dla dowolnie dużego regionu w obszarze obrazu. Dowolny piksel \textit{(x, y)} wchodzący w skład obrazu \textit{I} może zostać przedstawiony jako suma wszystkich pikseli na lewo oraz powyżej \textit{(x, y)}:
+Obraz całkowy (z ang. \textit{Integral Image} \cite{ViolaJonesIntegralImage}) to struktura danych wykorzystywana w celu efektywnej i~szybkiej generacji sum pikseli dla podanego regionu obrazu. Znalazła zastosowanie wszędzie tam, gdzie konieczna jest wysoka wydajność obliczeń dla dowolnie dużego regionu w obszarze obrazu. Dowolny piksel \textit{(x, y)} wchodzący w skład obrazu \textit{I} może zostać przedstawiony jako suma wszystkich pikseli na~lewo oraz powyżej \textit{(x, y)}:
 \begin{equation}
 \textit{Obraz całkowy}(x^{'},y^{'}) = \sum_{x<x^{'},y<y^{'}}^{}I(x,y).
 \end{equation}
@@ -78,7 +78,7 @@ L_{xx}(\textbf{x},\sigma) = I(\textbf{x})*\frac{\delta^2}{\delta x^2}g(\sigma)
 L_{xy}(\textbf{x},\sigma) = I(\textbf{x})*\frac{\delta^2}{\delta xy}g(\sigma)
 \end{equation}
 
-Udowodniono, że przestrzeń skali oparta o funkcję Gaussa jest rozwiązaniem optymalnym (\cite{SurfTemp1}), jednakże w zastosowaniach praktycznych wyliczanie splotu jest niezwykle kosztowne obliczeniowo. W celu przyspieszenia obliczeń dokonano aproksymacji drugich pochodnych cząstkowych filtrami przedstawionymi na rysunku \ref{im: GaussianApproximation}. Dodatkowo wykorzystanie obrazu całkowego powoduje, że czas wyliczania splotów nie zależy od wielkości filtra. 
+Udowodniono, że przestrzeń skali oparta o funkcję Gaussa jest rozwiązaniem optymalnym (\cite{SurfTemp1}), jednakże w zastosowaniach praktycznych wyliczanie splotu jest niezwykle kosztowne obliczeniowo. W~celu przyspieszenia obliczeń dokonano aproksymacji drugich pochodnych cząstkowych filtrami przedstawionymi na rysunku \ref{im: GaussianApproximation}. Dodatkowo wykorzystanie obrazu całkowego powoduje, że czas wyliczania splotów nie zależy od wielkości filtra. 
 \begin{figure}[h]
 	%\centering
 	\includegraphics[width=8cm]{SurfLxyLyy}
@@ -96,7 +96,7 @@ det(H_{aproks}) = D_{xx}D_{yy} - (wD_{xy})^2.
 Aby uczynić aproksymację Hesjanu bardziej dokładną wprowadzono parametr \textit{w}. Teoretycznie jest on zależny od skali, jednakże badania wykazały (\cite{Surf}), że można uczynić go stałą równą \textit{0.9}.  
 Wynikiem powyższych działań jest uzyskanie aproksymowanego wyznacznika Hesjanu dla każdego punktu obrazu \textit{\textbf{x}} przy różnych wartościach parametru $\sigma$.
 
- Algorytm SURF dzieli przestrzeń skali na oktawy. Oktawa reprezentuje zbiór odpowiedzi filtrów otrzymanych przez splot obrazu z filtrami coraz większych rozmiarów. Każda oktawa odpowiada fragmentowi przestrzeni skali, w którym nastąpiło podwojenie parametru $\sigma$. Dodatkowo podzielona jest na stałą liczbę poziomów. Wraz ze wzrostem wielkości filtrów muszą zostać spełnione dwa założenia: o istnieniu piksela centralnego oraz o zachowaniu proporcji poszczególnych obszarów maski. W pracy \cite{Surf} opisano szczegółowo, w jaki sposób definiować oktawy oraz liczbę poziomów dla nich. Przykład poprawnego skalowania filtra przedstawiono na rysunku \ref{im: FiltersScale}. 
+ Algorytm SURF dzieli przestrzeń skali na oktawy. Oktawa reprezentuje zbiór odpowiedzi filtrów otrzymanych przez splot obrazu z filtrami coraz większych rozmiarów. Każda oktawa odpowiada fragmentowi przestrzeni skali, w którym nastąpiło podwojenie parametru $\sigma$. Dodatkowo podzielona jest na~stałą liczbę poziomów. Wraz ze wzrostem wielkości filtrów muszą zostać spełnione dwa założenia: o~istnieniu piksela centralnego oraz o~zachowaniu proporcji poszczególnych obszarów maski. W pracy \cite{Surf} opisano szczegółowo, w jaki sposób definiować oktawy oraz liczbę poziomów dla nich. Przykład poprawnego skalowania filtra przedstawiono na rysunku \ref{im: FiltersScale}. 
  
  \begin{figure}[h]
  	%\centering
@@ -106,7 +106,7 @@ Wynikiem powyższych działań jest uzyskanie aproksymowanego wyznacznika Hesjan
  	\label{im: FiltersScale}
  \end{figure}
  
-W celu zlokalizowania punktów kluczowych na obrazie we wszystkich skalach, algorytm SURF wykorzystuje ograniczanie lokalnych wartości niemaksymalnych (z ang. \textit{non-maximal suppression}) dla obszaru wielkości \textit{3 x 3 x 3} piksele. Zasada działania została opisana w pracy \cite{Surf}. Następnie maksima wyznacznika Hessjanu dla poszczególnych skal są interpolowane na obraz oryginalny.
+W celu zlokalizowania punktów kluczowych na obrazie we wszystkich skalach, algorytm SURF wykorzystuje ograniczanie lokalnych wartości niemaksymalnych (z ang. \textit{non-maximal suppression}) dla obszaru wielkości \textit{3 x 3 x 3} piksele. Zasada działania została opisana w pracy \cite{Surf}. Następnie maksima wyznacznika Hesjanu dla poszczególnych skal są interpolowane na obraz oryginalny.
 
 \subsection{Deskryptor} 
 Aby punkt kluczowy był niewrażliwy na zmiany orientacji, punktowi przypisywana zostaje orientacja. W tym celu algorytm SURF wylicza odpowiedź falki Haara dla kolistego otoczenia punktu orientacji. Falka jest wyliczana w kierunku poziomym (\textit{dx}) oraz pionowym (\textit{dy}) dla każdego elementu z otoczenia punktu kluczowego.
@@ -122,20 +122,20 @@ Główna orientacja jest wyliczana następująco: mając odpowiedzi falki Haara 
 
 Kolejnym etapem tworzenia deskryptora jest podzielenie obszaru wokół punktu kluczowego na  \textit{4 x 4} kwadratowe obszary. Taki podział zachowuje istotne przestrzenne informacje. Każdy z podregionów zawiera \textit{5 x 5} punktów rozmieszczonych regularnie w wierzchołkach siatki. Dla każdego punktu wyliczone zostają odpowiedzi falki Haara w kierunku poziomym oraz pionowym. Odpowiedzi te uwzględniają rotację całego obszaru zgodnie z główną orientacją badanego punktu kluczowego. Schemat przedstawiono na rysunku \ref{im: Description}. Następnie rezultaty \textit{dx} oraz \textit{dy} są sumowane dla każdego z podregionów. Stanowią one pierwszą część deskryptora cechy. Dodatkowo w celu uwzględnienia informacji o zmianach intensywności wyliczane są sumy modułów odpowiedzi falki Haara. 
 
-Zatem, dla każdego z podregionów otrzymano czterowymiarowy wektor opisujacy o strukturze \textit{\textbf{v} = ($\sum$$d_x$, $\sum$$d_y$, $\sum$$|d_x|$, $\sum$$|d_y|)$}. Uwzględniając wszystkie podregiony, punkt kluczowy opisany jest 64-elementowym wektorem. 
+Zatem, dla każdego z podregionów otrzymano czterowymiarowy wektor opisujący o strukturze \textit{\textbf{v}~=~($\sum$$d_x$, $\sum$$d_y$, $\sum$$|d_x|$, $\sum$$|d_y|)$}. Uwzględniając wszystkie podregiony, punkt kluczowy opisany jest 64-elementowym wektorem. 
 
  \begin{figure}[h]
 	%\centering
 	\includegraphics[width=16cm]{Description}
 	\centering
-	\caption{Tworzenie deskryptora. Otoczenie punktu kluczowego obrócono zgodnie z orientacją cechy. Dla wszystkich elementów podregionu wyliczono odpowiedź falki Haara w dwóch kierunkach.}
+	\caption{Tworzenie deskryptora. Otoczenie punktu kluczowego obrócono zgodnie z orientacją cechy. Dla wszystkich elementów podregionu wyliczono odpowiedzi falki Haara w dwóch kierunkach.}
 	\label{im: Description}
 \end{figure}
 
 %MOŻNA DOPISAC O ZNAKU LAPLASJANU I O ROZRZERZENIU DO 128 ELEMENTOW.
 
 \section{Algorytm centroidów}
-Algorytm K-średnich (z ang. \textit{K-means}) jest jedną z najprostszych metod klasyfikacji bez nadzoru (z ang. \textit{unsupervised learning}). Grupowanie elementów oparte jest o wstępne podzielenie zbioru danych na z góry założoną liczbę klastrów. W kolejnych krokach niektóre z elementów skupień są przenoszone do innych klastrów w taki sposób, aby wariancja wewnątrz każdej z grup była jak najmniejsza. Minimalizacja wartości wariancji powoduje, że elementy wewnątrz poszczególnych klastrów są do siebie maksymalnie podobne. Schemat działania algorytmu K-średnich może zostać opisany w następujący sposób:
+Algorytm K-średnich (z ang. \textit{K-means}) jest jedną z najprostszych metod klasyfikacji bez nadzoru (z~ang. \textit{unsupervised learning}). Grupowanie elementów oparte jest o wstępne podzielenie zbioru danych na z góry założoną liczbę klastrów. W kolejnych krokach niektóre z elementów skupień są przenoszone do innych klastrów w taki sposób, aby wariancja wewnątrz każdej z grup była jak najmniejsza. Minimalizacja wartości wariancji powoduje, że elementy wewnątrz poszczególnych klastrów są do siebie maksymalnie podobne. Schemat działania algorytmu K-średnich może zostać opisany w następujący sposób:
 
 \begin{enumerate}
 	\item Wybór centroidów klastrów: dla podanej z góry liczby klas (skupień) środki klastrów powinny zostać dobrane w taki sposób, aby były możliwie jak najdalej od siebie.
@@ -155,9 +155,9 @@ Na rysunku \ref{im: Clustering} przedstawiono graf przepływu wyjaśniający zas
 
 \section{Metoda Wektorów Nośnych}
 \label{sec: SVM}
-Metoda wektorów nośnych (z ang. \textit{Support Vector Machine}, SVM) to jeden z modeli uczenia maszynowego służący do klasyfikacji danych. Model SVM po raz pierwszy został opublikowany przez dwóch naukowców: Vladimira N. Vapnika oraz Alexey'a Chervonenkisa w 1963 roku. Może zostać użyty do rozwiązywania takich problemów jak rozpoznawanie tekstu pisanego czy klasyfikacja obrazów.
+Metoda wektorów nośnych (z ang. \textit{Support Vector Machine}, SVM) to jeden z modeli uczenia maszynowego służący do klasyfikacji danych. Model SVM po raz pierwszy został opublikowany przez dwóch naukowców: Vladimira N. Vapnika oraz Alexey'a Chervonenkisa w 1963 roku. Może zostać użyty do~rozwiązywania problemów takich jak rozpoznawanie tekstu pisanego czy klasyfikacja obrazów.
 
-Mając do dyspozycji zbiór punktów uczących, w którym każdy z elementów należy do jednej z dwóch klas, SVM tworzy model, który przypisuje próbki testowe do jednej z dwóch kategorii. Model SVM jest reprezentowany jako zbiór punktów na przestrzeni skonstruowany w taki sposób, aby istniała wyraźna przerwa oddzielająca elementy rożnych klas. W zależności od tego, po której stronie przerwy próbka testowa została umiejscowiona, do tej kategorii zostanie przypisana. Bardziej formalnie SVM konstruuje hiperpłaszczyznę rozdzielającą zbiór próbek uczących. Najlepsza separacja zachodzi wtedy, gdy odległość hiperpłaszczyzny od najbliższego elementu dla każdej z klas jest maksymalna. 
+Mając do dyspozycji zbiór punktów uczących, w którym każdy z elementów należy do jednej z~dwóch klas, SVM tworzy model, który przypisuje próbki testowe do jednej z~dwóch kategorii. Model SVM jest reprezentowany jako zbiór punktów na przestrzeni skonstruowany w taki sposób, aby istniała wyraźna przerwa oddzielająca elementy rożnych klas. W zależności od tego, po której stronie przerwy próbka testowa została umiejscowiona, do tej kategorii zostanie przypisana. Bardziej formalnie SVM konstruuje hiperpłaszczyznę rozdzielającą zbiór próbek uczących. Najlepsza separacja zachodzi wtedy, gdy odległość hiperpłaszczyzny od najbliższego elementu dla każdej z klas jest maksymalna. 
 
 Zbiór $n$-punktów uczących opisano następująco:
 \begin{equation}
@@ -186,7 +186,7 @@ Powyższe nierówności mogą zostać przekształcone do:
 y_i(\vec{w}\cdot \vec{x}_i - b) \geq 1 \hspace{0.5cm} dla \hspace{0.2cm} wszystkich \hspace{0.2cm} 1 \leq i \leq n
 \end{equation}
 Zadanie minimalizacji może zostać postawione w następujący sposób:
-"Minimalizacja normy wektora $\vec{w}$ dla zależności $y_i(\vec{w}\cdot \vec{x}_i - b) \geq 1$ dla $i=1 \ldots n$".
+"Minimalizacja normy wektora $\vec{w}$ dla zależności $y_i(\vec{w}\cdot \vec{x}_i - b) \geq 1$ przy $i=1 \ldots n$".
 Szczegóły tworzenia hiperprzestrzeni w dwóch wymiarach przedstawiono na rysunku \ref{im: SvmMargin}
 \begin{figure}[h]
 	%\centering
@@ -196,7 +196,7 @@ Szczegóły tworzenia hiperprzestrzeni w dwóch wymiarach przedstawiono na rysun
 	\label{im: SvmMargin}
 \end{figure}
 
-Oryginalny algorytm do szukania hiperpłaszczyzny rozdzielającej z maksymalnym marginesem stworzony w 1963 roku był liniowym klasyfikatorem. Jednakże w latach 90-tych Vapnik przy wsparciu innych naukowców zaproponował sposób umożliwiający konstrukcję nieliniowego klasyfikatora przez zastosowanie tzw. \textit{"kernel trick"}. Algorytm w swoim działaniu jest bardzo podobny do oryginału z tą różnicą, że każdy iloczyn skalarny zostaje zastąpiony przez nieliniową funkcję jądra. Do najbardziej znanych funkcji jądra należą:
+Oryginalny algorytm do szukania hiperpłaszczyzny rozdzielającej z maksymalnym marginesem stworzony w 1963 roku był liniowym klasyfikatorem. Jednakże w latach 90-tych Vapnik przy wsparciu innych naukowców zaproponował sposób umożliwiający konstrukcję nieliniowego klasyfikatora przez zastosowanie tzw. \textit{"kernel trick'u"}. Algorytm w swoim działaniu jest bardzo podobny do oryginału z tą różnicą, że każdy iloczyn skalarny zostaje zastąpiony przez nieliniową funkcję jądra. Do najbardziej znanych funkcji jądra należą:
 
 \begin{itemize}
 	\item Wielomianowa jednorodna: 
@@ -217,7 +217,7 @@ Przykład zastosowania funkcji jądra przedstawiono na rysunku \ref{im: KernelMa
 	%\centering
 	\includegraphics[width=12cm]{KernelMachine}
 	\centering
-	\caption{Sposób wyznaczania optymalnej hiperpłaszczyzny.}
+	\caption{Zastosowanie funkcji jądra. \cite{Svm}.}
 	\label{im: KernelMachine}
 \end{figure}
 
@@ -239,15 +239,15 @@ Windows Presentation Foundation (\cite{Wpf}) jest silnikiem graficznym dostarcza
 Architektura silnika WPF została oparta zarówno o kod zarządzany, jak i o kod natywny.  Większość elementów składowych znajduje się w kodzie zarządzanym, tak jak publiczne API dostępne dla deweloperów. Na rysunku \ref{im: WpfArchitecture} przedstawiono architekturę silnika, w skład którego wchodzą:
 
 \begin{itemize}
-	\item PresentationFramework – biblioteka implementująca elementy do prezentacji dla końcowego uzytkownika tj. rozkład kontrolek, wyświetlanie animacji, skalowanie aplikacji. 
+	\item PresentationFramework – biblioteka implementująca elementy do prezentacji dla końcowego użytkownika tj. rozkład kontrolek, wyświetlanie animacji, skalowanie aplikacji. 
 	
-	\item PresentationCore – podstawowa biblioteka w technologii WPF. Dostarcza wraper dla MIL z poziomu kodu zarządzanego oraz implementuje bazowe  usługi dla każdej aplikacji WPF. W skład tych usług wchodzi przede wszystkim system zarządzania wiadomościami , którego implementację stanowi obiekt typu Dispacher.  
+	\item PresentationCore – podstawowa biblioteka w technologii WPF. Dostarcza wrapper dla MIL z poziomu kodu zarządzanego oraz implementuje bazowe  usługi dla każdej aplikacji WPF. W skład tych usług wchodzi przede wszystkim system zarządzania wiadomościami , którego implementację stanowi obiekt typu Dispacher.  
 	
 	\item Media Integration Layer, MIL – komponent działający w kodzie niezarządzanym w celu zapewnienia wydajnej współpracy  z DirectX.   Zawiera silnik kompozycji, który odpowiada za  podstawową obsługę renderowania powierzchni 2D oraz 3D.
 	
 	\item Kodeki – zbiór programów służących do przekształcania strumienia danych do postaci multimedialnej.
 	
-	\item DirectX – kolekcja zawierająca interfejsy programistyczne aplikacji (z ang. Application Programming Interfaces, APIs). Zestaw ten  wspomaga generację grafiki, dźwięku oraz innych elementów związanych z aplikacjami multimedialnymi
+	\item DirectX – kolekcja zawierająca interfejsy programistyczne aplikacji (z ang. \textit{Application Programming Interfaces}, APIs). Zestaw ten  wspomaga generację grafiki, dźwięku oraz innych elementów związanych z aplikacjami multimedialnymi.
 	
 	\item User32 – komponent Microsoft Windows dostarczający bazowe funkcjonalności do tworzenia prostych interfejsów użytkownika.  Aplikacje WPF zawierają obiekt typu Dispacher, który używa systemu zarządzania wiadomościami dostępnymi w User32.
 	
@@ -255,13 +255,13 @@ Architektura silnika WPF została oparta zarówno o kod zarządzany, jak i o kod
 	
 \end{itemize}
 
-Silnik WPF udostępnia system własności dla obiektów, które dziedziczą z DependencyObject. Obiekt ten monitoruje  wszystkie zależności pomiędzy własnościami i jest w stanie wykonywać odpowiednie akcje bazując na ich zmianach. Własności implementują mechanizm informujący o zmianach (z ang. Change notifications), który wywołuje wbudowane zachowania (z ang. Behaviors) w przypadku wykrycia jakiejkolwiek zmiany. Dodatkowo istnieje możliwość definiowania własnych zachowań w celu propagowania informacji o zmianie własności do innych składowych . System zarządzania rozkładem elementów w obszarze interfejsu użytkownika wykorzystuje powyższy zbiór zachowań do przeliczania nowego rozkładu w przypadku zmiany własności. Dzięki temu architektura systemu WPF spełnia deklaratywny paradygmat programowania, w którym praktycznie wszystko, począwszy od ustawania wielkości kontrolek do tworzenia animacji może zostać osiągnięte poprzez zmianę własności. Takie zachowanie umożliwia tworzenie aplikacji WPF w XAML (z ang. Extensible Application Markup Language) – deklaratywnym języku znaczników, gdzie przy pomocy atrybutów oraz słów kluczowych tworzone jest bezpośrednie połączenie z własnościami oraz klasami technologii WPF. 
+Silnik WPF udostępnia system własności dla obiektów, które dziedziczą z DependencyObject. Obiekt ten monitoruje  wszystkie zależności pomiędzy własnościami i jest w stanie wykonywać odpowiednie akcje bazując na ich zmianach. Własności implementują mechanizm informujący o zmianach (z ang. \textit{change notifications}), który wywołuje wbudowane zachowania (z ang. \textit{behaviors}) w przypadku wykrycia jakiejkolwiek zmiany. Dodatkowo istnieje możliwość definiowania własnych zachowań w celu propagowania informacji o zmianie własności do innych składowych. System zarządzania rozkładem elementów w obszarze interfejsu użytkownika wykorzystuje powyższy zbiór zachowań do przeliczania nowego rozkładu w przypadku zmiany własności. Dzięki temu architektura systemu WPF spełnia deklaratywny paradygmat programowania, w którym praktycznie wszystko, począwszy od ustawiania wielkości kontrolek do tworzenia animacji może zostać osiągnięte poprzez zmianę własności. Takie zachowanie umożliwia tworzenie aplikacji WPF w XAML (z ang. \textit{Extensible Application Markup Language}) – deklaratywnym języku znaczników, gdzie przy pomocy atrybutów oraz słów kluczowych tworzone jest bezpośrednie połączenie z własnościami oraz klasami technologii WPF. 
 
 Każdy element interfejsu aplikacji WPF dziedziczy z abstrakcyjnej klasy Visual. Obiekty tej klasy dostarczają interfejs do drzewa kompozycji zarządzanego przez MIL. Każdy element WPF tworzy oraz dodaje przynajmniej jeden węzeł kompozycji do drzewa. Węzły te zawierają przede wszystkim instrukcje renderowania takie jak przycinanie elementu bądź transformacja wizualna. Zatem cała aplikacja może być traktowana jako kolekcja węzłów kompozycji, które są przechowywane w buforze pamięci. Okresowo MIL przechodzi po strukturze drzewa i wykonuje instrukcje renderowania dla każdego węzła. Powoduje to tworzenie kompozytu na powierzchni DirectX, która następnie jest wyświetlana na ekranie.  MIL wykorzystuje algorytm malarza, w którym wyświetlanie elementów na monitorze rozpoczyna się od tych najbardziej odległych (tło). Takie zachowanie umożliwia renderowanie złożonych efektów takich jak rozmycie czy transparentność. Dodatkowo proces rysowania jest sprzętowo wspomagany przy pomocy GPU. 
 
-Każda z aplikacji WPF staruje z dwoma wątkami: pierwszy służy do obsługi interfejsu użytkownika, a drugi, działający w tle, obsługuje renderowanie oraz przerysowywanie – jego działanie jest automatyczne, więc nie wymaga żadnej interwencji dewelopera. Wątek powiązany z UI przechowuje obiekt Dispacher’a (poprzez instancję klasy DispacherObject), który zajmuje się kolejkowaniem operacji koniecznych do wykonania na interfejsie użytkownika.
+Każda z aplikacji WPF startuje z dwoma wątkami: pierwszy służy do obsługi interfejsu użytkownika, a drugi, działający w tle, obsługuje renderowanie oraz przerysowywanie – jego działanie jest automatyczne, więc nie wymaga żadnej interwencji dewelopera. Wątek powiązany z UI przechowuje obiekt Dispacher’a (poprzez instancję klasy DispacherObject), który zajmuje się kolejkowaniem operacji koniecznych do wykonania na interfejsie użytkownika.
 
-Etap tworzenia układu interfejsu użytkownika podzielony jest na dwie fazy: mierzenie (z ang. measure) oraz porządkowanie (z ang. arrange). Faza mierzenia rekursywnie wywołuje wszystkie elementy oraz określa rozmiar, z jakim one będą wyświetlane. Porządkowanie to faza, podczas której następuje rekursywne układanie wszystkich elementów w stosunku do ich rodziców w drzewie kompozycji. 
+Etap tworzenia układu interfejsu użytkownika podzielony jest na dwie fazy: mierzenie (z ang. \textit{measure}) oraz porządkowanie (z ang. \textit{arrange}). Faza mierzenia rekursywnie wywołuje wszystkie elementy oraz określa rozmiar, z jakim będą one wyświetlane. Porządkowanie to faza, podczas której następuje rekursywne układanie wszystkich elementów w stosunku do ich rodziców w drzewie kompozycji. 
 
 \section{C\#}
  C\# jest językiem programowania spełniającym wiele paradygmatów takich jak programowanie funkcyjne, obiektowe, imperatywne czy generyczne. Został utworzony przez firmę \textit{Microsoft} wewnątrz platformy .NET i zatwierdzony jako standard przez ISO (ISO/IEC 23270:2006) oraz Ecma (ECMA-334). Jest jednym z języków wchodzącym w skład Architektury Wspólnego Języka (z ang. \textit{Common Language Infrastructure, w skrócie CLR}). Najnowsza wersja języka to C\# 7.3, która ukazała się w 2018 roku wraz z środowiskiem programistycznym \textit{Visual Studio 2017} w wersji 15.7.2.
@@ -276,40 +276,40 @@ Etap tworzenia układu interfejsu użytkownika podzielony jest na dwie fazy: mie
  	\item Przenośność oprogramowania oraz łatwość wdrożenia w rozproszonych środowiskach. 
  	\item Język C\# jest bezpieczny w kontekście konwersji typów. Automatyczna konwersja jest dokonywana tylko w przypadku, gdy dane rzutowanie jest uznawane za bezpieczne.
  	\item Mechanizm refleksji oraz dynamicznego tworzenia kodu. Takie wsparcie umożliwia tworzenie oprogramowania, którego części nie są w całości znane podczas kompilacji.
- 	Takie działanie jest szeroko wykorzystywane w procesie mapowania obiektowo-relacyjnego (z ang. Object-Relational Mapping, w skrócie ORM).
+ 	Takie działanie jest szeroko wykorzystywane w procesie mapowania obiektowo-relacyjnego (z ang. \textit{Object-Relational Mapping}, w skrócie ORM).
  \end{itemize} 
 
 \section{.NET}
 Platforma programistyczna .NET została zaprojektowana przez firmę \textit{Microsoft}. Zawiera w sobie obszerną bibliotekę klas FCL (z ang. \textit{Framework Class Library}) oraz zapewnia kompatybilność dla kilku języków programowania. Programy napisane z wykorzystaniem .NET są wykonywane w środowisku CLR (z ang. \textit{Common Language Runtime}) - jest to maszyna wirtualna, która dostarcza usługi takie jak bezpieczeństwo, zarządzanie pamięcią czy obsługę wyjątków. Cechy platformy .NET:
 \begin{itemize}
-	\item Głównym elementem platformy .NET jest Środowisko Uruchomieniowe Wspólnego Języka (z ang. \textit{Common Language Runtime}, CLR). Stanowi ono implementację CLI gwarantując wiele właściwości oraz zachowań w obszarach zarządzania pamięcią bądź bezpieczeństwa. Głównym zadaniem komponentu CLR jest zamiana skompilowanego kodu CIL (z ang. Common Intermediate Language) na kod maszynowy, który jest dostosowany do maszyny, na jakiej został uruchomiony.
+	\item Głównym elementem platformy .NET jest Środowisko Uruchomieniowe Wspólnego Języka (z~ang. \textit{Common Language Runtime}, CLR). Stanowi ono implementację CLI gwarantując wiele właściwości oraz zachowań w obszarach zarządzania pamięcią bądź bezpieczeństwa. Głównym zadaniem komponentu CLR jest zamiana skompilowanego kodu CIL (z ang. \textit{Common Intermediate Language}) na kod maszynowy, który jest dostosowany do maszyny, na jakiej został uruchomiony.
 	\item Kompatybilność wsteczna: ponieważ systemy komputerowe bardzo często wymagają interakcji pomiędzy nowszymi i starszymi komponentami, .NET daje możliwość wykonywania funkcji poza platformą. Dostęp do komponentów COM jest możliwy dzięki wykorzystaniu przestrzeni nazw \textit{System.Runtime.InteropServices} oraz \textit{System.EnterpriseServices}.
-	\item W skład platformy .NET wchodzi komponent CTS (z ang. \textit{Common Type System}), który definiuje wszystkie możliwe typy danych wspierane przez CLR oraz w jaki sposób mogą one ze sobą ingerować. Dzięki temu jest możliwa wymiana typów bądz instancji obiektów pomiędzy bibliotekami oraz aplikacjami napisanymi w różnych językach opartych o .NET.
+	\item W skład platformy .NET wchodzi komponent CTS (z ang. \textit{Common Type System}), który definiuje wszystkie możliwe typy danych wspierane przez CLR oraz w jaki sposób mogą one ze sobą ingerować. Dzięki temu jest możliwa wymiana typów bądź instancji obiektów pomiędzy bibliotekami oraz aplikacjami napisanymi w różnych językach opartych o .NET.
 	\item Przenośność: platforma została zaprojektowana w taki sposób, aby jej implementacja była możliwa dla różnych systemów operacyjnych.
-	\item Bezpieczeństwo: platforma .NET dostarcza wspólny model bezpieczeństwa dla programów tworzonych w jej ramach. Została zaprojektowana w taki sposób, aby uniknąć wielu problemów z bezpieczeństwem aplikacji, do których należy m.in. przepełnienie bufora, które jest bardzo często używane przez złośliwe oprogramowanie (z ang. \textit{malicious software}, w skrócie \textit{malware}).
+	\item Bezpieczeństwo: platforma .NET dostarcza wspólny model bezpieczeństwa dla programów tworzonych w jej ramach. Została zaprojektowana w taki sposób, aby uniknąć wielu problemów z~bezpieczeństwem aplikacji, do których należy m.in. przepełnienie bufora, które jest bardzo często używane przez złośliwe oprogramowanie (z ang. \textit{malicious software}, w skrócie \textit{malware}).
 	
 \end{itemize}
 
 \section{Accord .NET}
-Accord .NET jest to szkielet aplikacyjny oparty o środowisko .NET. Zawiera biblioteki implementujące bardzo wiele algorytmów z szerokiej listy dziedzin nauki takich jak:
+Accord .NET jest to szkielet aplikacyjny oparty o środowisko .NET. Zawiera biblioteki implementujące bardzo wiele algorytmów z długiej listy dziedzin nauki takich jak:
 
 \begin{itemize}
-	\item \textbf{klasyfikacja}: sieci neuronowe, metody wektorów nośnych (z ang. \textit{Support Vector Machine}, w skrócie SVM), algorytm Levenberga-Marquardta, model Markova, tworzenie drzew decyzyjnych
-	\item \textbf{regresja}: regularyzacja, regresja liniowa, wielomianowa, 
-	\item \textbf{analiza skupień} (z ang. \textit{clustering}): algorytm k-średnich, podział binarny. 
+	\item \textbf{klasyfikacja}: sieci neuronowe, metody wektorów nośnych (z ang. \textit{Support Vector Machine}, w~skrócie SVM), algorytm Levenberga-Marquardta, model Markova, tworzenie drzew decyzyjnych
+	\item \textbf{regresja}: regularyzacja, regresja liniowa, wielomianowa
+	\item \textbf{analiza skupień} (z ang. \textit{clustering}): algorytm k-średnich, podział binarny
 	\item \textbf{rozkład prawdopodobieństwa}: rozkład normalny, Poissona, Cauchy'ego
-	\item \textbf{Przetwarzanie obrazów cyfrowych} (z ang. \textit{digital image processing, DIP}): deskryptory punktów kluczowych - SURF, FREAK, FAST; deskryptory gęstości - HOG, LBP
+	\item \textbf{Przetwarzanie obrazów cyfrowych} (z ang. \textit{Digital Image Processing, DIP}): deskryptory punktów kluczowych - SURF, FREAK, FAST; deskryptory gęstości - HOG, LBP
 	\item \textbf{Rozpoznawanie obrazów} (z ang. computer vision): metody do detekcji, śledzenia oraz transformacji obiektów w strumieniu wideo. 
 \end{itemize}
 
-Szkielet ten został zaimplementowany, aby rozszerzyć możliwości istniejącego rozwiązania - \textit{AForge .NET}, jednak z czasem oba podmioty zostały ze sobą połączone pod jedną nazwą \textit{Accord .NET}. Framework jest dostępny do pobrania z poziomu kodu źródłowego jak również za pomocą systemu zarządzania pakietami - \textit{NuGet}.
+Szkielet ten został zaimplementowany, aby rozszerzyć możliwości istniejącego rozwiązania - \textit{AForge~.NET}, jednak z czasem oba podmioty zostały ze sobą połączone pod jedną nazwą \textit{Accord .NET}. Framework jest dostępny do pobrania z poziomu kodu źródłowego jak również za pomocą systemu zarządzania pakietami - \textit{NuGet}.
 
 \section{Microsoft Visual Studio}
-Microsoft Visual Studio to zintegrowane środowisko programistyczne (z ang. \textit{Integrated Deveopment Environment, w skrócie IDE}) dostarczane prze firmę \textit{Microsoft}. Służy do budowania aplikacji konsolowych, jak również stron internetowych, aplikacji webowych oraz mobilnych. Visual Studio używa dostarczanych przez firmę Microsoft platform do tworzenia oprogramowania, do których należą m.in Windows Forms oraz Windows Presentation Foundation. Umożliwia tworzenie oprogramowania w 36 różnych językach programowania, do których należą m.in. C\#, C, C++, Visual Basic .NET, JavaScript czy CSS. Obecnie najnowsza wersja to Visual Studio 2017. 
+Microsoft Visual Studio to zintegrowane środowisko programistyczne (z ang. \textit{Integrated Deveopment Environment}, w skrócie IDE) dostarczane prze firmę \textit{Microsoft}. Służy do budowania aplikacji konsolowych, jak również stron internetowych, aplikacji webowych oraz mobilnych. Visual Studio używa dostarczanych przez firmę Microsoft platform do tworzenia oprogramowania, do których należą m.in Windows Forms oraz Windows Presentation Foundation. Umożliwia tworzenie oprogramowania w 36 różnych językach programowania, do których należą m.in. C\#, C, C++, Visual Basic .NET, JavaScript czy CSS. Obecnie najnowsza wersja to Visual Studio 2017. 
 
 Jednym z najważniejszych elementów wchodzących w skład środowiska jest edytor kodu. Jak każde nowoczesne IDE, Visual Studio zawiera edytor umożliwiający podświetlanie składni oraz auto-uzupełnianie brakujących fraz wykorzystując mechanizm \textit{IntelliSense}. Środowisko programistyczne wspiera tzw. kompilację w tle. W trakcie pisania kodu, Visual Studio kompiluje kod w tle w celu dostarczenia informacji o składni oraz ewentualnych błędach kompilacji. 
 
-Visual Studio zawiera debugger umożliwiający redukcję błędów w oprogramowaniu zarówno dla kodu zarządzanego, jak i natywnego. Dodatkowo istnieje możliwość dopięcia debuggera do procesu w celu monitorowania zachowania. Visual Studio umożliwia dokonywania zrzutów pamięci (z ang. \textit{memory dumps}) jak również wczytywania ich w dalszych momentach debugowania. Debugger umożliwia tworzenie punktu wstrzymania (z ang. \textit{breakpiont}) - miejsca celowego zatrzymania wykonywania programu w celu analizy jego zachowania. Dodatkowo punkty wstrzymania mogą być warunkowe, czyli zatrzymanie w punkcie następuje w momencie spełnienia warunku. Debugger wspiera tzw. \textit{edytuj i kontynuuj} - jak nazwa sugeruje, istnieje możliwość zmiany wartosci zmiennej podczas procesu debugowania.
+Visual Studio zawiera debugger umożliwiający redukcję błędów w oprogramowaniu zarówno dla kodu zarządzanego, jak i natywnego. Dodatkowo istnieje możliwość dopięcia debuggera do procesu w~celu monitorowania zachowania. Visual Studio umożliwia dokonywania zrzutów pamięci (z ang. \textit{memory dumps}) jak również wczytywania ich w dalszych momentach debugowania. Debugger umożliwia tworzenie punktu wstrzymania (z ang. \textit{breakpoint}) - miejsca celowego zatrzymania wykonywania programu w celu analizy jego zachowania. Dodatkowo punkty wstrzymania mogą być warunkowe, czyli zatrzymanie w punkcie następuje w momencie spełnienia warunku. Debugger wspiera tzw. \textit{edytuj i kontynuuj} - jak nazwa sugeruje, istnieje możliwość zmiany wartości zmiennej podczas procesu debugowania.
 
 Visual Studio zawiera narzędzia do tworzenia interfejsu użytkownika. Jeden z przykładów może stanowić narzędzie \textit{Cider} pomocne w budowaniu aplikacji WPF. Umożliwia tworzenie aplikacji poprzez przeciąganie istniejących elementów z przybornika oraz ustawianiu ich własciwości w dedykowanym oknie. Ponadto istnieje możliwość edycji widoku z poziomu języka znaczników XAML. Szczegółowy opis technologii WPF został opisany w podrozdziale \ref{sec: WPF}.
 
