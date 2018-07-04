@@ -86,7 +86,7 @@
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                     </Grid>
-                    <Button Grid.Row="1" Grid.ColumnSpan="2" Margin="5"  Content="Compute Bag-of-Words"
+                    <Button Grid.Row="1" Grid.ColumnSpan="2" Margin="5"  Content="Execute K-Means"
                         Command="{Binding ComputeCommand}">
                     </Button>
                 </Grid>
